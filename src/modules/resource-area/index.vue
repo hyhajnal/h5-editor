@@ -54,7 +54,7 @@ export default {
   methods: {
     onEnd (obj) {
       console.log(`${obj.to.children[0].dataset.pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
-      this.$store.commit('addEle', {
+      this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
         pid: obj.to.children[0].dataset.pid,
         idx: obj.newIndex

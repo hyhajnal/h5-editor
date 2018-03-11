@@ -9,9 +9,9 @@ const getInitStyle = type => {
   let style
   switch (type) {
     case 'div':
-      style = 'width:100%;height:50px;border:1px solid #000;'
+      style = 'width:100px;height:50px;border:1px solid #000;'
       break
-    case 'text':
+    case 'span':
       style = 'color:#000;'
       break
   }

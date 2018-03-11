@@ -37,10 +37,10 @@
         <el-input-number size="small" v-model="attr.border[0]" />
         <el-color-picker
           style="margin: 0 10px;"
-          v-model="attr.border[1]"
+          v-model="attr.border[2]"
           size="mini"
         />
-        <el-select v-model="attr.border[2]" placeholder="请选择" size="small">
+        <el-select v-model="attr.border[1]" placeholder="请选择" size="small">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -102,7 +102,7 @@ export default {
   watch: {
     attr: {
       handler () {
-        this.$store.commit('updateStyle', toStyleString(this.attr))
+        this.$store.dispatch('updateStyle', toStyleString(this.attr))
       },
       deep: true
     },

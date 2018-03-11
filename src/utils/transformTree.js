@@ -1,13 +1,13 @@
 // import DATA from './page'
 
-const toTree = list => {
+const toTree = data => {
+  let list = JSON.parse(JSON.stringify(data))
   let idMap = {}
   let tree = []
 
   list.forEach(item => {
     idMap[item.id] = item
   })
-
   list.forEach(v => {
     let parent = idMap[v.pid]
     // debugger
@@ -26,11 +26,8 @@ const toTree = list => {
 
 const handleList = (tree, list, pid) => {
   tree.forEach((item, idx) => {
-    const data = JSON.parse(JSON.stringify(item))
-    let newItem = { pid, idx, ...data }
+    let newItem = { pid, idx, ...item }
     delete newItem.children
-    newItem = JSON.parse(JSON.stringify(newItem))
-    // console.log(newItem)
     list.push(newItem)
     if (item.children && item.children.length > 0) {
       handleList(item.children, list, item.id)
@@ -41,7 +38,25 @@ const handleList = (tree, list, pid) => {
 const toList = (tree) => {
   let list = []
   handleList(tree, list, 'root')
-  return list
+  return JSON.parse(JSON.stringify(list))
 }
 
-export { toTree, toList }
+const treeTravel = (tree, id) => {
+  if (id === 'root') {
+    return new Promise((resolve) => {
+      resolve(tree)
+    })
+  }
+  tree.forEach(item => {
+    if (item.id === id) {
+      return new Promise((resolve) => {
+        resolve(item.children)
+      })
+    }
+    if (item.children && item.children.length > 0) {
+      treeTravel(item.children, id)
+    }
+  })
+}
+
+export { toTree, toList, treeTravel }

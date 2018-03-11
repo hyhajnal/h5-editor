@@ -1,6 +1,6 @@
 <template>
   <el-tree
-    :data="data"
+    :data="tree"
     node-key="id"
     default-expand-all
     :expand-on-click-node="false">
@@ -36,15 +36,19 @@
 </template>
 
 <script>
-  import DATA from '@/utils/page'
+  import { mapGetters } from 'vuex'
   let id = 1000
 
   export default {
     name: 'Struct',
     data () {
       return {
-        data: DATA
       }
+    },
+    computed: {
+      ...mapGetters({
+        tree: 'page'
+      })
     },
     methods: {
       append (data) {

@@ -47,25 +47,18 @@ export default {
     ...mapGetters({
       elements: 'page'
     })
-    // elements: {
-    //   get () {
-    //     return toTree(this.$store.state.list)
-    //   },
-    //   set (value) {
-    //     const list = JSON.parse(JSON.stringify(value))
-    //     this.$store.commit('updateList', toList(list, 0, []))
-    //   }
-    // }
   },
   methods: {
     onEnd (obj) {
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
-      this.$store.commit('moveEle', {
+      this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
-        pid: obj.to.children[0].dataset.pid,
-        idx: obj.newIndex
+        oPid: obj.from.children[0].dataset.pid,
+        nPid: obj.to.children[0].dataset.pid,
+        nIdx: obj.newIndex,
+        oIdx: obj.oldIndex
       })
     }
     // onEnd (obj) {

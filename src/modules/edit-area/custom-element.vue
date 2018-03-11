@@ -61,10 +61,12 @@ export default {
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
-      this.$store.commit('moveEle', {
-        ele: obj.item.dataset.id,
-        pid: obj.to.children[0].dataset.pid,
-        idx: obj.newIndex
+      this.$store.dispatch('moveEle', {
+        id: obj.item.dataset.id,
+        oPid: obj.from.children[0].dataset.pid,
+        nPid: obj.to.children[0].dataset.pid,
+        nIdx: obj.newIndex,
+        oIdx: obj.oldIndex
       })
     },
     unActive () {
