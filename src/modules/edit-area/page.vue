@@ -2,11 +2,16 @@
   <div class="page"
     :style="{ width: width + 'px', height: height + 'px' }"
   >
-    <draggable element="div" :options="dragOptions" :move="onMove" @end="onEnd" @start="onStart"> 
+    <draggable element="div"
+      :options="dragOptions"
+      @end="onEnd"
+    > 
       <custom-element
         v-for="item in elements"
         :key="item.id"
         :element="item"
+        :data-id="item.id"
+        :data-pid="item.pid"
       />
     </draggable>
   </div>
@@ -53,18 +58,32 @@ export default {
     // }
   },
   methods: {
-    onMove (obj) {
-      console.log('move')
-      console.log(obj)
-    },
     onEnd (obj) {
-      console.log('end')
-      console.log(obj)
-    },
-    onStart (obj) {
-      console.log('start')
-      console.log(obj)
+      const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
+      const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
+      console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
+      this.$store.commit('moveEle', {
+        id: obj.item.dataset.id,
+        pid: obj.to.children[0].dataset.pid,
+        idx: obj.newIndex
+      })
     }
+    // onEnd (obj) {
+    //   console.log('resource', obj)
+    //   console.log('edit', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
+    // }
+    // onUpdate (obj) {
+    //   console.log('update', obj)
+    //   console.log('update', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
+    // },
+    // onRemove (obj) {
+    //   console.log('remove', obj)
+    //   console.log('remove', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
+    // },
+    // onAdd (obj) {
+    //   console.log('add', obj)
+    //   console.log('add', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
+    // }
   }
 }
 </script>

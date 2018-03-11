@@ -21,7 +21,7 @@
         </el-input>
       </span> -->
       <span>
-        <i class="iconfont icon-dir" v-if="!node.isLeaf"></i>
+        <i :class="'icontype iconfont icon-' + data.type" />
         {{node.label}}
       </span>
       <span>
@@ -81,8 +81,9 @@
 .el-icon-circle-plus-outline {
   margin: 0 5px;
 }
-.icon-dir {
+.icontype {
   margin-right: 5px;
+  font-size: 14px;
 }
 .tree-input {
   max-width: 120px;

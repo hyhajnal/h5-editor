@@ -1,9 +1,12 @@
 <template>
   <div class="attr-area">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="页面" name="first">用户管理</el-tab-pane>
+      <el-tab-pane label="页面" name="first">页面基本信息</el-tab-pane>
       <el-tab-pane label="工作区" name="second">
         <struct></struct>
+      </el-tab-pane>
+      <el-tab-pane label="属性" name="attr">
+        <attr-box />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -11,6 +14,7 @@
 
 <script>
 import Struct from './struct'
+import AttrBox from '@/modules/edit-area/attr-box/index'
 export default {
   name: 'AttrArea',
   data () {
@@ -19,7 +23,8 @@ export default {
     }
   },
   components: {
-    Struct
+    Struct,
+    AttrBox
   },
   methods: {
     handleClick (tab, event) {

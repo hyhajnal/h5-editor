@@ -72,21 +72,22 @@ export default {
 
 <style lang="scss" scoped>
 .attr-box {
-  position: fixed;
-  top: 200px;
-  left: 400px;
-  width: 300px;
-  max-height: 400px;
-  padding: 10px;
-  background: #394650;
-  color: #fff;
+  // position: fixed;
+  // top: 200px;
+  // left: 400px;
+  // width: 300px;
+  // max-height: 400px;
+  padding: 0 10px;
+  // background: #394650;
+  // color: #fff;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 4px;
-  font-size: 13px;
-  z-index: 1000;
-  cursor: move;
-  user-select: none;
+  font-size: 14px;
+  color: #606266;
+  // z-index: 1000;
+  // cursor: move;
+  // user-select: none;
 }
 .divider {
   height: 1px;

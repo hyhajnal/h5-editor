@@ -9,9 +9,10 @@
           v-model="components"
           class="components-box"
           element="ul"
-          :options="{group:'resource1'}"
+          :options="{group:{name:'resource1',pull:'clone',put:false}}"
+          @end="onEnd"
         >
-          <li class="component-item" v-for="item in components" :key="item.label">
+          <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
             <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
           </li>
         </draggable>
@@ -24,9 +25,10 @@
           v-model="layouts"
           class="components-box"
           element="ul"
-          :options="{group:'resource2'}"
+          :options="{group:{name:'resource2',pull:'clone',put:false}}"
+          @end="onEnd"
         >
-          <li class="component-item" v-for="item in layouts" :key="item.label">
+          <li class="component-item" v-for="item in layouts" :key="item.label" :data-id="item.value">
             <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
           </li>
         </draggable>
@@ -48,7 +50,17 @@ export default {
       layouts: layouts
     }
   },
-  components: {draggable}
+  components: {draggable},
+  methods: {
+    onEnd (obj) {
+      console.log(`${obj.to.children[0].dataset.pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
+      this.$store.commit('addEle', {
+        type: obj.item.dataset.id,
+        pid: obj.to.children[0].dataset.pid,
+        idx: obj.newIndex
+      })
+    }
+  }
 }
 </script>
 

@@ -105,6 +105,9 @@ export default {
         this.$store.commit('updateStyle', toStyleString(this.attr))
       },
       deep: true
+    },
+    attrData () {
+      this.attr = this.attrData
     }
   },
   components: {

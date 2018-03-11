@@ -1,5 +1,5 @@
 <template>
-  <div :style="ele.style" :id="ele.id">
+  <div :style="ele.style">
     <slot></slot>
   </div>
 </template>
@@ -13,7 +13,6 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
 

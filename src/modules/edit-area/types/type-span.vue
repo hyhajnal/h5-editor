@@ -1,5 +1,5 @@
 <template>
-  <span :style="ele.style" :id="ele.id">
+  <span :style="ele.style">
     <slot>{{ele.text}}</slot>
   </span>
 </template>
@@ -13,7 +13,6 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
 

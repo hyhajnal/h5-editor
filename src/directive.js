@@ -9,11 +9,10 @@
 const clickoutsideContext = '@@clickoutsideContext'
 
 export default {
-  bind (el, binding, vnode, params) {
+  bind (el, binding, vnode) {
     const documentHandler = function (e) {
       if (vnode.context && !el.contains(e.target)) {
-        console.log(params.arg)
-        vnode.context[el[clickoutsideContext].methodName](params.arg)
+        vnode.context[el[clickoutsideContext].methodName]()
       }
     }
     el[clickoutsideContext] = {
@@ -36,7 +35,6 @@ export default {
 
   install (Vue) {
     Vue.directive('clickoutside', {
-      params: ['arg'],
       bind: this.bind,
       unbind: this.unbind
     })

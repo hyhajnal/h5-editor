@@ -9,13 +9,13 @@ const DATA = [{
     type: 'span',
     text: 'hhhh',
     style: 'width:50px;height:50px;background:pink;'
+  }, {
+    id: 'e6',
+    label: '文字',
+    type: 'span',
+    text: 'hhhh',
+    style: 'width:50px;height:50px;background: #555;'
   }]
-}, {
-  id: 'e3',
-  label: '容器',
-  type: 'div',
-  style: 'width:100px;height:100px;background:blue;',
-  children: []
 }, {
   id: 'e4',
   label: '容器',
@@ -28,6 +28,12 @@ const DATA = [{
     text: 'jkbjkb',
     style: 'color: #000;'
   }]
+}, {
+  id: 'e7',
+  label: '容器',
+  type: 'div',
+  style: 'width:100px;height:100px;background:blue;',
+  children: []
 }]
 
 export default DATA

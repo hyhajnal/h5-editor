@@ -6,7 +6,7 @@
       <el-button size="small">100%</el-button>
       <el-button size="small" icon="el-icon-plus"></el-button>
     </el-button-group>
-    <attr-box></attr-box>
+    <!-- <attr-box></attr-box> -->
   </div>
 </template>
 
