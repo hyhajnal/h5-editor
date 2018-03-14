@@ -42,21 +42,23 @@ const toList = (tree) => {
 }
 
 const treeTravel = (tree, id) => {
+  let result = null
   if (id === 'root') {
-    return new Promise((resolve) => {
-      resolve(tree)
-    })
+    return new Promise(resolve => resolve(tree))
   }
-  tree.forEach(item => {
+  for (let i = 0; i < tree.length; i++) {
+    let item = tree[i]
     if (item.id === id) {
-      return new Promise((resolve) => {
-        resolve(item.children)
-      })
+      result = item.children
+      break
     }
     if (item.children && item.children.length > 0) {
       treeTravel(item.children, id)
     }
-  })
+  }
+  if (result) {
+    return new Promise(resolve => resolve(result))
+  }
 }
 
 export { toTree, toList, treeTravel }

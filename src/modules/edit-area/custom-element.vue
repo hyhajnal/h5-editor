@@ -1,34 +1,28 @@
 <template>
-  <div class="ele-wrap">
-    <span class="option-wrap"
+  <!-- <div class="ele-wrap"> -->
+    <!-- <span class="option-wrap"
       :class="{'active': active}"
-      @click.stop.capture="changeActive"
-    >
-      <div :class="{'can-receive': canReceive}" class="option"></div>
-      <component :is="'type-'+element.type" :ele="element" v-if="element.type === 'div'">
-        <custom-element
-          v-if="element.children && element.children.length > 0"
-          v-for="item in element.children"
-          :element="item"
-          :key="item.id"
-        />
-      </component>
-      <draggable
-        v-else
-        :options="{group:{name:'page',put:['resource1', 'resource2', 'page']}}"
-        @end="onEnd"
-      >
-        <component :is="'type-'+element.type" :ele="element" :data-id="element.id" :data-pid="element.pid">
+    > -->
+      <!-- @click.stop.capture="changeActive" -->
+      <!-- <div :class="{'can-receive': canReceive}" class="option"></div> -->
+      <component :is="'type-'+element.type" :ele="element" :data-id="element.id" :data-pid="element.pid">
+        <draggable
+          element="span"
+          :options="{group:{name:'page',put:['resource1', 'resource2', 'page']}}"
+          @end="onEnd"
+          v-if="element.type === 'div'"
+        >
           <custom-element
-            v-if="element.children && element.children.length > 0"
             v-for="item in element.children"
             :element="item"
             :key="item.id"
+            v-if="element.children && element.children.length > 0"
           />
-        </component>
-      </draggable>
-    </span>
-  </div>
+        </draggable>
+      </component>
+      <!-- <component :is="'type-'+element.type" :ele="element" :data-id="element.id" :data-pid="element.pid" v-else></component> -->
+    <!-- </span> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -56,6 +50,15 @@ export default {
       return current && current.id === this.element.id
     }
   },
+  // watch: {
+  //   element: {
+  //     handler () {
+  //       console.log('change')
+  //       this.$forceUpdate()
+  //     },
+  //     deep: true
+  //   }
+  // },
   methods: {
     onEnd (obj) {
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
@@ -63,7 +66,7 @@ export default {
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
-        oPid: obj.from.children[0].dataset.pid,
+        oPid: obj.item.dataset.pid,
         nPid: obj.to.children[0].dataset.pid,
         nIdx: obj.newIndex,
         oIdx: obj.oldIndex

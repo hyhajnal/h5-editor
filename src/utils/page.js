@@ -12,14 +12,16 @@ const DATA = [{
     type: 'span',
     text: 'hhhh',
     style: 'width:50px;height:50px;background:pink;',
-    pid: 'e1'
+    pid: 'e1',
+    children: []
   }, {
     id: 'e6',
     label: '文字-e6',
     type: 'span',
     text: 'hhhh',
     style: 'width:50px;height:50px;background: #555;',
-    pid: 'e1'
+    pid: 'e1',
+    children: []
   }]
 }, {
   id: 'e4',
@@ -33,7 +35,8 @@ const DATA = [{
     type: 'span',
     text: 'jkbjkb',
     style: 'color: #000;',
-    pid: 'e4'
+    pid: 'e4',
+    children: []
   }]
 }, {
   id: 'e7',

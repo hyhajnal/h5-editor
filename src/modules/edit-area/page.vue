@@ -2,7 +2,7 @@
   <div class="page"
     :style="{ width: width + 'px', height: height + 'px' }"
   >
-    <draggable element="div"
+    <draggable element="span"
       :options="dragOptions"
       @end="onEnd"
     > 
@@ -43,6 +43,15 @@ export default {
     CustomElement,
     draggable
   },
+  // watch: {
+  //   elements: {
+  //     handler () {
+  //       console.log('change')
+  //       this.$forceUpdate()
+  //     },
+  //     deep: true
+  //   }
+  // },
   computed: {
     ...mapGetters({
       elements: 'page'
