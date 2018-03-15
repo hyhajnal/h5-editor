@@ -35,7 +35,8 @@ export default {
           put: ['resource1', 'resource2', 'page']
         },
         disabled: false,
-        ghostClass: 'ghost'
+        ghostClass: 'ghost',
+        chosenClass: 'element-active'
       }
     }
   },
@@ -70,22 +71,6 @@ export default {
         oIdx: obj.oldIndex
       })
     }
-    // onEnd (obj) {
-    //   console.log('resource', obj)
-    //   console.log('edit', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // }
-    // onUpdate (obj) {
-    //   console.log('update', obj)
-    //   console.log('update', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // },
-    // onRemove (obj) {
-    //   console.log('remove', obj)
-    //   console.log('remove', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // },
-    // onAdd (obj) {
-    //   console.log('add', obj)
-    //   console.log('add', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // }
   }
 }
 </script>
@@ -95,4 +80,7 @@ export default {
   border: 1px solid #ddd;
   margin: 40px auto;
 }
+// .element-active {
+//   border: 2px solid #03dafd;
+// }
 </style>

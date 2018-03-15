@@ -19,7 +19,7 @@ export default {
   name: 'AttrArea',
   data () {
     return {
-      activeName: 'second'
+      activeName: 'attr'
     }
   },
   components: {
@@ -34,6 +34,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.attr-area {
+  .el-tabs__nav-scroll {
+    padding: 0 10px;
+  }
+}
 </style>

@@ -5,17 +5,24 @@ function guid () {
   return (`e-${S4() + S4()}`)
 }
 
-const getInitStyle = type => {
-  let style
+const getInit = type => {
+  let attr
   switch (type) {
     case 'div':
-      style = 'width:100px;height:50px;border:1px solid #000;'
+      attr = {
+        style: 'width:100px;height:50px;border:1px solid #000;'
+      }
       break
     case 'span':
-      style = 'color:#000;'
+      attr = {
+        style: 'color:#000;',
+        config: [
+          { name: 'text', title: '文字', type: 'input', data: '文字' }
+        ]
+      }
       break
   }
-  return style
+  return attr
 }
 
-export { guid, getInitStyle }
+export { guid, getInit }

@@ -28,17 +28,26 @@
     <el-row :gutter="10" v-if="attr.background">
       <el-col :span="6" class="label">背景色:</el-col>
       <el-col :span="18">
-        <el-color-picker v-model="attr.background" size="mini" />
+        <color-picker v-model="attr.background" />
+      </el-col>
+    </el-row>
+    <el-row :gutter="10">
+      <el-col :span="6" class="label">圆角:</el-col>
+      <el-col :span="18" class="border-box">
+        <el-input-number size="small" v-model="attr.borderRadius[0]" style="margin-right: 10px;"/>
+        <el-radio-group v-model="attr.borderRadius[1]">
+          <el-radio label="px" />
+          <el-radio label="%" />
+        </el-radio-group>
       </el-col>
     </el-row>
     <el-row :gutter="10" v-if="attr.border">
       <el-col :span="6" class="label">边框:</el-col>
       <el-col :span="18" class="border-box">
         <el-input-number size="small" v-model="attr.border[0]" />
-        <el-color-picker
+        <color-picker
           style="margin: 0 10px;"
           v-model="attr.border[2]"
-          size="mini"
         />
         <el-select v-model="attr.border[1]" placeholder="请选择" size="small">
           <el-option
@@ -79,7 +88,14 @@
 
 <script>
 import { RadioBar, RadioItem } from '@/components/radio'
+import ColorPicker from '@/components/ColorPicker'
 import { toStyleString } from '@/utils/transformStyle'
+const init = {
+  margin: [0, 0, 0, 0],
+  padding: [0, 0, 0, 0],
+  border: [0, 'solid', '#000'],
+  borderRadius: [0, 'px']
+}
 export default {
   name: 'Container',
   props: {
@@ -87,10 +103,10 @@ export default {
   },
   data () {
     return {
-      attr: this.attrData,
+      attr: init,
       options: [{
         label: '---',
-        value: 'dash'
+        value: 'dashed'
       }, {
         label: '——',
         value: 'solid'
@@ -98,6 +114,9 @@ export default {
       justifyContent: 'center',
       alignItems: 'top'
     }
+  },
+  mounted () {
+    this.attr = { ...init, ...this.attrData }
   },
   watch: {
     attr: {
@@ -107,11 +126,11 @@ export default {
       deep: true
     },
     attrData () {
-      this.attr = this.attrData
+      this.attr = { ...init, ...this.attrData }
     }
   },
   components: {
-    RadioBar, RadioItem
+    RadioBar, RadioItem, ColorPicker
   }
 }
 </script>
@@ -129,6 +148,16 @@ export default {
 <style>
 .std-radio-active i {
   color: orange;
+}
+.el-radio + .el-radio {
+  margin-left: 10px;
+}
+.el-radio__label {
+  padding-left: 5px;
+}
+.el-radio__inner {
+  width: 10px;
+  height: 10px;
 }
 </style>
 

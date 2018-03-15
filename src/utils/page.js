@@ -10,16 +10,10 @@ const DATA = [{
     id: 'e2',
     label: '文字-e2',
     type: 'span',
-    text: 'hhhh',
+    config: [
+      { name: 'text', lable: '文字', type: 'input', data: '监控设备' }
+    ],
     style: 'width:50px;height:50px;background:pink;',
-    pid: 'e1',
-    children: []
-  }, {
-    id: 'e6',
-    label: '文字-e6',
-    type: 'span',
-    text: 'hhhh',
-    style: 'width:50px;height:50px;background: #555;',
     pid: 'e1',
     children: []
   }]
@@ -33,7 +27,9 @@ const DATA = [{
     id: 'e5',
     label: '文字-e5',
     type: 'span',
-    text: 'jkbjkb',
+    config: [
+      { name: 'text', label: '文字', type: 'input', data: 'sajfg' }
+    ],
     style: 'color: #000;',
     pid: 'e4',
     children: []
@@ -44,7 +40,17 @@ const DATA = [{
   type: 'div',
   style: 'width:100px;height:100px;background:blue;',
   children: [],
-  pid: 'e4'
+  pid: 'root'
+}, {
+  id: 'e6',
+  label: '文字-e6',
+  type: 'span',
+  config: [
+    { name: 'text', label: '文字', type: 'input', data: '数据库表' }
+  ],
+  style: 'width:50px;height:50px;background: #555;',
+  pid: 'root',
+  children: []
 }]
 
 const LIST = toList(DATA)

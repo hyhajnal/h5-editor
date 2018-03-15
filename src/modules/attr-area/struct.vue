@@ -5,21 +5,6 @@
     default-expand-all
     :expand-on-click-node="false">
     <span class="custom-tree-node" slot-scope="{ node, data }">
-      <!-- <span @dblclick="() => {data.edit = true}"
-        v-clickoutside="clickOut"
-        :arg="data"
-      >
-        <i class="iconfont icon-dir" v-if="!node.isLeaf"></i>
-        <template v-if="!data.edit">{{ node.name }}</template>
-        <el-input
-          class="tree-input"
-          v-else
-          v-model="node.name"
-          placeholder="请输入内容"
-          size="mini"
-        >
-        </el-input>
-      </span> -->
       <span>
         <i :class="'icontype iconfont icon-' + data.type" />
         {{node.label}}
@@ -28,7 +13,6 @@
         <i class="iconfont icon-eye"
           v-show="data.show"
         />
-        <!-- <i class="el-icon-circle-plus-outline" @click="() => append(data)"></i> -->
         <i class="el-icon-circle-close-outline" @click="() => remove(node, data)"></i>
       </span>
     </span>
@@ -37,7 +21,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  let id = 1000
+  // let id = 1000
 
   export default {
     name: 'Struct',
@@ -51,22 +35,13 @@
       })
     },
     methods: {
-      append (data) {
-        const newChild = { id: id++, name: 'testtest', children: [] }
-        if (!data.children) {
-          this.$set(data, 'children', [])
-        }
-        data.children.push(newChild)
-      },
 
       remove (node, data) {
         const parent = node.parent
         const children = parent.data.children || parent.data
-        const index = children.findIndex(d => d.id === data.id)
-        children.splice(index, 1)
-      },
-      clickOut (data) {
-        // data.edit = false
+        const idx = children.findIndex(d => d.id === data.id)
+        // children.splice(index, 1)
+        this.$store.dispatch('delEle', { pid: data.pid, idx })
       }
 
     }

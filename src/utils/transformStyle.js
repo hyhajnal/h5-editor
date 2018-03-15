@@ -25,6 +25,15 @@ function toStyleStrItem (key, value) {
     case 'border':
       result = `${value[0]}px ${value[1]} ${value[2]}`
       break
+    case 'borderRadius':
+      result = `${value[0]}${value[1]}`
+      break
+    case 'fontWeight':
+      result = value * 10
+      break
+    case 'fontSize':
+      result = `${value}px`
+      break
     default:
       result = value
   }
@@ -64,6 +73,25 @@ function toStyleObjItem (key, value) {
     case 'border':
       const dataB = value.split(' ')
       result = [parseInt(dataB[0].split('px')[0]), dataB[1], dataB[2]]
+      break
+    case 'borderRadius':
+      if (value.indexOf('%') > -1) {
+        result = [parseInt(value.split('%')[0]), '%']
+      } else {
+        result = [parseInt(value.split('px')[0]), 'px']
+      }
+      break
+    case 'fontSize':
+      result = parseInt(value.split('px')[0])
+      break
+    case 'fontWeight':
+      if (value === 'normal') {
+        result = 40
+      } else if (value === 'bold') {
+        result = 70
+      } else {
+        result = value / 10
+      }
       break
     default:
       result = value

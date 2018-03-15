@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { DATA } from '@/utils/page'
 import { treeTravel } from '@/utils/transformTree'
-import { guid, getInitStyle } from '@/utils/help'
+import { guid, getInit } from '@/utils/help'
 
 Vue.use(Vuex)
 
@@ -13,11 +13,21 @@ const state = {
 }
 
 const actions = {
-  updateStyle ({ state, commit }, {style}) {
+  updateStyle ({ state, commit }, style) {
     if (!state.current) return
     let { list, current } = JSON.parse(JSON.stringify(state))
-    treeTravel(list, current.id).then(item => {
-      item.style = style
+    treeTravel(list, current.pid).then(item => {
+      const idx = item.findIndex(d => d.id === current.id)
+      item[idx].style = style
+      commit('update', list)
+    })
+  },
+  updateConfig ({ state, commit }, config) {
+    if (!state.current) return
+    let { list, current } = JSON.parse(JSON.stringify(state))
+    treeTravel(list, current.pid).then(item => {
+      const idx = item.findIndex(d => d.id === current.id)
+      item[idx].config = config
       commit('update', list)
     })
   },
@@ -38,11 +48,11 @@ const actions = {
   addEle ({ state, commit }, payload) {
     const { type, pid, idx } = payload
     let id = guid()
-    let style = getInitStyle(type)
+    let attr = getInit(type)
     let list = JSON.parse(JSON.stringify(state.list))
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, style, type, label: `${type}/${id}`
+        id, pid, ...attr, type, label: `${type}/${id}`
       })
       commit('update', list)
     })
@@ -62,20 +72,8 @@ const mutations = {
     Vue.set(state, 'list', list)
   },
   changeCurrent (state, ele) {
-    this.state.current = ele
+    Vue.set(state, 'current', ele)
   }
-  // moveEle (state, payload) {
-  //   const { oIdx, oPid, nIdx, nPid } = payload
-  //   let tmp = null
-  //   treeTravel(this.state.list, oPid).then(item => {
-  //     tmp = item[oIdx]
-  //     item.splice(oIdx, 1)
-  //   })
-  //   treeTravel(this.state.list, nPid).then(item => {
-  //     tmp.pid = nPid
-  //     item.splice(nIdx, 0, tmp)
-  //   })
-  // }
 }
 
 const getters = {

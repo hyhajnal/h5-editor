@@ -1,14 +1,19 @@
 <template>
-  <!-- <div class="ele-wrap"> -->
-    <!-- <span class="option-wrap"
-      :class="{'active': active}"
-    > -->
-      <!-- @click.stop.capture="changeActive" -->
-      <!-- <div :class="{'can-receive': canReceive}" class="option"></div> -->
-      <component :is="'type-'+element.type" :ele="element" :data-id="element.id" :data-pid="element.pid">
+  <div
+    :data-id="element.id"
+    :data-pid="element.pid"
+  >
+    <span
+      @click.stop.capture="changeActive"
+      :class="[{'active': active}, 'option-wrap']"
+    >
+      <component :is="'type-'+element.type"
+        :ele="element"
+        class="element"
+      >
         <draggable
           element="span"
-          :options="{group:{name:'page',put:['resource1', 'resource2', 'page']}}"
+          :options="dragOptions"
           @end="onEnd"
           v-if="element.type === 'div'"
         >
@@ -20,9 +25,8 @@
           />
         </draggable>
       </component>
-      <!-- <component :is="'type-'+element.type" :ele="element" :data-id="element.id" :data-pid="element.pid" v-else></component> -->
-    <!-- </span> -->
-  <!-- </div> -->
+    </span>
+  </div>
 </template>
 
 <script>
@@ -35,7 +39,20 @@ export default {
   props: {
     element: Object
   },
-  data () { return {} },
+  data () {
+    return {
+      dragOptions: {
+        animation: 0,
+        group: {
+          name: 'page',
+          put: ['resource1', 'resource2', 'page']
+        },
+        disabled: false,
+        ghostClass: 'ghost',
+        chosenClass: 'element-active'
+      }
+    }
+  },
   components: {
     TypeDiv,
     TypeSpan,
@@ -72,37 +89,23 @@ export default {
         oIdx: obj.oldIndex
       })
     },
-    unActive () {
-      alert('hhh')
-      this.active = false
-    },
     changeActive () {
       this.$store.commit('changeCurrent', this.element)
     }
-    // onUpdate (obj) {
-    //   console.log('update', obj)
-    //   console.log('update', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // },
-    // onRemove (obj) {
-    //   console.log('remove', obj.to.children[0].dataset.pid)
-    //   console.log('remove', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // },
-    // onAdd (obj) {
-    //   console.log('add', obj.to.children[0].dataset.pid)
-    //   console.log('add', `${obj.item.dataset.id}:${obj.item.dataset.pid}-${obj.oldIndex}->${obj.newIndex}`)
-    // }
   }
 }
 </script>
 
 
 <style scoped lang="scss">
-.ele-wrap {
+.element {
   cursor: move;
+  // transition: all .5s;
 }
 .option-wrap {
   position: relative;
   display: inline-block;
+  cursor: move;
 }
 .can-receive {
   background: rgba(3, 218, 253, 0.6);
@@ -119,5 +122,8 @@ export default {
   left: 0;
   z-index: 1000;
 }
+// .element-active {
+//   opacity: 0.5;
+// }
 </style>
 

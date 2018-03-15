@@ -1,16 +1,17 @@
 <template>
   <div class="attr-box"
     ref="attrbox"
-    @mousedown="onMouseDown"
-    @mousemove="onMouseMove"
-    @mouseup="onMouseUp"
-    :style="styleObj"
   >
-    <template v-if="type === 'container' && attr" >
+    <template v-if="current.type === 'div' && attr" >
       <container :attrData="attr"/>
+      <div class="divider"></div>
     </template>
-    <template v-if="type === 'text' && attr">
+    <template v-if="current.type === 'span' && attr">
       <attr-text :attrData="attr" />
+      <div class="divider"></div>
+    </template>
+    <template v-if="current.config">
+      <config :attrData="current.config" />
     </template>
   </div>
 </template>
@@ -18,6 +19,7 @@
 <script>
 import Container from './container'
 import AttrText from './text'
+import Config from './config'
 import { toStyleObj } from '@/utils/transformStyle'
 import { mapGetters } from 'vuex'
 
@@ -35,7 +37,8 @@ export default {
   },
   components: {
     Container,
-    AttrText
+    AttrText,
+    Config
   },
   computed: {
     ...mapGetters({
@@ -72,33 +75,27 @@ export default {
 
 <style lang="scss" scoped>
 .attr-box {
-  // position: fixed;
-  // top: 200px;
-  // left: 400px;
-  // width: 300px;
-  // max-height: 400px;
   padding: 0 10px;
-  // background: #394650;
-  // color: #fff;
   overflow-y: auto;
-  overflow-x: hidden;
+  // overflow-x: hidden;
+  min-height: 100vh;
   border-radius: 4px;
   font-size: 14px;
   color: #606266;
-  // z-index: 1000;
-  // cursor: move;
-  // user-select: none;
 }
 .divider {
   height: 1px;
-  background: #555;
+  background: #eee;
   width: 100%;
-  margin: 10px 0;
+  margin: 20px 0;
 }
 </style>
 
 <style lang="scss">
 .attr-box {
+  .el-tabs__content {
+    overflow-x: auto;
+  }
   .align-box {
     display: flex;
     width: 100px;
