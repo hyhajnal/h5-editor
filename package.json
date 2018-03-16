@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "element-ui": "^2.2.0",
+    "prismjs": "^1.12.2",
     "vue": "^2.5.2",
     "vue-color": "^2.4.5",
     "vue-router": "^3.0.1",

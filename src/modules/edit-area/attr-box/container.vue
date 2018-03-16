@@ -3,8 +3,8 @@
     <el-row :gutter="10" v-if="attr.width || attr.height">
       <el-col :span="6" class="label">宽高:</el-col>
       <el-col :span="18" class="input-box">
-        <el-input-number size="small" v-model="attr.width" v-if="attr.width"/>
-        <el-input-number size="small" v-model="attr.height" v-if="attr.height" />
+        <el-input-number size="small" v-model="attr.width" />
+        <el-input-number size="small" v-model="attr.height" />
       </el-col>
     </el-row>
     <el-row :gutter="10" v-if="attr.padding">

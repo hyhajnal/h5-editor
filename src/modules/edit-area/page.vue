@@ -32,7 +32,9 @@ export default {
         animation: 0,
         group: {
           name: 'page',
-          put: ['resource1', 'resource2', 'page']
+          put: ['resource1', 'resource2', 'page'],
+          // put: true,
+          pull: true
         },
         disabled: false,
         ghostClass: 'ghost',
@@ -77,8 +79,10 @@ export default {
 
 <style scoped lang="scss">
 .page {
-  border: 1px solid #ddd;
+  // border: 1px solid #ddd;
   margin: 40px auto;
+  background: #fff;
+  overflow: auto;
 }
 // .element-active {
 //   border: 2px solid #03dafd;

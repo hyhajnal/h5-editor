@@ -11,7 +11,7 @@ function toStyleStrItem (key, value) {
   let result = ''
   switch (key) {
     case 'width':
-      result = `${value}px`
+      result = value === 0 ? '100%' : `${value}px`
       break
     case 'height':
       result = `${value}px`
@@ -57,7 +57,11 @@ function toStyleObjItem (key, value) {
   let result = ''
   switch (key) {
     case 'width':
-      result = parseInt(value.split('px')[0])
+      if (value === '100%') {
+        result = 0
+      } else {
+        result = parseInt(value.split('px')[0])
+      }
       break
     case 'height':
       result = parseInt(value.split('px')[0])

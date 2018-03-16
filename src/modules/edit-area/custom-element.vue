@@ -1,18 +1,20 @@
 <template>
-  <div
+  <!-- <div
     :data-id="element.id"
     :data-pid="element.pid"
   >
     <span
       @click.stop.capture="changeActive"
       :class="[{'active': active}, 'option-wrap']"
-    >
+    > -->
       <component :is="'type-'+element.type"
         :ele="element"
+        :data-id="element.id"
+        :data-pid="element.pid"
+        @click.native.stop.capture="changeActive"
         class="element"
       >
         <draggable
-          element="span"
           :options="dragOptions"
           @end="onEnd"
           v-if="element.type === 'div'"
@@ -25,8 +27,8 @@
           />
         </draggable>
       </component>
-    </span>
-  </div>
+    <!-- </span>
+  </div> -->
 </template>
 
 <script>
@@ -45,7 +47,9 @@ export default {
         animation: 0,
         group: {
           name: 'page',
-          put: ['resource1', 'resource2', 'page']
+          put: ['resource1', 'resource2', 'page'],
+          // put: true,
+          pull: true
         },
         disabled: false,
         ghostClass: 'ghost',
@@ -101,6 +105,9 @@ export default {
 .element {
   cursor: move;
   // transition: all .5s;
+  &:hover {
+    border: 2px dashed #03dafd !important;
+  }
 }
 .option-wrap {
   position: relative;
@@ -110,9 +117,6 @@ export default {
 .can-receive {
   background: rgba(3, 218, 253, 0.6);
   border: 2px dashed #03dafd;
-}
-.active {
-  border: 2px solid #03dafd;
 }
 .option {
   width: 100%;

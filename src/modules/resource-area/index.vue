@@ -9,7 +9,14 @@
           v-model="components"
           class="components-box"
           element="ul"
-          :options="{group:{name:'resource1',pull:'clone',put:false}}"
+          :options="{
+            group: {
+              name:'resource1',
+              pull:'clone',
+              put: false
+            },
+            ghostClass: 'ghost',
+          }"
           @end="onEnd"
         >
           <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
@@ -85,6 +92,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  cursor: move;
   span {
     font-size: 13px;
     margin-top: 5px;

@@ -11,15 +11,13 @@
 </template>
 
 <script>
-import AttrBox from './attr-box/index'
 import Page from './page'
 export default {
-  name: 'EditArea',
+  name: 'PreviewArea',
   data () {
     return {}
   },
   components: {
-    AttrBox,
     Page
   }
 }

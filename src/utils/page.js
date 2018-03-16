@@ -4,7 +4,7 @@ const DATA = [{
   id: 'e1',
   label: '容器-e1',
   type: 'div',
-  style: 'width:100px;height:100px;background:red;',
+  style: 'width:100px;height:100px;background:#F56C6C;',
   pid: 'root',
   children: [{
     id: 'e2',
@@ -13,7 +13,7 @@ const DATA = [{
     config: [
       { name: 'text', lable: '文字', type: 'input', data: '监控设备' }
     ],
-    style: 'width:50px;height:50px;background:pink;',
+    style: 'width:50px;height:50px;color:pink;',
     pid: 'e1',
     children: []
   }]
@@ -38,7 +38,7 @@ const DATA = [{
   id: 'e7',
   label: '容器-e7',
   type: 'div',
-  style: 'width:100px;height:100px;background:blue;',
+  style: 'width:100%;height:100px;background:#409EFF;',
   children: [],
   pid: 'root'
 }, {
@@ -48,7 +48,7 @@ const DATA = [{
   config: [
     { name: 'text', label: '文字', type: 'input', data: '数据库表' }
   ],
-  style: 'width:50px;height:50px;background: #555;',
+  style: 'width:50px;height:50px;color: #555;',
   pid: 'root',
   children: []
 }]

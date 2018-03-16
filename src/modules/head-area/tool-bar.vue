@@ -5,7 +5,7 @@
         <i class="iconfont icon-save"></i>
         <span>保存</span>
       </li>
-      <li>
+      <li @click="preview">
         <i class="iconfont icon-preview"></i>
         <span>预览</span>
       </li>
@@ -24,6 +24,11 @@ export default {
   data () {
     return {
       avatar: 'http://img.zcool.cn/community/013eed5a7fdd56a8012045b3640463.jpeg@520w_390h_1c_1e_1o_100sh.jpg'
+    }
+  },
+  methods: {
+    preview () {
+      this.$router.push({name: 'Preview'})
     }
   }
 }
