@@ -1,35 +1,25 @@
 <template>
-  <!-- <div
+  <component :is="'type-'+element.type"
+    :ele="element"
     :data-id="element.id"
     :data-pid="element.pid"
+    @click.native.capture="changeActive"
+    class="element"
   >
-    <span
-      @click.stop.capture="changeActive"
-      :class="[{'active': active}, 'option-wrap']"
+    <!-- <draggable
+      :options="dragOptions"
+      @end="onEnd"
+      v-if="element.type === 'div'"
+      element="div"
     > -->
-      <component :is="'type-'+element.type"
-        :ele="element"
-        :data-id="element.id"
-        :data-pid="element.pid"
-        @click.native.capture="changeActive"
-        class="element"
-      >
-        <draggable
-          :options="dragOptions"
-          @end="onEnd"
-          v-if="element.type === 'div'"
-          element="span"
-        >
-          <custom-element
-            v-for="item in element.children"
-            :element="item"
-            :key="item.id"
-            v-if="element.children && element.children.length > 0"
-          />
-        </draggable>
-      </component>
-    <!-- </span>
-  </div> -->
+      <custom-element
+        v-for="item in element.children"
+        :element="item"
+        :key="item.id"
+        v-if="element.children && element.children.length > 0"
+      />
+    <!-- </draggable> -->
+  </component>
 </template>
 
 <script>
@@ -42,22 +32,22 @@ export default {
   props: {
     element: Object
   },
-  data () {
-    return {
-      dragOptions: {
-        animation: 0,
-        group: {
-          name: 'page',
-          put: ['resource1', 'resource2', 'page'],
-          // put: true,
-          pull: true
-        },
-        disabled: false,
-        ghostClass: 'ghost',
-        chosenClass: 'element-active'
-      }
-    }
-  },
+  // data () {
+  //   return {
+  //     dragOptions: {
+  //       animation: 0,
+  //       group: {
+  //         name: 'page',
+  //         put: ['resource1', 'resource2', 'page'],
+  //         // put: true,
+  //         pull: true
+  //       },
+  //       disabled: false,
+  //       ghostClass: 'ghost',
+  //       chosenClass: 'element-active'
+  //     }
+  //   }
+  // },
   components: {
     TypeDiv,
     TypeSpan,
