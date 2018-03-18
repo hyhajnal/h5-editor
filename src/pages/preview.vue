@@ -47,10 +47,10 @@ export default {
     flex: 1;
   }
   aside {
-    flex: 1;
+    width: 500px;
     border-left: 1px solid #ddd;
   }
   .main {
-    width: 800px;
+    flex: 1;
   }
 </style>

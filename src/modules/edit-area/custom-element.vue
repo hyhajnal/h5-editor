@@ -11,13 +11,14 @@
         :ele="element"
         :data-id="element.id"
         :data-pid="element.pid"
-        @click.native.stop.capture="changeActive"
+        @click.native.capture="changeActive"
         class="element"
       >
         <draggable
           :options="dragOptions"
           @end="onEnd"
           v-if="element.type === 'div'"
+          element="span"
         >
           <custom-element
             v-for="item in element.children"

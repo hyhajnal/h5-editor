@@ -64,4 +64,7 @@ export default {
     background-size: cover;
     margin-left: 40px;
   }
+  li {
+    cursor: pointer;
+  }
 </style>

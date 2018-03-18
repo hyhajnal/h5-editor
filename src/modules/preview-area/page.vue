@@ -1,5 +1,5 @@
 <template>
-  <div class="page"
+  <div class="page" id="page" ref="page"
     :style="{ width: width + 'px', height: height + 'px' }"
   >
     <custom-element

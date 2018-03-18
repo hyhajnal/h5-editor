@@ -91,10 +91,13 @@ import { RadioBar, RadioItem } from '@/components/radio'
 import ColorPicker from '@/components/ColorPicker'
 import { toStyleString } from '@/utils/transformStyle'
 const init = {
+  width: 0,
+  height: 0,
   margin: [0, 0, 0, 0],
   padding: [0, 0, 0, 0],
   border: [0, 'solid', '#000'],
-  borderRadius: [0, 'px']
+  borderRadius: [0, 'px'],
+  background: 'transparent'
 }
 export default {
   name: 'Container',

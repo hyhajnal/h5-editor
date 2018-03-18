@@ -1,6 +1,6 @@
 <template>
   <div class="head-area">
-    <h1>活动中心页面</h1>
+    <h1 @click="goEdit">{{info.name}}-{{info.id}}</h1>
     <menu-bar></menu-bar>
     <tool-bar></tool-bar>
   </div>
@@ -9,6 +9,7 @@
 <script>
 import ToolBar from './tool-bar'
 import MenuBar from './menu-bar'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'HeadArea',
@@ -18,6 +19,18 @@ export default {
   components: {
     ToolBar,
     MenuBar
+  },
+  computed: {
+    ...mapGetters({
+      info: 'pageInfo'
+    })
+  },
+  methods: {
+    goEdit () {
+      this.$router.push({
+        name: 'Edit'
+      })
+    }
   }
 }
 </script>
@@ -33,5 +46,6 @@ export default {
   h1 {
     font-size: 20px;
     font-weight: normal;
+    cursor: pointer;
   }
 </style>

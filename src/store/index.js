@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { DATA } from '@/utils/page'
+import Page from '@/utils/page.json'
 import { treeTravel } from '@/utils/transformTree'
 import { guid, getInit } from '@/utils/help'
 
 Vue.use(Vuex)
 
 const state = {
-  list: DATA, // 组件列表
+  name: Page.name,
+  id: Page.id,
+  list: Page.elements, // 组件列表
   current: null, //  当前选中组件的idx
   isDraging: false
 }
@@ -83,6 +85,12 @@ const getters = {
   page: state => {
     // return toTree(state.list)
     return state.list
+  },
+  pageInfo: state => {
+    return {
+      name: state.name,
+      id: state.id
+    }
   }
 }
 

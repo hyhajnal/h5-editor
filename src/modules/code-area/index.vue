@@ -20,8 +20,12 @@
 </template>
 
 <script>
-var Prism = require('prismjs')
+import { styleToClass } from '@/utils/transformStyle'
+const cssFormat = require('prettyugly')
+const Prism = require('prismjs')
 require('prismjs/themes/prism-okaidia.css')
+const prettifyHtml = require('prettify-html')
+
 export default {
   name: 'CodeArea',
   data () {
@@ -31,34 +35,11 @@ export default {
     }
   },
   mounted () {
-    const htmlCode = `
-      <template>
-        <div class="code-area">
-          <div class="code html">
-            <pre class="language-javascript">
-              <code class="language-javascript">
-                <div v-html="html"></div>
-              </code>
-            </pre>
-          </div>
-          <div class="code css">{{css}}</div>
-        </div>
-      </template>
-    `
-    const cssCode = ` 
-    .code-area {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      background: #272823;
-    }
-    .code {
-      flex: 1;
-      overflow: auto;
-    }
-    .html {
-      border-bottom: 1px solid #ddd;
-    }`
+    let htmlCode = prettifyHtml(document.getElementById('page').innerHTML
+      .replace(/data-v-\w{8}=""\s/g, '')
+      // .replace(/style="[\s\S]+"$/g, '')
+    )
+    const cssCode = cssFormat.pretty(styleToClass(this.$store.state.list))
     this.css = Prism.highlight(cssCode, Prism.languages.css)
     this.html = Prism.highlight(htmlCode, Prism.languages.markup)
   }
@@ -66,7 +47,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$head: 60px;
 .code-area {
   display: flex;
   flex-direction: column;
@@ -78,15 +58,13 @@ $head: 60px;
   display: flex;
   flex-direction: column;
 }
-.html {
-  // border-bottom: 4px solid #ccc;
-}
 pre {
   margin: 0 !important;
-  padding: 0 !important;
+  // padding: 0 !important;
   border-radius: 0 !important;
   flex: 1;
   overflow: auto;
+  width: 100%;
 }
 h1 {
   width: 100%;

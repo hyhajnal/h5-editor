@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "element-ui": "^2.2.0",
+    "prettify-html": "0.0.2",
+    "prettyugly": "0.0.5",
     "prismjs": "^1.12.2",
     "vue": "^2.5.2",
     "vue-color": "^2.4.5",

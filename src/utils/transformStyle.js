@@ -1,6 +1,9 @@
 const toStyleString = (data) => {
   let styleStr = ''
   Object.keys(data).forEach(key => {
+    if (key === 'width' && data[key] === 0) {
+      return
+    }
     const value = toStyleStrItem(key, data[key])
     styleStr = `${styleStr}${key}:${value};`
   })
@@ -11,7 +14,8 @@ function toStyleStrItem (key, value) {
   let result = ''
   switch (key) {
     case 'width':
-      result = value === 0 ? '100%' : `${value}px`
+      // result = value === 0 ? '100%' : `${value}px`
+      result = `${value}px`
       break
     case 'height':
       result = `${value}px`
@@ -103,4 +107,15 @@ function toStyleObjItem (key, value) {
   return result
 }
 
-export { toStyleObj, toStyleString }
+const styleToClass = (tree, s) => {
+  let str = s || ''
+  tree.forEach((item, idx) => {
+    str = `${str}.${item.id}{${item.style}}`
+    if (item.children && item.children.length > 0) {
+      styleToClass(item.children, str)
+    }
+  })
+  return str
+}
+
+export { toStyleObj, toStyleString, styleToClass }

@@ -1,6 +1,7 @@
 <template>
   <component :is="'type-'+element.type"
     :ele="element"
+    :class="element.id"
   >
     <custom-element
       v-for="item in element.children"
