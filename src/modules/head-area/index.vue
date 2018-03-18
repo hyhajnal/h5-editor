@@ -1,7 +1,8 @@
 <template>
   <div class="head-area">
     <h1 @click="goEdit">{{info.name}}-{{info.id}}</h1>
-    <menu-bar></menu-bar>
+    <!-- <menu-bar></menu-bar> -->
+    <mobile />
     <tool-bar></tool-bar>
   </div>
 </template>
@@ -9,6 +10,7 @@
 <script>
 import ToolBar from './tool-bar'
 import MenuBar from './menu-bar'
+import Mobile from './mobile'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -18,7 +20,8 @@ export default {
   },
   components: {
     ToolBar,
-    MenuBar
+    MenuBar,
+    Mobile
   },
   computed: {
     ...mapGetters({

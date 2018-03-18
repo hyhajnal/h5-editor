@@ -2,16 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Page from '@/utils/page.json'
 import { treeTravel } from '@/utils/transformTree'
-import { guid, getInit } from '@/utils/help'
+import { guid, getInit, mobiles } from '@/utils/help'
 
 Vue.use(Vuex)
 
 const state = {
-  name: Page.name,
-  id: Page.id,
+  pageInfo: Page.info,
   list: Page.elements, // 组件列表
   current: null, //  当前选中组件的idx
-  isDraging: false
+  isDraging: false,
+  device: {...mobiles[0], percent: 100}
 }
 
 const actions = {
@@ -75,6 +75,9 @@ const mutations = {
   },
   changeCurrent (state, ele) {
     Vue.set(state, 'current', ele)
+  },
+  changeDevice (state, device) {
+    Vue.set(state, 'device', device)
   }
 }
 
@@ -87,10 +90,10 @@ const getters = {
     return state.list
   },
   pageInfo: state => {
-    return {
-      name: state.name,
-      id: state.id
-    }
+    return state.pageInfo
+  },
+  device: state => {
+    return state.device
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="page"
-    :style="{ width: width + 'px', height: height + 'px' }"
+    :style="style"
   >
     <draggable element="span"
       :options="dragOptions"
@@ -26,8 +26,6 @@ export default {
   name: 'Page',
   data () {
     return {
-      width: 375,
-      height: 667,
       dragOptions: {
         animation: 0,
         group: {
@@ -57,8 +55,15 @@ export default {
   // },
   computed: {
     ...mapGetters({
-      elements: 'page'
-    })
+      elements: 'page',
+      device: 'device'
+    }),
+    style () {
+      const width = this.device.width
+      const height = this.device.height
+      const scale = this.device.percent / 100
+      return `width: ${width}px;height:${height}px;transform:scale(${scale})`
+    }
   },
   methods: {
     onEnd (obj) {

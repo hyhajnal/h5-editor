@@ -25,4 +25,22 @@ const getInit = type => {
   return attr
 }
 
-export { guid, getInit }
+const mobiles = [{
+  label: 'iPhone7',
+  width: 375,
+  height: 667
+}, {
+  label: 'iPhone7Plus',
+  width: 414,
+  height: 736
+}, {
+  label: 'iPhone5s',
+  width: 320,
+  height: 568
+}, {
+  label: 'iPhoneX',
+  width: 375,
+  height: 812
+}]
+
+export { guid, getInit, mobiles }

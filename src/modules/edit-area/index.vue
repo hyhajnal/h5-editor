@@ -1,11 +1,11 @@
 <template>
   <div class="edit-area">
     <page />
-    <el-button-group class="zoom-box">
+    <!-- <el-button-group class="zoom-box">
       <el-button size="small" icon="el-icon-minus"></el-button>
       <el-button size="small">100%</el-button>
       <el-button size="small" icon="el-icon-plus"></el-button>
-    </el-button-group>
+    </el-button-group> -->
     <!-- <attr-box></attr-box> -->
   </div>
 </template>

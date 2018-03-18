@@ -5,7 +5,7 @@
         <template slot="title">
           <i class="iconfont icon-component"></i><span>组件</span>
         </template>
-        <draggable
+        <!-- <draggable
           v-model="components"
           class="components-box"
           element="ul"
@@ -18,11 +18,26 @@
             ghostClass: 'ghost',
           }"
           @end="onEnd"
-        >
-          <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
-            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
+        > -->
+        <ul class="components-box">
+          <li class="component-item" v-for="item in components" :key="item.label">
+            <draggable
+              element="span"
+              :options="{
+                group: {
+                  name:'resource1',
+                  pull:'clone',
+                  put: false
+                },
+                ghostClass: 'ghost',
+              }"
+              @end="onEnd"
+            >
+              <i :class="'iconfont icon-' + item.icon" :data-id="item.value"></i>
+            </draggable>
+            <span>{{item.label}}</span>
           </li>
-        </draggable>
+        </ul>
       </el-collapse-item>
       <el-collapse-item name="2">
         <template slot="title">
