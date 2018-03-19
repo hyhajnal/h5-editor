@@ -61,6 +61,39 @@
     </el-row>
 
     <el-row :gutter="10" type="flex" align="middle">
+      <el-col :span="6" class="label">绝对定位:</el-col>
+      <el-col :span="18" class="input-box">
+        <el-switch
+          v-model="position"
+          active-color="#FED030"
+          size="mini">
+        </el-switch>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" v-if="position" type="flex" align="middle">
+      <el-col :span="6" class="label">定位:</el-col>
+      <el-col :span="18" class="input-box">
+        <el-input-number size="small" v-model="attr.top" />
+        <el-input-number size="small" v-model="attr.right" />
+        <el-input-number size="small" v-model="attr.bottom" />
+        <el-input-number size="small" v-model="attr.left" />
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" v-if="position" type="flex" align="middle">
+      <el-col :span="6" class="label">层级:</el-col>
+      <el-col :span="18">
+        <el-slider
+          v-model="attr.zIndex"
+          :step="100"
+          :max="1000"
+          show-stops>
+        </el-slider>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" type="flex" align="middle">
       <el-col :span="6" class="label">盒子:</el-col>
       <el-col :span="18" class="input-box">
         <el-radio-group v-model="attr.display" size="mini">
@@ -112,9 +145,8 @@ const init = {
   border: [0, 'solid', '#000'],
   borderRadius: [0, 'px'],
   background: 'transparent',
-  justifyContent: 'space-around',
-  alignItems: 'center',
-  display: 'block'
+  display: 'block',
+  position: 'relative'
 }
 export default {
   name: 'Container',
@@ -130,7 +162,8 @@ export default {
       }, {
         label: '——',
         value: 'solid'
-      }]
+      }],
+      position: false
     }
   },
   mounted () {
@@ -145,6 +178,27 @@ export default {
     },
     attrData () {
       this.attr = { ...init, ...this.attrData }
+      this.position = this.position === 'absolute'
+    },
+    position () {
+      this.attr.position = this.position ? 'absolute' : 'relative'
+      if (!this.position) {
+        this.$delete(this.attr, 'left')
+        this.$delete(this.attr, 'right')
+        this.$delete(this.attr, 'bottom')
+        this.$delete(this.attr, 'top')
+        this.$delete(this.attr, 'zIndex')
+      } else {
+        this.attr = {...this.attr, left: 0, top: 0, right: 0, bottom: 0, zIndex: 0}
+      }
+    },
+    'attr.display' () {
+      if (this.attr.display === 'block') {
+        this.$delete(this.attr, 'alignItems')
+        this.$delete(this.attr, 'justifyContent')
+      } else {
+        this.attr = {...this.attr, justifyContent: 'flex-start', alignItems: 'flex-start'}
+      }
     }
   },
   components: {

@@ -49,6 +49,7 @@ const treeTravel = (tree, id) => {
   for (let i = 0; i < tree.length; i++) {
     let item = tree[i]
     if (item.id === id) {
+      console.log(`${item.id},${id}`)
       result = item.children
       break
     }
@@ -57,6 +58,8 @@ const treeTravel = (tree, id) => {
     }
   }
   if (result) {
+    result = result || []
+    console.log(result)
     return new Promise(resolve => resolve(result))
   }
 }

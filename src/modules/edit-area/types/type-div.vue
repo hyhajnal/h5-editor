@@ -39,12 +39,16 @@ export default {
   methods: {
     onEnd (obj) {
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
-      const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
+      let nPid = obj.to.children[0].dataset.pid
+      if (obj.to.localName === 'div') {
+        nPid = obj.to.dataset.id
+      }
+      let to = `${nPid}的${obj.newIndex}`
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.item.dataset.pid,
-        nPid: obj.to.children[0].dataset.pid,
+        nPid,
         nIdx: obj.newIndex,
         oIdx: obj.oldIndex
       })

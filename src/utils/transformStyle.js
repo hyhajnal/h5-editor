@@ -20,6 +20,18 @@ function toStyleStrItem (key, value) {
     case 'height':
       result = `${value}px`
       break
+    case 'top':
+      result = `${value}px`
+      break
+    case 'bottom':
+      result = `${value}px`
+      break
+    case 'left':
+      result = `${value}px`
+      break
+    case 'right':
+      result = `${value}px`
+      break
     case 'margin':
       result = `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
       break
@@ -68,6 +80,18 @@ function toStyleObjItem (key, value) {
       }
       break
     case 'height':
+      result = parseInt(value.split('px')[0])
+      break
+    case 'top':
+      result = parseInt(value.split('px')[0])
+      break
+    case 'bottom':
+      result = parseInt(value.split('px')[0])
+      break
+    case 'left':
+      result = parseInt(value.split('px')[0])
+      break
+    case 'right':
       result = parseInt(value.split('px')[0])
       break
     case 'margin':

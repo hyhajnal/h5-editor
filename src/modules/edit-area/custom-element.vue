@@ -6,19 +6,12 @@
     @click.native.capture="changeActive"
     class="element"
   >
-    <!-- <draggable
-      :options="dragOptions"
-      @end="onEnd"
-      v-if="element.type === 'div'"
-      element="div"
-    > -->
-      <custom-element
-        v-for="item in element.children"
-        :element="item"
-        :key="item.id"
-        v-if="element.children && element.children.length > 0"
-      />
-    <!-- </draggable> -->
+    <custom-element
+      v-for="item in element.children"
+      :element="item"
+      :key="item.id"
+      v-if="element.children && element.children.length > 0"
+    />
   </component>
 </template>
 

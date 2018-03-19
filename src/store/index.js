@@ -37,10 +37,12 @@ const actions = {
     const { oIdx, oPid, nIdx, nPid } = payload
     let tmp = null
     let list = JSON.parse(JSON.stringify(state.list))
+    // debugger
     treeTravel(list, oPid).then(item => {
       tmp = item[oIdx]
       item.splice(oIdx, 1)
       treeTravel(list, nPid).then(item => {
+        console.log(item)
         tmp.pid = nPid
         item.splice(nIdx, 0, tmp)
         commit('update', list)

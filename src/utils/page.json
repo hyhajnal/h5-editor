@@ -14,13 +14,15 @@
         "label": "容器-e2",
         "type": "div",
         "style": "width:50px;height:50px;background:#409EFF;",
-        "pid": "e1"
+        "pid": "e1",
+        "children": []
       },{
         "id": "e3",
         "label": "容器-e3",
         "type": "div",
         "style": "width:50px;height:50px;background:green;",
-        "pid": "e1"
+        "pid": "e1",
+        "children": []
       }],
       "pid": "root"
     },
