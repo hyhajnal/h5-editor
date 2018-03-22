@@ -43,6 +43,27 @@
         "pid": "e4",
         "children": []
       }]
+    },
+    {
+      "id": "e6",
+      "label": "文字-e6",
+      "type": "span",
+      "config": [
+        { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+      ],
+      "style": "color: #000;",
+      "pid": "root",
+      "children": []
+    }, {
+      "id": "e7",
+      "label": "文字-e6",
+      "type": "span",
+      "config": [
+        { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+      ],
+      "style": "color: #000;",
+      "pid": "root",
+      "children": []
     }
   ]
 }

@@ -18,6 +18,7 @@ const actions = {
   updateStyle ({ state, commit }, style) {
     if (!state.current) return
     let { list, current } = JSON.parse(JSON.stringify(state))
+    console.log(current.pid)
     treeTravel(list, current.pid).then(item => {
       const idx = item.findIndex(d => d.id === current.id)
       item[idx].style = style
@@ -37,16 +38,14 @@ const actions = {
     const { oIdx, oPid, nIdx, nPid } = payload
     let tmp = null
     let list = JSON.parse(JSON.stringify(state.list))
-    // debugger
     treeTravel(list, oPid).then(item => {
       tmp = item[oIdx]
       item.splice(oIdx, 1)
-      treeTravel(list, nPid).then(item => {
-        console.log(item)
-        tmp.pid = nPid
-        item.splice(nIdx, 0, tmp)
-        commit('update', list)
-      })
+    })
+    treeTravel(list, nPid).then(item => {
+      tmp.pid = nPid
+      item.splice(nIdx, 0, tmp)
+      commit('update', list)
     })
   },
   addEle ({ state, commit }, payload) {

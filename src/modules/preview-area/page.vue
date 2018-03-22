@@ -1,6 +1,6 @@
 <template>
   <div class="page" id="page" ref="page"
-    :style="{ width: width + 'px', height: height + 'px' }"
+    :style="style"
   >
     <custom-element
       v-for="item in elements"
@@ -26,8 +26,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      elements: 'page'
-    })
+      elements: 'page',
+      device: 'device'
+    }),
+    style () {
+      const width = this.device.width
+      const height = this.device.height
+      const scale = this.device.percent / 100
+      return `width: ${width}px;height:${height}px;transform:scale(${scale})`
+    }
   },
   methods: {}
 }

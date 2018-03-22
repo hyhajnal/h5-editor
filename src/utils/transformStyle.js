@@ -131,14 +131,35 @@ function toStyleObjItem (key, value) {
   return result
 }
 
+// const styleToClass = (tree, s) => {
+//   let str = s || ''
+//   console.log('hh', s)
+//   tree.forEach((item, idx) => {
+//     str = `${str}.${item.id}{${item.style}}`
+//     if (item.children && item.children.length > 0) {
+//       debugger
+//       styleToClass(item.children, str)
+//     }
+//   })
+//   return str
+// }
+
 const styleToClass = (tree, s) => {
-  let str = s || ''
-  tree.forEach((item, idx) => {
-    str = `${str}.${item.id}{${item.style}}`
-    if (item.children && item.children.length > 0) {
-      styleToClass(item.children, str)
-    }
+  let q = []
+  let str = ''
+  tree.forEach(item => {
+    q.push(item)
   })
+  // console.dir(q)
+  while (q.length > 0) {
+    let node = q.shift()
+    str = `${str}.${node.id}{${node.style}}`
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(item => {
+        q.push(item)
+      })
+    }
+  }
   return str
 }
 

@@ -5,39 +5,16 @@
         <template slot="title">
           <i class="iconfont icon-component"></i><span>组件</span>
         </template>
-        <!-- <draggable
-          v-model="components"
+        <draggable
           class="components-box"
           element="ul"
-          :options="{
-            group: {
-              name:'resource1',
-              pull:'clone',
-              put: false
-            },
-            ghostClass: 'ghost',
-          }"
+          :options="{group:{name:'resource1',pull:'clone',put:false}}"
           @end="onEnd"
-        > -->
-        <ul class="components-box">
-          <li class="component-item" v-for="item in components" :key="item.label">
-            <draggable
-              element="span"
-              :options="{
-                group: {
-                  name:'resource1',
-                  pull:'clone',
-                  put: false
-                },
-                ghostClass: 'ghost',
-              }"
-              @end="onEnd"
-            >
-              <i :class="'iconfont icon-' + item.icon" :data-id="item.value"></i>
-            </draggable>
-            <span>{{item.label}}</span>
+        >
+          <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
+            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
           </li>
-        </ul>
+        </draggable>
       </el-collapse-item>
       <el-collapse-item name="2">
         <template slot="title">
@@ -75,10 +52,11 @@ export default {
   components: {draggable},
   methods: {
     onEnd (obj) {
-      console.log(`${obj.to.children[0].dataset.pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
+      const pid = obj.to.children[0].dataset.pid || obj.to.dataset.pid
+      console.log(`${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
-        pid: obj.to.children[0].dataset.pid,
+        pid: pid,
         idx: obj.newIndex
       })
     }

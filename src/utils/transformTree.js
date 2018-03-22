@@ -41,26 +41,49 @@ const toList = (tree) => {
   return JSON.parse(JSON.stringify(list))
 }
 
+// const treeTravel = (tree, id) => {
+//   if (id === 'root') {
+//     return new Promise(resolve => resolve(tree))
+//   }
+//   let result = null
+//   for (let i = 0; i < tree.length; i++) {
+//     let item = tree[i]
+//     if (item.id === id) {
+//       console.log(`${item.id}-${id}`)
+//       result = item.children
+//       break
+//     } else if (item.children && item.children.length > 0) {
+//       treeTravel(item.children, id)
+//     }
+//   }
+//   if (result) {
+//     const p = new Promise(resolve => resolve(result))
+//     console.log(p)
+//     return p
+//   } else {
+//     return true
+//   }
+// }
+
 const treeTravel = (tree, id) => {
-  let result = null
   if (id === 'root') {
     return new Promise(resolve => resolve(tree))
   }
-  for (let i = 0; i < tree.length; i++) {
-    let item = tree[i]
-    if (item.id === id) {
-      console.log(`${item.id},${id}`)
-      result = item.children
-      break
+  let q = []
+  tree.forEach(item => {
+    q.push(item)
+  })
+  // console.dir(q)
+  while (q.length > 0) {
+    let node = q.shift()
+    if (node.id === id) {
+      return new Promise(resolve => resolve(node.children))
     }
-    if (item.children && item.children.length > 0) {
-      treeTravel(item.children, id)
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(item => {
+        q.push(item)
+      })
     }
-  }
-  if (result) {
-    result = result || []
-    console.log(result)
-    return new Promise(resolve => resolve(result))
   }
 }
 

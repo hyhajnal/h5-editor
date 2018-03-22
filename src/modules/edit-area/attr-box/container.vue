@@ -97,8 +97,9 @@
       <el-col :span="6" class="label">盒子:</el-col>
       <el-col :span="18" class="input-box">
         <el-radio-group v-model="attr.display" size="mini">
-          <el-radio label="block" border>Block</el-radio>
-          <el-radio label="flex" border>Flex</el-radio>
+          <el-radio label="block">块级</el-radio>
+          <el-radio label="flex">弹性</el-radio>
+          <el-radio label="inline-block">行内</el-radio>
         </el-radio-group>
       </el-col>
     </el-row>

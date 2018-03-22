@@ -39,7 +39,9 @@ export default {
       .replace(/data-v-\w{8}=""\s/g, '')
       // .replace(/style="[\s\S]+"$/g, '')
     )
-    const cssCode = cssFormat.pretty(styleToClass(this.$store.state.list))
+    // console.log(styleToClass(this.$store.state.list))
+    const list = JSON.parse(JSON.stringify(this.$store.state.list))
+    const cssCode = cssFormat.pretty(styleToClass(list))
     this.css = Prism.highlight(cssCode, Prism.languages.css)
     this.html = Prism.highlight(htmlCode, Prism.languages.markup)
   }
