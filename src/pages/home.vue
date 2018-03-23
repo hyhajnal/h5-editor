@@ -52,7 +52,7 @@ export default {
     flex: 1;
   }
   .left {
-    border-right: 1px solid #ddd;
+    /* border-right: 1px solid #ddd; */
     overflow: auto;
   }
   aside {

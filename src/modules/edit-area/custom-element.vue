@@ -56,9 +56,9 @@ export default {
     }
   },
   // watch: {
-  //   element: {
-  //     handler () {
-  //       console.log('change')
+  //   'element.children': {
+  //     handler (o, n) {
+  //       console.log(n)
   //       this.$forceUpdate()
   //     },
   //     deep: true

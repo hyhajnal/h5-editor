@@ -1,5 +1,6 @@
 <template>
   <div class="page"
+    id="page"
     :style="style"
   >
     <draggable element="span"

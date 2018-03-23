@@ -1,6 +1,6 @@
 <template>
   <div class="resource-area">
-    <el-collapse v-model="activeNames">
+    <!-- <el-collapse v-model="activeNames">
       <el-collapse-item name="1">
         <template slot="title">
           <i class="iconfont icon-component"></i><span>组件</span>
@@ -32,12 +32,37 @@
           </li>
         </draggable>
       </el-collapse-item>
-    </el-collapse>
+    </el-collapse> -->
+    <el-tabs tab-position="left" style="height: 100vh;" type="border-card">
+      <el-tab-pane>
+        <template slot="label">
+          <span>元件</span>
+        </template>
+        <draggable
+          class="components-box"
+          element="ul"
+          :options="{group:{name:'resource1',pull:'clone',put:false}}"
+          @end="onEnd"
+        >
+          <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
+            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
+          </li>
+        </draggable>
+      </el-tab-pane>
+
+      <el-tab-pane>
+        <template slot="label">
+          <span>组件</span>
+        </template>
+        <tpl></tpl>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
 import { components, layouts } from './type'
+import Tpl from './tpl'
 import draggable from 'vuedraggable'
 
 export default {
@@ -49,10 +74,15 @@ export default {
       layouts: layouts
     }
   },
-  components: {draggable},
+  components: {
+    draggable,
+    Tpl
+  },
   methods: {
     onEnd (obj) {
-      const pid = obj.to.children[0].dataset.pid || obj.to.dataset.pid
+      const pid = obj.to.dataset.id || obj.to.children[0].dataset.pid
+      const p = document.getElementById('page')
+      p.getElementsByClassName('component-item')[0].remove()
       console.log(`${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
@@ -99,6 +129,9 @@ export default {
 .component-item:nth-child(3n) {
   border-right: none;
 }
+.icon-component {
+  margin-right: 2px;
+}
 </style>
 
 <style lang="scss">
@@ -120,5 +153,13 @@ export default {
 }
 .resource-area .el-tabs__item {
   width: 80px !important;
+}
+.resource-area {
+  .el-tabs--border-card>.el-tabs__content {
+    padding: 0;
+  }
+  .el-tabs--left .el-tabs__header.is-left {
+    margin-right: 0;
+  }
 }
 </style>

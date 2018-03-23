@@ -56,7 +56,7 @@
       "children": []
     }, {
       "id": "e7",
-      "label": "文字-e6",
+      "label": "文字-e7",
       "type": "span",
       "config": [
         { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }

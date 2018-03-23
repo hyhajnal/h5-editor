@@ -16,6 +16,14 @@
         </code>
       </pre>
     </div>
+    <div class="code js">
+      <h1 class="css-title">JS</h1>
+      <pre class="language-javascript">
+        <code class="language-javascript">
+          <div v-html="js"></div>
+        </code>
+      </pre>
+    </div>
   </div>
 </template>
 
@@ -31,7 +39,8 @@ export default {
   data () {
     return {
       html: '',
-      css: ''
+      css: '',
+      js: ''
     }
   },
   mounted () {
@@ -39,11 +48,21 @@ export default {
       .replace(/data-v-\w{8}=""\s/g, '')
       // .replace(/style="[\s\S]+"$/g, '')
     )
+    let jsCode = `
+      export default {
+        name: 'Module',
+        data () {
+          return {}
+        },
+        components: {}
+      }
+    `
     // console.log(styleToClass(this.$store.state.list))
     const list = JSON.parse(JSON.stringify(this.$store.state.list))
     const cssCode = cssFormat.pretty(styleToClass(list))
     this.css = Prism.highlight(cssCode, Prism.languages.css)
     this.html = Prism.highlight(htmlCode, Prism.languages.markup)
+    this.js = Prism.highlight(jsCode, Prism.languages.javascript)
   }
 }
 </script>
