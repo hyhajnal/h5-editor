@@ -69,9 +69,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .mobile-config {
-//   width: 
-// }
+.mobile-config {
+  height: 100%;
+}
 </style>
 
 <style lang="scss">

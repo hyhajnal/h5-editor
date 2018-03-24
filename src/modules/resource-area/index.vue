@@ -33,7 +33,7 @@
         </draggable>
       </el-collapse-item>
     </el-collapse> -->
-    <el-tabs tab-position="left" style="height: 100vh;" type="border-card">
+    <el-tabs tab-position="left" class="tab-wrap" type="border-card">
       <el-tab-pane>
         <template slot="label">
           <span>元件</span>
@@ -96,8 +96,8 @@ export default {
 
 <style scoped lang="scss">
 .resource-area {
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100%;
 }
 .components-box {
   flex-wrap: wrap;
@@ -132,6 +132,11 @@ export default {
 .icon-component {
   margin-right: 2px;
 }
+.tab-wrap {
+  height: 100vh;
+  // position: absolute;
+
+}
 </style>
 
 <style lang="scss">
@@ -140,7 +145,7 @@ export default {
   border: none !important;
 }
 /* .el-collapse-item__header {
-  background: #FED030 !important;
+  background: #FD7F6B !important;
   color: #555;
 } */
 .el-collapse-item__header.is-active {
@@ -157,6 +162,9 @@ export default {
 .resource-area {
   .el-tabs--border-card>.el-tabs__content {
     padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
   }
   .el-tabs--left .el-tabs__header.is-left {
     margin-right: 0;

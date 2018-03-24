@@ -1,13 +1,13 @@
 {
   "info": {
-    "id": "p1",
-    "name": "测试页面"
+    "id": "M1",
+    "name": "测试模块"
   },
   "elements": [
     {
       "id": "e1",
       "type": "div",
-      "style": "width:150px;height:150px;background:#F56C6C;",
+      "style": "width:150px;height:150px;background:#4ED7EC",
       "label": "容器-e1",
       "children": [{
         "id": "e2",
@@ -20,7 +20,7 @@
         "id": "e3",
         "label": "容器-e3",
         "type": "div",
-        "style": "width:50px;height:50px;background:green;",
+        "style": "width:50px;height:50px;background:#555;",
         "pid": "e1",
         "children": []
       }],
@@ -30,7 +30,7 @@
       "id": "e4",
       "label": "容器-e4",
       "type": "div",
-      "style": "width:100px;height:50px;background:orange;",
+      "style": "width:100px;height:50px;background:#FED96E",
       "pid": "root",
       "children": [{
         "id": "e5",
@@ -43,27 +43,6 @@
         "pid": "e4",
         "children": []
       }]
-    },
-    {
-      "id": "e6",
-      "label": "文字-e6",
-      "type": "span",
-      "config": [
-        { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
-      ],
-      "style": "color: #000;",
-      "pid": "root",
-      "children": []
-    }, {
-      "id": "e7",
-      "label": "文字-e7",
-      "type": "span",
-      "config": [
-        { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
-      ],
-      "style": "color: #000;",
-      "pid": "root",
-      "children": []
     }
   ]
 }

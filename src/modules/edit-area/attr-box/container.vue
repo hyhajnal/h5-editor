@@ -65,7 +65,7 @@
       <el-col :span="18" class="input-box">
         <el-switch
           v-model="position"
-          active-color="#FED030"
+          active-color="#FD7F6B"
           size="mini">
         </el-switch>
       </el-col>
@@ -223,7 +223,7 @@ export default {
 
 <style>
 .std-radio-active i {
-  color: orange;
+  color: #FD7F6B;
 }
 .el-radio + .el-radio {
   margin-left: 10px;

@@ -49,7 +49,7 @@ export default {
   }
   header {
     height: 60px;
-    background: #FED030;
+    background: #FD7F6B;
     transition: all .5s;
   }
   main {

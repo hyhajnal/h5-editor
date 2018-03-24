@@ -1,7 +1,7 @@
 <template>
   <div class="tool-bar">
     <ul>
-      <template v-if="edit">
+      <template v-if="route === 'Edit'">
         <li>
           <i class="iconfont icon-save"></i>
           <span>保存</span>
@@ -11,26 +11,22 @@
           <span>预览</span>
         </li>
       </template>
-      <template v-else>
+      <template v-if="route === 'Preview'">
         <li>
           <i class="iconfont icon-publish"></i>
           <span>发布</span>
         </li>
         <li @click="preview">
-          <i class="iconfont icon-code"></i>
-          <span>预览</span>
-        </li>
-        <li @click="preview">
           <i class="iconfont icon-down"></i>
           <span>下载</span>
         </li>
+        <li @click="preview">
+          <i class="iconfont icon-code"></i>
+          <span>二维码</span>
+        </li>
       </template>
     </ul>
-    <div
-      class="avatar"
-      :style="{ backgroundImage: 'url('+avatar+')' }"
-    >
-    </div>
+    <img src="../../assets/2.jpg" class="avatar" alt="avatar" width="40" height="40">
   </div>
 </template>
 
@@ -39,7 +35,6 @@ export default {
   name: 'ToolBar',
   data () {
     return {
-      avatar: 'http://img.zcool.cn/community/013eed5a7fdd56a8012045b3640463.jpeg@520w_390h_1c_1e_1o_100sh.jpg',
       edit: true
     }
   },
@@ -48,9 +43,9 @@ export default {
       this.$router.push({name: 'Preview'})
     }
   },
-  watch: {
-    '$route' () {
-      console.log(this.$route)
+  computed: {
+    route () {
+      return this.$route.name
     }
   }
 }
@@ -80,11 +75,10 @@ export default {
     font-size: 18px;
   }
   .avatar {
-    width: 40px;
-    height: 40px;
     border-radius: 100%;
     background-size: cover;
     margin-left: 40px;
+    background: url('../../assets/2.jpg');
   }
   li {
     cursor: pointer;
