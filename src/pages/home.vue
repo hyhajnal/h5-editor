@@ -1,20 +1,37 @@
 <template>
   <div class="home">
-    <header><head-area></head-area></header>
+    <!-- <header><head-area></head-area></header> -->
     <main>
       <el-row type="flex" justify="center" class="search-box">
         <el-input
+          prefix-icon="el-icon-search"
           placeholder="请输入内容"
+          v-model="search"
           class="search-input"
-          v-model="input">
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        >
+          <el-select v-model="select" slot="append" placeholder="请选择">
+            <el-option label="餐厅名" value="1"></el-option>
+            <el-option label="订单号" value="2"></el-option>
+            <el-option label="用户电话" value="3"></el-option>
+          </el-select>
         </el-input>
       </el-row>
       <el-row :gutter="20" class="project-list">
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1" v-for="i in 20" :key="i" >
-          <project-card></project-card>
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1" v-for="i in 12" :key="i" >
+          <!-- <router-link :to="{name: 'Edit'}"> -->
+            <project-card></project-card>
+          <!-- </router-link> -->
         </el-col>
       </el-row>
+
+      <el-row type="flex" justify="end" class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="1000">
+        </el-pagination>
+      </el-row>
+
     </main>
   </div>
 </template>
@@ -30,7 +47,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      input: ''
+      search: '',
+      select: ''
     }
   },
   mounted () {},
@@ -48,7 +66,7 @@ export default {
   .home {
     height: 100vh;
     overflow: auto;
-    background: #090822;
+    background: linear-gradient(#090822, #fff);
   }
   header {
     height: 60px;
@@ -71,7 +89,13 @@ export default {
   }
   .search-box {
     padding: 0 20px;
-    margin-bottom: 60px;
+    margin: 100px 0;
+  }
+  .type-box {
+    /* width: 40%; */
+  }
+  .pagination {
+    margin: 40px 0 100px 0;
   }
 </style>
 
@@ -79,6 +103,9 @@ export default {
 .home {
   .el-col {
     margin-bottom: 20px;
+  }
+   .el-select .el-input {
+    width: 130px;
   }
 }
 </style>

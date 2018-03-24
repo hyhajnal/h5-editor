@@ -1,6 +1,6 @@
 <template>
   <div class="mobile-config">
-    <el-row :gutter="15" type="flex" justify="center">
+    <el-row :gutter="15" type="flex" justify="center" align="middle">
       <el-col :span="5">
         <el-select v-model="device" placeholder="请选择" size="mini" @change="changeDevice">
           <el-option
@@ -75,13 +75,15 @@ export default {
 </style>
 
 <style lang="scss">
-.input-group {
-  .el-input-group__append, .el-input-group__prepend {
-    padding: 0 4px;
-  }
-  .el-input__inner {
-    text-align: center;
-    padding: 0 5px;
+.mobile-config {
+  .input-group {
+    .el-input-group__append, .el-input-group__prepend {
+      padding: 0 4px;
+    }
+    .el-input__inner {
+      text-align: center;
+      padding: 0 5px;
+    }
   }
 }
 </style>

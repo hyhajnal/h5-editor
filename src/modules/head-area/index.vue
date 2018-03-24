@@ -9,7 +9,15 @@
       </router-link>
     </h1>
     <!-- <menu-bar></menu-bar> -->
-    <mobile v-show="route !== 'Home'" />
+    <el-input
+      style="width: 400px;"
+      v-if="route === 'Home'"
+      placeholder="请输入内容"
+      class="search-input"
+      v-model="input">
+      <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    </el-input>
+    <mobile v-if="route !== 'Home'" />
     <tool-bar></tool-bar>
   </div>
 </template>

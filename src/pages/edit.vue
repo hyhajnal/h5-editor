@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="edit">
     <header><head-area></head-area></header>
     <main>
       <div class="left">

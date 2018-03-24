@@ -1,6 +1,12 @@
 <template>
-  <div class="card">
-    <figure class="card-image"></figure>
+  <div class="card" @click="goEdit">
+    <figure class="card-image">
+      <el-row class="shadow" type="flex" justify="space-around" align="middle">
+        <i class="el-icon-circle-plus"></i>
+        <i class="el-icon-search"></i>
+        <i class="el-icon-menu" @click.stop="open"></i>
+      </el-row>
+    </figure>
     <section class="card-body">
       <h3 class="title">模块名</h3>
       <el-row type="flex" justify="space-between" align="middle">
@@ -16,6 +22,15 @@
       </el-row>
     </section>
     <span class="tag">分类</span>
+
+    <el-dialog
+      title="二维码"
+      :visible.sync="dialogVisible"
+      width="30%"
+      @close.stop="close">
+      <span>这是一段信息</span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -24,6 +39,19 @@ export default {
   name: 'ProjectCard',
   data () {
     return {
+      dialogVisible: false
+    }
+  },
+  methods: {
+    goEdit () {
+      this.$router.push({name: 'Edit'})
+    },
+    open () {
+      this.dialogVisible = true
+    },
+    close () {
+      this.dialogVisible = false
+      // e.stopPropagation()
     }
   }
 }
@@ -34,11 +62,30 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 .card-image {
   background-image: url('../assets/avatar.jpg');
   height: 200px;
   background-size: cover;
+  position: relative;
+}
+.shadow {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  position: absolute;
+  display: none;
+  i {
+    color: #fff;
+    font-size: 42px;
+  }
+}
+.card:hover {
+  .shadow {
+    display: flex;
+  }
 }
 .card-body {
   padding: 10px;
