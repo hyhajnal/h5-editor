@@ -1,29 +1,29 @@
 <template>
   <div class="code-area">
     <div class="code html">
-      <h1 class="html-title">HTML</h1>
+      <h1 class="html-title">Vue</h1>
       <pre class="language-markup">
         <code class="language-markup">
-          <div v-html="html"></div>
+          <div v-html="vue"></div>
         </code>
       </pre>
     </div>
-    <div class="code css">
+    <!-- <div class="code css">
       <h1 class="css-title">CSS</h1>
       <pre class="language-css">
         <code class="language-css">
           <div v-html="css"></div>
         </code>
       </pre>
-    </div>
-    <div class="code js">
+    </div> -->
+    <!-- <div class="code js">
       <h1 class="css-title">JS</h1>
       <pre class="language-javascript">
         <code class="language-javascript">
           <div v-html="js"></div>
         </code>
       </pre>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,7 +40,8 @@ export default {
     return {
       html: '',
       css: '',
-      js: ''
+      js: '',
+      vue: ''
     }
   },
   mounted () {
@@ -60,9 +61,20 @@ export default {
     // console.log(styleToClass(this.$store.state.list))
     const list = JSON.parse(JSON.stringify(this.$store.state.list))
     const cssCode = cssFormat.pretty(styleToClass(list))
-    this.css = Prism.highlight(cssCode, Prism.languages.css)
-    this.html = Prism.highlight(htmlCode, Prism.languages.markup)
-    this.js = Prism.highlight(jsCode, Prism.languages.javascript)
+    let css = Prism.highlight(cssCode, Prism.languages.css)
+    let html = Prism.highlight(htmlCode, Prism.languages.markup)
+    const js = Prism.highlight(jsCode, Prism.languages.javascript)
+    this.vue = `
+      &lt;template&gt;
+        ${html}
+      &lt;/template&gt;
+      &lt;script&gt;
+        ${js}
+      &lt;/script&gt;
+      &lt;style scoped&gt;
+        ${css}
+      &lt;/style&gt;
+    `
   }
 }
 </script>

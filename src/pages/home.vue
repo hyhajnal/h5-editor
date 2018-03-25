@@ -10,14 +10,16 @@
           class="search-input"
         >
           <el-select v-model="select" slot="append" placeholder="请选择">
-            <el-option label="餐厅名" value="1"></el-option>
-            <el-option label="订单号" value="2"></el-option>
-            <el-option label="用户电话" value="3"></el-option>
+            <el-option label="模块库" value="module"></el-option>
+            <el-option label="项目库" value="project"></el-option>
           </el-select>
         </el-input>
       </el-row>
       <el-row :gutter="20" class="project-list">
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1" v-for="i in 12" :key="i" >
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+          <add-card :type="select"></add-card>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1" v-for="i in 11" :key="i" >
           <!-- <router-link :to="{name: 'Edit'}"> -->
             <project-card></project-card>
           <!-- </router-link> -->
@@ -42,13 +44,14 @@ import EditArea from '@/modules/edit-area'
 import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
 import ProjectCard from '@/components/ProjectCard'
+import AddCard from '@/components/AddCard'
 
 export default {
   name: 'Home',
   data () {
     return {
       search: '',
-      select: ''
+      select: 'module'
     }
   },
   mounted () {},
@@ -57,7 +60,8 @@ export default {
     EditArea,
     ResourceArea,
     AttrArea,
-    ProjectCard
+    ProjectCard,
+    AddCard
   }
 }
 </script>
@@ -85,7 +89,7 @@ export default {
     margin: 0 !important;
   }
   .search-input {
-    width: 70%;
+    width: 50%;
   }
   .search-box {
     padding: 0 20px;

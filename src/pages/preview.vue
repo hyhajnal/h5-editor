@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="preview">
     <header><head-area></head-area></header>
     <main>
       <div class="left">
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style scoped>
-  .home {
+  .preview {
     display: flex;
     flex-direction: column;
     height: 100vh;

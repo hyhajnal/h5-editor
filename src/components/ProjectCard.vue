@@ -82,14 +82,14 @@ export default {
     font-size: 42px;
   }
 }
-.card:hover {
+.card-image:hover {
   .shadow {
     display: flex;
   }
 }
 .card-body {
   padding: 10px;
-  border: 1px solid #ddd;
+  // border: 1px solid #ddd;
   background: #fff;
 }
 .owner {
