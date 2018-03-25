@@ -8,6 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '../styles/element-variables.scss'
 import store from '../src/store'
 import clickoutside from './directive'
+import axios from './request'
+
+Vue.prototype.axios = axios
 
 Vue.use(ElementUI)
 

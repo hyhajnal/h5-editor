@@ -2,15 +2,16 @@
   <div class="attr-box"
     ref="attrbox"
   >
-    <template v-if="current.type === 'div' && attr" >
+    <p v-if="!current"><span class="el-tree__empty-text">暂无选中元素</span></p>
+    <template v-if="current && current.type === 'div' && attr" >
       <container :attrData="attr"/>
       <div class="divider"></div>
     </template>
-    <template v-if="current.type === 'span' && attr">
+    <template v-if="current && current.type === 'span' && attr">
       <attr-text :attrData="attr" />
       <div class="divider"></div>
     </template>
-    <template v-if="current.config">
+    <template v-if="current && current.config">
       <config :attrData="current.config" />
     </template>
   </div>

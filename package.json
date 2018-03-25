@@ -12,6 +12,7 @@
     "test": "karma start"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.2.0",
     "prettify-html": "0.0.2",
     "prettyugly": "0.0.5",

@@ -11,7 +11,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.stop="show = false">取 消</el-button>
-        <el-button type="primary" @click.stop="show = false">确 定</el-button>
+        <el-button type="primary" @click.stop="addModule">确 定</el-button>
       </div>
     </el-dialog>
     <!-- Form -->
@@ -20,23 +20,19 @@
 </template>
 
 <script>
+import Config from '@/utils/config'
 export default {
   name: 'AddCard',
   props: {
-    type: String
+    type: String,
+    page: Number
   },
   data () {
     return {
       show: false,
       form: {
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        elements: JSON.stringify([])
       },
       formLabelWidth: '120px'
     }
@@ -47,6 +43,18 @@ export default {
     }
   },
   methods: {
+    addModule () {
+      this.show = false
+      this.axios.post(`${Config.URL}/editor/module/add`, {
+        page: this.page,
+        module: this.form
+      }).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '创建成功'})
+          this.$emit('after-add', data)
+        }
+      })
+    }
   }
 }
 </script>
@@ -60,7 +68,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 271px;
+  height: 270px;
 }
 i {
   font-size: 60px;

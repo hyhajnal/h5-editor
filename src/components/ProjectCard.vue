@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="goEdit">
+  <div class="card" @click="goEdit" v-if="mod">
     <figure class="card-image">
       <el-row class="shadow" type="flex" justify="space-around" align="middle">
         <i class="el-icon-circle-plus"></i>
@@ -8,16 +8,16 @@
       </el-row>
     </figure>
     <section class="card-body">
-      <h3 class="title">模块名</h3>
+      <h3 class="title">{{mod.name}}</h3>
       <el-row type="flex" justify="space-between" align="middle">
         <el-row type="flex" justify="space-between" align="middle" class="owner">
           <img src="../assets/2.jpg" alt="avatar" width="20" height="20">
           <span>发布者</span>
         </el-row>
         <div class="social-bar">
-          <span><i class="iconfont icon-eye"></i>153</span>
-          <span><i class="iconfont icon-like"></i>153</span>
-          <span><i class="iconfont icon-favor"></i>153</span>
+          <span><i class="iconfont icon-eye"></i>{{mod.visitCount}}</span>
+          <span><i class="iconfont icon-like"></i>{{mod.useCount}}</span>
+          <span><i class="iconfont icon-favor"></i>{{mod.collectCount}}</span>
         </div>
       </el-row>
     </section>
@@ -42,8 +42,12 @@ export default {
       dialogVisible: false
     }
   },
+  props: {
+    mod: Object
+  },
   methods: {
     goEdit () {
+      this.$store.dispatch('changeModule', this.mod)
       this.$router.push({name: 'Edit'})
     },
     open () {
@@ -63,6 +67,7 @@ export default {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  height: 270px;
 }
 .card-image {
   background-image: url('../assets/avatar.jpg');
@@ -73,7 +78,7 @@ export default {
 .shadow {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.13);
   z-index: 100;
   position: absolute;
   display: none;
@@ -109,6 +114,9 @@ export default {
     margin-right: 4px;
   }
   margin-right: -4px;
+  i {
+    margin-right: 2px;
+  }
 }
 .tag {
   position: absolute;

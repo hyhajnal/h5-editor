@@ -17,11 +17,14 @@
       </el-row>
       <el-row :gutter="20" class="project-list">
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
-          <add-card :type="select"></add-card>
+          <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1" v-for="i in 11" :key="i" >
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
+          v-for="item in modules"
+          :key="item.id"
+        >
           <!-- <router-link :to="{name: 'Edit'}"> -->
-            <project-card></project-card>
+            <project-card :mod="item"></project-card>
           <!-- </router-link> -->
         </el-col>
       </el-row>
@@ -29,8 +32,10 @@
       <el-row type="flex" justify="end" class="pagination">
         <el-pagination
           background
-          layout="prev, pager, next"
-          :total="1000">
+          layout="total, prev, pager, next"
+          :total="total"
+          :page-size="11"
+          @current-change="getModules">
         </el-pagination>
       </el-row>
 
@@ -45,16 +50,22 @@ import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
 import ProjectCard from '@/components/ProjectCard'
 import AddCard from '@/components/AddCard'
+import Config from '@/utils/config'
 
 export default {
   name: 'Home',
   data () {
     return {
       search: '',
-      select: 'module'
+      select: 'module',
+      modules: [],
+      total: 1,
+      page: 1
     }
   },
-  mounted () {},
+  mounted () {
+    this.getModules()
+  },
   components: {
     HeadArea,
     EditArea,
@@ -62,6 +73,21 @@ export default {
     AttrArea,
     ProjectCard,
     AddCard
+  },
+  methods: {
+    getModules (page) {
+      this.page = page
+      this.axios.get(`${Config.URL}/editor/search/modules`, {
+        params: { page: page || 1 }
+      }).then(data => {
+        this.modules = data.list
+        this.total = data.total
+      })
+    },
+    afterAdd ({ list, total }) {
+      this.modules = list
+      this.total = total
+    }
   }
 }
 </script>

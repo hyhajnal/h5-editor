@@ -80,9 +80,10 @@ export default {
   },
   methods: {
     onEnd (obj) {
-      const pid = obj.to.dataset.id || obj.to.children[0].dataset.pid
+      const pid = obj.to.dataset.id || obj.to.children[0].dataset.pid || 'root'
       const p = document.getElementById('page')
-      p.getElementsByClassName('component-item')[0].remove()
+      const el = p.getElementsByClassName('component-item')[0]
+      el && el.remove()
       console.log(`${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,

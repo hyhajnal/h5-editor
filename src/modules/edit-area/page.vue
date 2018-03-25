@@ -8,6 +8,7 @@
       @end="onEnd"
     > 
       <custom-element
+        v-if="elements.length > 0"
         v-for="item in elements"
         :key="item.id"
         :element="item"

@@ -8,13 +8,21 @@ Vue.use(Vuex)
 
 const state = {
   pageInfo: Page.info,
-  list: Page.elements, // 组件列表
+  list: [], // 组件列表
   current: null, //  当前选中组件的idx
   isDraging: false,
   device: {...mobiles[0], percent: 100}
 }
 
 const actions = {
+  changeModule ({ state, commit }, mod) {
+    const info = {
+      id: mod.id,
+      name: mod.name
+    }
+    const elements = JSON.parse(mod.elements)
+    commit('changeModule', { info, elements })
+  },
   updateStyle ({ state, commit }, style) {
     if (!state.current) return
     let { list, current } = JSON.parse(JSON.stringify(state))
@@ -55,7 +63,7 @@ const actions = {
     let list = JSON.parse(JSON.stringify(state.list))
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, ...attr, type, label: `${type}/${id}`
+        id, pid, ...attr, type, label: `${type}/${id}`, children: []
       })
       commit('update', list)
     })
@@ -79,6 +87,10 @@ const mutations = {
   },
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
+  },
+  changeModule (state, { info, elements }) {
+    Vue.set(state, 'pageInfo', info)
+    Vue.set(state, 'list', elements)
   }
 }
 
