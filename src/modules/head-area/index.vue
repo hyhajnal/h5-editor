@@ -4,7 +4,7 @@
       <router-link :to="{name: 'Home'}">
         <i class="iconfont icon-design"></i>
       </router-link>
-      <router-link :to="{name: 'Edit'}">
+      <router-link :to="{name: 'Edit'}" v-if="info">
         {{info.name}}-{{info.id}}
       </router-link>
     </h1>
@@ -18,7 +18,7 @@
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
     <mobile v-if="route !== 'Home'" />
-    <tool-bar :isSaving="isSaving"></tool-bar>
+    <tool-bar :isSaving="isSaving" @save="save"></tool-bar>
   </div>
 </template>
 
@@ -57,6 +57,9 @@ export default {
       this.$router.push({
         name: 'Edit'
       })
+    },
+    save () {
+      this.$emit('save')
     }
   }
 }

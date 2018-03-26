@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Page from '@/utils/page.json'
+// import Page from '@/utils/page.json'
 import { treeTravel } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
 
 Vue.use(Vuex)
 
 const state = {
-  pageInfo: Page.info,
+  pageInfo: null,
   list: [], // 组件列表
   current: null, //  当前选中组件的idx
   isDraging: false,
@@ -20,8 +20,8 @@ const actions = {
       id: mod.id,
       name: mod.name
     }
-    const elements = JSON.parse(mod.elements).elements
-    commit('changeModule', { info, elements })
+    const list = JSON.parse(mod.elements).elements
+    commit('changeModule', { info, list })
   },
   updateStyle ({ state, commit }, style) {
     if (!state.current) return
@@ -88,9 +88,9 @@ const mutations = {
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
   },
-  changeModule (state, { info, elements }) {
+  changeModule (state, { info, list }) {
     Vue.set(state, 'pageInfo', info)
-    Vue.set(state, 'list', elements)
+    Vue.set(state, 'list', list)
   }
 }
 

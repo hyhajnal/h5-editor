@@ -2,7 +2,7 @@
   <div class="tool-bar">
     <ul>
       <template v-if="route === 'Edit'">
-        <li v-show="!isSaving">
+        <li v-show="!isSaving" @click="save">
           <i class="iconfont icon-save"></i>
           <span>保存</span>
         </li>
@@ -51,6 +51,9 @@ export default {
   methods: {
     preview () {
       this.$router.push({name: 'Preview'})
+    },
+    save () {
+      this.$emit('save')
     }
   },
   computed: {

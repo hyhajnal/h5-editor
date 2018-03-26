@@ -1,7 +1,7 @@
 <template>
   <div class="edit">
     <header>
-      <head-area :isSaving="isSaving"></head-area>
+      <head-area :isSaving="isSaving" @save="save"></head-area>
     </header>
     <main>
       <div class="left">
@@ -22,6 +22,7 @@ import HeadArea from '@/modules/head-area'
 import EditArea from '@/modules/edit-area'
 import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
+import Config from '@/utils/config'
 
 export default {
   name: 'Edit',
@@ -32,16 +33,44 @@ export default {
     }
   },
   mounted () {
+    const mod = JSON.parse(window.localStorage.getItem('mod'))
+    let { pageInfo, list } = this.$store.state
+    // 刷新: localStorage 里有值
+    if (!pageInfo && !mod) {
+      this.$store.dispatch('changeModule', mod)
+    }
+    const modNew = {
+      id: pageInfo ? pageInfo.id : mod.id,
+      name: pageInfo ? pageInfo.name : mod.name,
+      elements: list ? JSON.stringify({elements: list}) : mod.elements
+    }
+    // 定时保存 store -> localStorage
     this.timer = setInterval(() => {
       this.isSaving = true
       setTimeout(() => {
         this.isSaving = false
       }, 1000)
-      window.localStorage.setItem('elements', JSON.stringify(this.$store.state.list))
+      window.localStorage.setItem('mod', JSON.stringify(modNew))
     }, 5000)
   },
   destroyed () {
     clearInterval(this.timer)
+  },
+  beforeRouteLeave (to, from, next) {
+    this.save()
+    next()
+  },
+  methods: {
+    save () {
+      const { pageInfo, list } = this.$store.state
+      this.axios.post(`${Config.URL}/editor/module/edit`, {
+        id: pageInfo.id,
+        name: pageInfo.name,
+        elements: JSON.stringify({elements: list})
+      }).then(data => {
+        data !== 1000 && this.$message({type: 'success', message: '保存成功'})
+      })
+    }
   },
   components: {
     HeadArea,
