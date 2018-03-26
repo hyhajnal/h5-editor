@@ -18,7 +18,7 @@
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
     <mobile v-if="route !== 'Home'" />
-    <tool-bar></tool-bar>
+    <tool-bar :isSaving="isSaving"></tool-bar>
   </div>
 </template>
 
@@ -32,6 +32,12 @@ export default {
   name: 'HeadArea',
   data () {
     return {}
+  },
+  props: {
+    isSaving: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     ToolBar,

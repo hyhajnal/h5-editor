@@ -20,7 +20,7 @@ const actions = {
       id: mod.id,
       name: mod.name
     }
-    const elements = JSON.parse(mod.elements)
+    const elements = JSON.parse(mod.elements).elements
     commit('changeModule', { info, elements })
   },
   updateStyle ({ state, commit }, style) {
@@ -96,7 +96,7 @@ const mutations = {
 
 const getters = {
   current: state => {
-    return state.current || state.list[0]
+    return state.current
   },
   page: state => {
     // return toTree(state.list)

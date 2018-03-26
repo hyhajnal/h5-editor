@@ -12,20 +12,44 @@
           <el-select v-model="select" slot="append" placeholder="请选择">
             <el-option label="模块库" value="module"></el-option>
             <el-option label="项目库" value="project"></el-option>
+            <el-option label="页面库" value="page"></el-option>
           </el-select>
         </el-input>
       </el-row>
-      <el-row :gutter="20" class="project-list">
+
+      <el-row :gutter="20" class="project-list" v-if="select === 'project'">
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
-          v-for="item in modules"
+          v-for="item in list"
           :key="item.id"
         >
-          <!-- <router-link :to="{name: 'Edit'}"> -->
-            <project-card :mod="item"></project-card>
-          <!-- </router-link> -->
+          <project-card :project="item"></project-card>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20" class="project-list" v-if="select === 'module'">
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+          <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
+          v-for="item in list"
+          :key="item.id"
+        >
+          <module-card :mod="item"></module-card>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="20" class="project-list" v-if="select === 'page'">
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+          <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
+        </el-col>
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
+          v-for="item in list"
+          :key="item.id"
+        >
+          <page-card :page="item"></page-card>
         </el-col>
       </el-row>
 
@@ -49,6 +73,8 @@ import EditArea from '@/modules/edit-area'
 import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
 import ProjectCard from '@/components/ProjectCard'
+import PageCard from '@/components/PageCard'
+import ModuleCard from '@/components/ModuleCard'
 import AddCard from '@/components/AddCard'
 import Config from '@/utils/config'
 
@@ -58,7 +84,7 @@ export default {
     return {
       search: '',
       select: 'module',
-      modules: [],
+      list: [],
       total: 1,
       page: 1
     }
@@ -72,20 +98,27 @@ export default {
     ResourceArea,
     AttrArea,
     ProjectCard,
-    AddCard
+    AddCard,
+    PageCard,
+    ModuleCard
+  },
+  watch: {
+    select () {
+      this.getModules()
+    }
   },
   methods: {
     getModules (page) {
       this.page = page
-      this.axios.get(`${Config.URL}/editor/search/modules`, {
+      this.axios.get(`${Config.URL}/editor/search/${this.select}s`, {
         params: { page: page || 1 }
       }).then(data => {
-        this.modules = data.list
+        this.list = data.list
         this.total = data.total
       })
     },
     afterAdd ({ list, total }) {
-      this.modules = list
+      this.list = list
       this.total = total
     }
   }

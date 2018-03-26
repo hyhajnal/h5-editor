@@ -2,9 +2,13 @@
   <div class="tool-bar">
     <ul>
       <template v-if="route === 'Edit'">
-        <li>
+        <li v-show="!isSaving">
           <i class="iconfont icon-save"></i>
           <span>保存</span>
+        </li>
+        <li v-show="isSaving">
+          <i class="el-icon-loading"></i>
+          <span>保存中</span>
         </li>
         <li @click="preview">
           <i class="iconfont icon-preview"></i>
@@ -36,6 +40,12 @@ export default {
   data () {
     return {
       edit: true
+    }
+  },
+  props: {
+    isSaving: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

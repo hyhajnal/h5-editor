@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :style="cardStyle">
     <i class="el-icon-plus" @click="show = true"></i>
 
     <!-- Form -->
@@ -32,14 +32,32 @@ export default {
       show: false,
       form: {
         name: '',
-        elements: JSON.stringify([])
+        elements: JSON.stringify({
+          elements: []
+        })
       },
       formLabelWidth: '120px'
     }
   },
   computed: {
     typeStr () {
-      return this.type === 'module' ? '模块' : '项目'
+      let str = ''
+      switch (this.type) {
+        case 'module':
+          str = '模块'
+          break
+        case 'project':
+          str = '项目'
+          break
+        case 'page':
+          str = '页面'
+          break
+      }
+      return str
+    },
+    cardStyle () {
+      const height = this.type === 'page' ? '470px' : '270px'
+      return `height: ${height}`
     }
   },
   methods: {
@@ -68,7 +86,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 270px;
+  // height: 270px;
 }
 i {
   font-size: 60px;

@@ -1,27 +1,27 @@
 <template>
-  <div class="card" @click="goEdit" v-if="project">
+  <div class="card" @click="goEdit" v-if="page">
     <figure class="card-image">
-      <!-- <el-row class="shadow" type="flex" justify="space-around" align="middle">
+      <el-row class="shadow" type="flex" justify="space-around" align="middle">
         <i class="el-icon-circle-plus"></i>
         <i class="el-icon-search"></i>
         <i class="el-icon-menu" @click.stop="open"></i>
-      </el-row> -->
+      </el-row>
     </figure>
     <section class="card-body">
-      <h3 class="title">{{project.name}}</h3>
+      <h3 class="title">{{page.name}}</h3>
       <el-row type="flex" justify="space-between" align="middle">
         <el-row type="flex" justify="space-between" align="middle" class="owner">
           <img src="../assets/2.jpg" alt="avatar" width="20" height="20">
           <span>发布者</span>
         </el-row>
         <div class="social-bar">
-          <span><i class="iconfont icon-eye"></i>{{project.visitCount}}</span>
-          <span><i class="iconfont icon-like"></i>{{project.useCount}}</span>
-          <span><i class="iconfont icon-favor"></i>{{project.collectCount}}</span>
+          <span><i class="iconfont icon-eye"></i>{{page.visitCount}}</span>
+          <span><i class="iconfont icon-like"></i>{{page.useCount}}</span>
+          <span><i class="iconfont icon-favor"></i>{{page.collectCount}}</span>
         </div>
       </el-row>
     </section>
-    <span class="tag">项目</span>
+    <span class="tag">页面</span>
 
     <el-dialog
       title="二维码"
@@ -43,11 +43,11 @@ export default {
     }
   },
   props: {
-    project: Object
+    page: Object
   },
   methods: {
     goEdit () {
-      // this.$store.dispatch('changeModule', this.mod)
+      // this.$store.dispatch('changeModule', this.page)
       this.$router.push({name: 'Edit'})
     },
     open () {
@@ -67,16 +67,13 @@ export default {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  height: 270px;
+  height: 470px;
 }
 .card-image {
-  background-image: url('../assets/project.jpg');
-  height: 200px;
+  background-image: url('../assets/page.jpg');
+  height: 400px;
   background-size: cover;
   position: relative;
-}
-.title {
-  text-align: center;
 }
 .shadow {
   width: 100%;

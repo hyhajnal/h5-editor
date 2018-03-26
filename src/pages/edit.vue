@@ -1,6 +1,8 @@
 <template>
   <div class="edit">
-    <header><head-area></head-area></header>
+    <header>
+      <head-area :isSaving="isSaving"></head-area>
+    </header>
     <main>
       <div class="left">
         <resource-area></resource-area>
@@ -24,9 +26,23 @@ import AttrArea from '@/modules/attr-area'
 export default {
   name: 'Edit',
   data () {
-    return {}
+    return {
+      isSaving: false,
+      timer: 0
+    }
   },
-  mounted () {},
+  mounted () {
+    this.timer = setInterval(() => {
+      this.isSaving = true
+      setTimeout(() => {
+        this.isSaving = false
+      }, 1000)
+      window.localStorage.setItem('elements', JSON.stringify(this.$store.state.list))
+    }, 5000)
+  },
+  destroyed () {
+    clearInterval(this.timer)
+  },
   components: {
     HeadArea,
     EditArea,
