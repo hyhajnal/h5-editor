@@ -34,24 +34,25 @@ export default {
   },
   mounted () {
     const mod = JSON.parse(window.localStorage.getItem('mod'))
-    let { pageInfo, list } = this.$store.state
+    let { pageInfo } = this.$store.state
+    // debugger
     // 刷新: localStorage 里有值
-    if (!pageInfo && !mod) {
+    if (!pageInfo && mod) {
       this.$store.dispatch('changeModule', mod)
     }
-    const modNew = {
-      id: pageInfo ? pageInfo.id : mod.id,
-      name: pageInfo ? pageInfo.name : mod.name,
-      elements: list ? JSON.stringify({elements: list}) : mod.elements
-    }
+    // const modNew = {
+    //   id: pageInfo ? pageInfo.id : mod.id,
+    //   name: pageInfo ? pageInfo.name : mod.name,
+    //   elements: list ? JSON.stringify({elements: list}) : mod.elements
+    // }
     // 定时保存 store -> localStorage
-    this.timer = setInterval(() => {
-      this.isSaving = true
-      setTimeout(() => {
-        this.isSaving = false
-      }, 1000)
-      window.localStorage.setItem('mod', JSON.stringify(modNew))
-    }, 5000)
+    // this.timer = setInterval(() => {
+    //   this.isSaving = true
+    //   setTimeout(() => {
+    //     this.isSaving = false
+    //   }, 1000)
+    //   window.localStorage.setItem('mod', JSON.stringify(modNew))
+    // }, 5000)
   },
   destroyed () {
     clearInterval(this.timer)
@@ -63,6 +64,7 @@ export default {
   methods: {
     save () {
       const { pageInfo, list } = this.$store.state
+      this.saveLocal(pageInfo, list)
       this.axios.post(`${Config.URL}/editor/module/edit`, {
         id: pageInfo.id,
         name: pageInfo.name,
@@ -70,6 +72,14 @@ export default {
       }).then(data => {
         data !== 1000 && this.$message({type: 'success', message: '保存成功'})
       })
+    },
+    saveLocal (pageInfo, list) {
+      const mod = {
+        id: pageInfo.id,
+        name: pageInfo.name,
+        elements: JSON.stringify({elements: list})
+      }
+      window.localStorage.setItem('mod', JSON.stringify(mod))
     }
   },
   components: {

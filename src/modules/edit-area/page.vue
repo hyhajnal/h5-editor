@@ -1,9 +1,13 @@
 <template>
-  <div class="page"
+  <!-- <div class="page"
     id="page"
     :style="style"
-  >
-    <draggable element="span"
+  > -->
+    <draggable element="div"
+      id="page"
+      class="page"
+      data-id="root"
+      :style="style"
       :options="dragOptions"
       @end="onEnd"
     > 
@@ -16,7 +20,7 @@
         :data-pid="item.pid"
       />
     </draggable>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -69,13 +73,15 @@ export default {
   },
   methods: {
     onEnd (obj) {
+      // console.log(obj)
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
-      const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
+      let pid = obj.to.dataset.id || obj.to.children[0].dataset.pid
+      const to = `${pid}的${obj.newIndex}`
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.from.children[0].dataset.pid,
-        nPid: obj.to.children[0].dataset.pid,
+        nPid: pid,
         nIdx: obj.newIndex,
         oIdx: obj.oldIndex
       })

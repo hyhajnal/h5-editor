@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="goEdit" v-if="page">
+  <div class="card" @click="goDetail" v-if="page">
     <figure class="card-image">
       <el-row class="shadow" type="flex" justify="space-around" align="middle">
         <i class="el-icon-circle-plus"></i>
@@ -46,9 +46,9 @@ export default {
     page: Object
   },
   methods: {
-    goEdit () {
+    goDetail () {
       // this.$store.dispatch('changeModule', this.page)
-      this.$router.push({name: 'Edit'})
+      this.$router.push({name: 'PageDetail'})
     },
     open () {
       this.dialogVisible = true

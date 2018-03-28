@@ -10,7 +10,7 @@ const getInit = type => {
   switch (type) {
     case 'div':
       attr = {
-        style: 'width:100%;height:50px;border:1px solid #000;'
+        style: 'width:100%;height:100px;border:1px solid #ccc;'
       }
       break
     case 'span':

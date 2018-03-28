@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="goEdit" v-if="project">
+  <div class="card" @click="goDetail" v-if="project">
     <figure class="card-image">
       <!-- <el-row class="shadow" type="flex" justify="space-around" align="middle">
         <i class="el-icon-circle-plus"></i>
@@ -46,9 +46,9 @@ export default {
     project: Object
   },
   methods: {
-    goEdit () {
+    goDetail () {
       // this.$store.dispatch('changeModule', this.mod)
-      this.$router.push({name: 'Edit'})
+      this.$router.push({name: 'ProjectDetail'})
     },
     open () {
       this.dialogVisible = true

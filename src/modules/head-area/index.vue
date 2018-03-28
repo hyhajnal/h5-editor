@@ -17,7 +17,7 @@
       v-model="input">
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
-    <mobile v-if="route !== 'Home'" />
+    <mobile v-if="route === 'Preview' || route === 'Edit'" />
     <tool-bar :isSaving="isSaving" @save="save"></tool-bar>
   </div>
 </template>

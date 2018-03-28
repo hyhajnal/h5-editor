@@ -89,9 +89,7 @@ export default {
   }
   .avatar {
     border-radius: 100%;
-    background-size: cover;
     margin-left: 40px;
-    background: url('../../assets/2.jpg');
   }
   li {
     cursor: pointer;
