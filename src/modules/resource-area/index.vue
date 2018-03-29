@@ -134,7 +134,7 @@ export default {
   margin-right: 2px;
 }
 .tab-wrap {
-  height: 100vh;
+  height: 100%;
   // position: absolute;
 
 }
@@ -165,7 +165,7 @@ export default {
     padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100vh;
+    height: 100%;
   }
   .el-tabs--left .el-tabs__header.is-left {
     margin-right: 0;

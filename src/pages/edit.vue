@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-  .home {
+  .edit {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -108,6 +108,7 @@ export default {
   }
   .left {
     /* border-right: 1px solid #ddd; */
+    height: 100%;
     overflow: auto;
   }
   aside {
