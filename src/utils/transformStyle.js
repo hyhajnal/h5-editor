@@ -4,6 +4,9 @@ const toStyleString = (data) => {
     if (key === 'width' && data[key] === 0) {
       return
     }
+    if (key === 'height' && data[key] === 0) {
+      return
+    }
     const value = toStyleStrItem(key, data[key])
     styleStr = `${styleStr}${key}:${value};`
   })

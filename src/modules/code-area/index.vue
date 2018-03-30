@@ -1,29 +1,15 @@
 <template>
   <div class="code-area">
     <div class="code html">
-      <h1 class="html-title">Vue</h1>
+      <h1 class="html-title">
+        Vue<i class="iconfont icon-copy" @click="copy"></i>
+      </h1>
       <pre class="language-markup">
         <code class="language-markup">
           <div v-html="vue"></div>
         </code>
       </pre>
     </div>
-    <!-- <div class="code css">
-      <h1 class="css-title">CSS</h1>
-      <pre class="language-css">
-        <code class="language-css">
-          <div v-html="css"></div>
-        </code>
-      </pre>
-    </div> -->
-    <!-- <div class="code js">
-      <h1 class="css-title">JS</h1>
-      <pre class="language-javascript">
-        <code class="language-javascript">
-          <div v-html="js"></div>
-        </code>
-      </pre>
-    </div> -->
   </div>
 </template>
 
@@ -75,6 +61,24 @@ export default {
         ${css}
       &lt;/style&gt;
     `
+  },
+  methods: {
+    copy () {
+      document.addEventListener('copy', this.copyHandler, false)
+      document.execCommand('copy')
+    },
+    copyHandler (e) {
+      e.clipboardData.setData('text/plain', this.vue)
+      e.preventDefault()
+      this.$notify({
+        title: '成功',
+        message: '代码复制成功，快去粘贴吧～',
+        type: 'success',
+        duration: 100,
+        showClose: false
+      })
+      // this.$message.info('代码复制成功，快去粘贴吧～')
+    }
   }
 }
 </script>
@@ -104,7 +108,15 @@ h1 {
   color: #fff;
   text-align: center;
   background: #3a3a42;
+  position: relative;
   // border-bottom: 1px solid #ddd;
+}
+.icon-copy {
+  position: absolute;
+  right: 20px;
+  top: 7px;
+  font-size: 18px;
+  cursor: pointer;
 }
 .css-title {
   top: 50%;

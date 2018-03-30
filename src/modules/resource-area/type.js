@@ -5,7 +5,11 @@ const components = [
   {icon: 'button', label: '按钮', value: 'button'},
   {icon: 'radio', label: '单选框', value: 'radio'},
   {icon: 'checkbox', label: '多选框', value: 'checkbox'},
-  {icon: 'search', label: '搜索框', value: 'search'}
+  {icon: 'search', label: '搜索框', value: 'search'},
+  {icon: 'switch', label: '开关', value: 'switch'},
+  {icon: 'tag', label: '标签', value: 'tag'},
+  {icon: 'tabbar', label: '底部栏', value: 'tabbar'},
+  {icon: 'navbar', label: '导航栏', value: 'navbar'}
 ]
 
 const layouts = [

@@ -2,6 +2,14 @@
   <div class="tool-bar">
     <ul>
       <template v-if="route === 'Edit'">
+        <li @click="clear">
+          <i class="iconfont icon-delete"></i>
+          <span>清空</span>
+        </li>
+        <!-- <li @click="preview">
+          <i class="iconfont icon-reverse"></i>
+          <span>撤销</span>
+        </li> -->
         <li v-show="!isSaving" @click="save">
           <i class="iconfont icon-save"></i>
           <span>保存</span>
@@ -54,6 +62,9 @@ export default {
     },
     save () {
       this.$emit('save')
+    },
+    clear () {
+      this.$store.commit('clear')
     }
   },
   computed: {

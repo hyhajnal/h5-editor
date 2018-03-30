@@ -21,6 +21,24 @@ const getInit = type => {
         ]
       }
       break
+    case 'button':
+      attr = {
+        config: [
+          { name: 'size', label: '文字', type: 'input', data: '文字' }
+        ]
+      }
+      break
+    case 'radio':
+      attr = {}
+      break
+    case 'search':
+      attr = {}
+      break
+    case 'switch':
+      attr = {}
+      break
+    default:
+      attr = {}
   }
   return attr
 }

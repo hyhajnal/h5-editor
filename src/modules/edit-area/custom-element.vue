@@ -16,36 +16,15 @@
 </template>
 
 <script>
-import TypeDiv from './types/type-div'
-import TypeSpan from './types/type-span'
 import draggable from 'vuedraggable'
+import _Type from './types'
 
 export default {
   name: 'CustomElement',
   props: {
     element: Object
   },
-  // data () {
-  //   return {
-  //     dragOptions: {
-  //       animation: 0,
-  //       group: {
-  //         name: 'page',
-  //         put: ['resource1', 'resource2', 'page'],
-  //         // put: true,
-  //         pull: true
-  //       },
-  //       disabled: false,
-  //       ghostClass: 'ghost',
-  //       chosenClass: 'element-active'
-  //     }
-  //   }
-  // },
-  components: {
-    TypeDiv,
-    TypeSpan,
-    draggable
-  },
+  components: {..._Type, draggable},
   computed: {
     canReceive () {
       return this.$store.state.isDraging && this.element.type === 'div'

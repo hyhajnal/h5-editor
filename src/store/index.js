@@ -79,11 +79,20 @@ const actions = {
    */
   addComp ({ state, commit }, payload) {
     const { type, pid, idx } = payload
-    console.log(payload)
+    let id = guid()
     let list = JSON.parse(JSON.stringify(state.list))
     const newCompIdx = state.components.findIndex(c => c.id === type)
+    let newComp = state.components[newCompIdx].content
+    newComp.id = id
+    newComp.label = `组合容器/${id}`
+    newComp.children.map(item => {
+      item.pid = id
+    })
     treeTravel(list, pid).then(item => {
-      item.splice(idx, 0, state.components[newCompIdx].content)
+      item.splice(idx, 0, {
+        ...state.components[newCompIdx].content,
+        pid: pid
+      })
       commit('update', list)
     })
   },
@@ -106,6 +115,9 @@ const actions = {
 const mutations = {
   update (state, list) {
     Vue.set(state, 'list', list)
+  },
+  clear (state) {
+    Vue.set(state, 'list', [])
   },
   changeCurrent (state, ele) {
     Vue.set(state, 'current', ele)

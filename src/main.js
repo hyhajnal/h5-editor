@@ -9,6 +9,10 @@ import '../styles/element-variables.scss'
 import store from '../src/store'
 import clickoutside from './directive'
 import axios from './request'
+import Vant from 'vant'
+import 'vant/lib/vant-css/index.css'
+
+Vue.use(Vant)
 
 Vue.prototype.axios = axios
 

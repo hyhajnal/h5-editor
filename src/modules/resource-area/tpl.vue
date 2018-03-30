@@ -8,7 +8,16 @@
     >
       <li v-for="item in components" :key="item.id" :data-id="item.id" class="component-item">
         <el-card :body-style="{ padding: '0px' }">
-          <img :src="item.image" class="image">
+          <!-- <img :src="item.image" class="image"> -->
+          <div class="image">
+            <div class="component-preview">
+              <custom-element
+                v-for="el in item.content.children"
+                :key="el.id"
+                :element="el"
+              />
+            </div>
+          </div>
           <div style="padding: 4px 14px 14px 14px;">
             <div class="bottom clearfix">
               <span class="title">{{item.name}}-{{item.id}}</span>
@@ -27,6 +36,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import CustomElement from '@/modules/preview-area/custom-element'
 import draggable from 'vuedraggable'
 export default {
   name: 'Tpl',
@@ -35,7 +45,10 @@ export default {
       currentDate: new Date()
     }
   },
-  components: {draggable},
+  components: {
+    draggable,
+    CustomElement
+  },
   computed: {
     ...mapGetters({
       components: 'components'
@@ -63,7 +76,7 @@ export default {
     background: #fff;
     padding: 15px;
   }
-  .components-box {
+  .component-item {
     cursor: move;
   }
   .title {
@@ -89,6 +102,15 @@ export default {
     width: 210px;
     display: block;
     height: 150px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .component-preview {
+    transform: scale(0.6);
+    // position: absolute;
+    // top: 0;
+    // left: 0;
   }
 
   .clearfix:before,
