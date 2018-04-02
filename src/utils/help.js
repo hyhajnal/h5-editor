@@ -17,8 +17,13 @@ const getInit = type => {
       attr = {
         style: 'color:#000;',
         config: [
-          { name: 'text', label: '文字', type: 'input', data: '文字' }
-        ]
+          { name: 'text', label: '文字', type: 'input' }
+        ],
+        content: {
+          props: {
+            text: '文字'
+          }
+        }
       }
       break
     case 'button':

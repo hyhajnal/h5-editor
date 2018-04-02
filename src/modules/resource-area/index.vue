@@ -1,39 +1,6 @@
 <template>
   <div class="resource-area">
-    <!-- <el-collapse v-model="activeNames">
-      <el-collapse-item name="1">
-        <template slot="title">
-          <i class="iconfont icon-component"></i><span>组件</span>
-        </template>
-        <draggable
-          class="components-box"
-          element="ul"
-          :options="{group:{name:'resource1',pull:'clone',put:false}}"
-          @end="onEnd"
-        >
-          <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
-            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
-          </li>
-        </draggable>
-      </el-collapse-item>
-      <el-collapse-item name="2">
-        <template slot="title">
-          <i class="iconfont icon-layout"></i><span>布局</span>
-        </template>
-        <draggable
-          v-model="layouts"
-          class="components-box"
-          element="ul"
-          :options="{group:{name:'resource2',pull:'clone',put:false}}"
-          @end="onEnd"
-        >
-          <li class="component-item" v-for="item in layouts" :key="item.label" :data-id="item.value">
-            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
-          </li>
-        </draggable>
-      </el-collapse-item>
-    </el-collapse> -->
-    <el-tabs tab-position="left" class="tab-wrap" type="border-card">
+    <el-tabs tab-position="left" class="tab-wrap" type="border-card" v-model="tabActive">
       <el-tab-pane>
         <template slot="label">
           <span>元件</span>
@@ -54,7 +21,14 @@
         <template slot="label">
           <span>组件</span>
         </template>
-        <tpl></tpl>
+        <comp></comp>
+      </el-tab-pane>
+
+      <el-tab-pane>
+        <template slot="label">
+          <span>模版</span>
+        </template>
+        <templ></templ>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -62,21 +36,23 @@
 
 <script>
 import { components, layouts } from './type'
-import Tpl from './tpl'
+import Templ from './templ'
+import Comp from './comp'
 import draggable from 'vuedraggable'
 
 export default {
   name: 'ResourceArea',
   data () {
     return {
-      activeNames: ['1', '2'],
       components: components,
-      layouts: layouts
+      layouts: layouts,
+      tabActive: '1'
     }
   },
   components: {
     draggable,
-    Tpl
+    Comp,
+    Templ
   },
   methods: {
     onEnd (obj) {

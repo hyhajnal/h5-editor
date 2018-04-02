@@ -1,0 +1,161 @@
+[
+  {
+    "id": "t1",
+    "name": "模版1",
+    "image": "http://imgs.xueui.cn/wp-content/uploads/2018/01/fm110.jpg",
+    "content": {
+      "id": "t1",
+      "type": "div",
+      "style": "",
+      "label": "模版1容器",
+      "children": [
+        {
+          "id": "e1",
+          "type": "div",
+          "style": "width:150px;height:150px;background:#4ED7EC;",
+          "label": "容器-e1",
+          "children": [{
+            "id": "e2",
+            "label": "容器-e2",
+            "type": "div",
+            "style": "width:50px;height:50px;background:#409EFF;",
+            "pid": "e1",
+            "children": []
+          },{
+            "id": "e3",
+            "label": "容器-e3",
+            "type": "div",
+            "style": "width:50px;height:50px;background:#555;",
+            "pid": "e1",
+            "children": []
+          }],
+          "pid": "t1"
+        },
+        {
+          "id": "e4",
+          "label": "容器-e4",
+          "type": "div",
+          "style": "width:100px;height:50px;background:#FED96E;",
+          "pid": "t1",
+          "children": [{
+            "id": "e5",
+            "label": "文字-e5",
+            "type": "span",
+            "config": [
+              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+            ],
+            "style": "color: #000;",
+            "pid": "e4",
+            "children": []
+          }]
+        }
+      ]
+    }
+  },
+  {
+    "id": "t2",
+    "name": "模版2",
+    "image": "http://imgs.xueui.cn/wp-content/uploads/2017/10/Cover%EF%BC%9AArticle-2017.10.26-1.png",
+    "content": {
+      "id": "t2",
+      "type": "div",
+      "style": "",
+      "label": "模版1容器",
+      "children": [
+        {
+          "id": "e1",
+          "type": "div",
+          "style": "width:150px;height:150px;background:#2CD3F0;",
+          "label": "容器-e1",
+          "children": [{
+            "id": "e2",
+            "label": "容器-e2",
+            "type": "div",
+            "style": "width:50px;height:50px;background:#409EFF;",
+            "pid": "e1",
+            "children": []
+          },{
+            "id": "e3",
+            "label": "容器-e3",
+            "type": "div",
+            "style": "width:50px;height:50px;background:#555;",
+            "pid": "e1",
+            "children": []
+          }],
+          "pid": "t2"
+        },
+        {
+          "id": "e4",
+          "label": "容器-e4",
+          "type": "div",
+          "style": "width:100px;height:50px;background:#FED96E;",
+          "pid": "t2",
+          "children": [{
+            "id": "e5",
+            "label": "文字-e5",
+            "type": "span",
+            "config": [
+              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+            ],
+            "style": "color: #000;",
+            "pid": "e4",
+            "children": []
+          }]
+        }
+      ]
+    }
+  },
+  {
+    "id": "t3",
+    "name": "模版3",
+    "image": "http://imgs.xueui.cn/wp-content/uploads/2017/10/Cover%EF%BC%9AArticle-2017.10.24-2.png",
+    "content": {
+      "id": "t3",
+      "type": "div",
+      "style": "",
+      "label": "模版1容器",
+      "children": [
+        {
+          "id": "e1",
+          "type": "div",
+          "style": "width:150px;height:150px;background:#4ed7ec;",
+          "label": "容器-e1",
+          "children": [{
+            "id": "e2",
+            "label": "容器-e2",
+            "type": "div",
+            "style": "width:50px;height:50px;background:#409eff;",
+            "pid": "e1",
+            "children": []
+          },{
+            "id": "e3",
+            "label": "容器-e3",
+            "type": "div",
+            "style": "width:50px;height:50px;background:#555;",
+            "pid": "e1",
+            "children": []
+          }],
+          "pid": "t3"
+        },
+        {
+          "id": "e4",
+          "label": "容器-e4",
+          "type": "div",
+          "style": "width:100px;height:50px;background:#fed96e;",
+          "pid": "t3",
+          "children": [{
+            "id": "e5",
+            "label": "文字-e5",
+            "type": "span",
+            "config": [
+              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+            ],
+            "style": "color: #000;",
+            "pid": "e4",
+            "children": []
+          }]
+        }
+      ]
+    }
+  }
+]

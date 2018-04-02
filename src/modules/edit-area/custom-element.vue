@@ -1,5 +1,7 @@
 <template>
-  <component :is="'type-'+element.type"
+  <component
+    v-if="ready"
+    :is="'type-'+element.type"
     :ele="element"
     :data-id="element.id"
     :data-pid="element.pid"
@@ -16,6 +18,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import draggable from 'vuedraggable'
 import _Type from './types'
 
@@ -23,6 +26,11 @@ export default {
   name: 'CustomElement',
   props: {
     element: Object
+  },
+  data () {
+    return {
+      ready: false
+    }
   },
   components: {..._Type, draggable},
   computed: {
@@ -34,18 +42,16 @@ export default {
       return current && current.id === this.element.id
     }
   },
-  // watch: {
-  //   'element.children': {
-  //     handler (o, n) {
-  //       console.log(n)
-  //       this.$forceUpdate()
-  //     },
-  //     deep: true
-  //   }
-  // },
+  mounted () {
+    if (this.element.type.indexOf('van') > -1) {
+      this.renderChild()
+      this.ready = true
+    } else {
+      this.ready = true
+    }
+  },
   methods: {
     onEnd (obj) {
-      // console.log(obj)
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
@@ -59,6 +65,15 @@ export default {
     },
     changeActive () {
       this.$store.commit('changeCurrent', this.element)
+    },
+    renderChild () {
+      const type = this.element.type
+      const content = JSON.parse(JSON.stringify(this.element.content))
+      Vue.component(`type-${type}`, {
+        render: function (createElement) {
+          return createElement(type, content)
+        }
+      })
     }
   }
 }

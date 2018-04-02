@@ -2,7 +2,7 @@
   <div class="attr-area">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="页面" name="first">页面基本信息</el-tab-pane>
-      <el-tab-pane label="工作区" name="second">
+      <el-tab-pane label="结构" name="second">
         <struct></struct>
       </el-tab-pane>
       <el-tab-pane label="属性" name="attr">

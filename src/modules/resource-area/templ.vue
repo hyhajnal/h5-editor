@@ -6,7 +6,7 @@
       :options="{group:{name:'resource1',pull:'clone',put:false}}"
       @end="onEnd"
     >
-      <li v-for="item in components" :key="item.id" :data-id="item.id" class="component-item">
+      <li v-for="item in templs" :key="item.id" :data-id="item.id" class="component-item">
         <el-card :body-style="{ padding: '0px' }">
           <!-- <img :src="item.image" class="image"> -->
           <div class="image">
@@ -39,7 +39,7 @@ import { mapGetters } from 'vuex'
 import CustomElement from '@/modules/preview-area/custom-element'
 import draggable from 'vuedraggable'
 export default {
-  name: 'Tpl',
+  name: 'Templ',
   data () {
     return {
       currentDate: new Date()
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      components: 'components'
+      templs: 'templs'
     })
   },
   methods: {
@@ -60,8 +60,8 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log(`${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
-      this.$store.dispatch('addComp', {
+      console.log(`${pid}的${obj.newIndex}新增组件${obj.item.dataset.id}`)
+      this.$store.dispatch('addTempl', {
         type: obj.item.dataset.id,
         pid: pid,
         idx: obj.newIndex

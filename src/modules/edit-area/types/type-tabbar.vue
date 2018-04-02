@@ -12,6 +12,11 @@ export default {
   name: 'TabBar',
   props: {
     ele: Object
+  },
+  data () {
+    return {
+      active: 0
+    }
   }
 }
 </script>

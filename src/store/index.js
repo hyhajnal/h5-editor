@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // import Page from '@/utils/page.json'
 import Components from '@/utils/components.json'
+import Templs from '@/utils/templs.json'
 import { treeTravel } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
 
@@ -13,6 +14,7 @@ const state = {
   current: null, //  当前选中组件的idx
   isDraging: false,
   components: Components,
+  templs: Templs,
   device: {...mobiles[0], percent: 100}
 }
 
@@ -40,7 +42,7 @@ const actions = {
     let { list, current } = JSON.parse(JSON.stringify(state))
     treeTravel(list, current.pid).then(item => {
       const idx = item.findIndex(d => d.id === current.id)
-      item[idx].config = config
+      item[idx].content.props = config
       commit('update', list)
     })
   },
@@ -72,6 +74,32 @@ const actions = {
   },
 
   /**
+   * 复制模版
+   * @param {组件的id} type
+   * @param {拖入的父元素id} pid
+   * @param {拖入的父元素index} idx
+   */
+  addTempl ({ state, commit }, payload) {
+    const { type, pid, idx } = payload
+    let id = guid()
+    let list = JSON.parse(JSON.stringify(state.list))
+    const newCompIdx = state.templs.findIndex(c => c.id === type)
+    let newComp = state.templs[newCompIdx].content
+    newComp.id = id
+    newComp.label = `组合容器/${id}`
+    newComp.children.map(item => {
+      item.pid = id
+    })
+    treeTravel(list, pid).then(item => {
+      item.splice(idx, 0, {
+        ...state.templs[newCompIdx].content,
+        pid: pid
+      })
+      commit('update', list)
+    })
+  },
+
+  /**
    * 复制组件
    * @param {组件的id} type
    * @param {拖入的父元素id} pid
@@ -82,16 +110,10 @@ const actions = {
     let id = guid()
     let list = JSON.parse(JSON.stringify(state.list))
     const newCompIdx = state.components.findIndex(c => c.id === type)
-    let newComp = state.components[newCompIdx].content
-    newComp.id = id
-    newComp.label = `组合容器/${id}`
-    newComp.children.map(item => {
-      item.pid = id
-    })
+    let newComp = state.components[newCompIdx]
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        ...state.components[newCompIdx].content,
-        pid: pid
+        ...newComp, pid, label: `${newComp.type}/${id}`
       })
       commit('update', list)
     })
@@ -147,6 +169,9 @@ const getters = {
   },
   components: state => {
     return state.components
+  },
+  templs: state => {
+    return state.templs
   }
 }
 

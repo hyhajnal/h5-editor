@@ -1,161 +1,32 @@
 [
   {
     "id": "c1",
-    "name": "组件1",
-    "image": "http://imgs.xueui.cn/wp-content/uploads/2018/01/fm110.jpg",
+    "name": "按钮",
+    "type": "van-button",
     "content": {
-      "id": "c1",
-      "type": "div",
-      "style": "",
-      "label": "组件1容器",
-      "children": [
-        {
-          "id": "e1",
-          "type": "div",
-          "style": "width:150px;height:150px;background:#4ED7EC;",
-          "label": "容器-e1",
-          "children": [{
-            "id": "e2",
-            "label": "容器-e2",
-            "type": "div",
-            "style": "width:50px;height:50px;background:#409EFF;",
-            "pid": "e1",
-            "children": []
-          },{
-            "id": "e3",
-            "label": "容器-e3",
-            "type": "div",
-            "style": "width:50px;height:50px;background:#555;",
-            "pid": "e1",
-            "children": []
-          }],
-          "pid": "c1"
-        },
-        {
-          "id": "e4",
-          "label": "容器-e4",
-          "type": "div",
-          "style": "width:100px;height:50px;background:#FED96E;",
-          "pid": "c1",
-          "children": [{
-            "id": "e5",
-            "label": "文字-e5",
-            "type": "span",
-            "config": [
-              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
-            ],
-            "style": "color: #000;",
-            "pid": "e4",
-            "children": []
-          }]
-        }
-      ]
-    }
+      "domProps": {
+        "innerHTML": "默认按钮"
+      },
+      "props": {
+        "type": "primary",
+        "size": "mini",
+        "text": "hh"
+      }
+    },
+    "config": [
+      { "name": "type", "label": "类型", "type": "input" },
+      { "name": "size", "label": "大小", "type": "input" },
+      { "name": "text", "label": "内容", "type": "input" }
+    ]
   },
   {
     "id": "c2",
-    "name": "组件2",
-    "image": "http://imgs.xueui.cn/wp-content/uploads/2017/10/Cover%EF%BC%9AArticle-2017.10.26-1.png",
+    "name": "标签",
+    "type": "van-tag",
     "content": {
-      "id": "c2",
-      "type": "div",
-      "style": "",
-      "label": "组件1容器",
-      "children": [
-        {
-          "id": "e1",
-          "type": "div",
-          "style": "width:150px;height:150px;background:#2CD3F0;",
-          "label": "容器-e1",
-          "children": [{
-            "id": "e2",
-            "label": "容器-e2",
-            "type": "div",
-            "style": "width:50px;height:50px;background:#409EFF;",
-            "pid": "e1",
-            "children": []
-          },{
-            "id": "e3",
-            "label": "容器-e3",
-            "type": "div",
-            "style": "width:50px;height:50px;background:#555;",
-            "pid": "e1",
-            "children": []
-          }],
-          "pid": "c2"
-        },
-        {
-          "id": "e4",
-          "label": "容器-e4",
-          "type": "div",
-          "style": "width:100px;height:50px;background:#FED96E;",
-          "pid": "c2",
-          "children": [{
-            "id": "e5",
-            "label": "文字-e5",
-            "type": "span",
-            "config": [
-              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
-            ],
-            "style": "color: #000;",
-            "pid": "e4",
-            "children": []
-          }]
-        }
-      ]
-    }
-  },
-  {
-    "id": "c3",
-    "name": "组件3",
-    "image": "http://imgs.xueui.cn/wp-content/uploads/2017/10/Cover%EF%BC%9AArticle-2017.10.24-2.png",
-    "content": {
-      "id": "c3",
-      "type": "div",
-      "style": "",
-      "label": "组件1容器",
-      "children": [
-        {
-          "id": "e1",
-          "type": "div",
-          "style": "width:150px;height:150px;background:#4ed7ec;",
-          "label": "容器-e1",
-          "children": [{
-            "id": "e2",
-            "label": "容器-e2",
-            "type": "div",
-            "style": "width:50px;height:50px;background:#409eff;",
-            "pid": "e1",
-            "children": []
-          },{
-            "id": "e3",
-            "label": "容器-e3",
-            "type": "div",
-            "style": "width:50px;height:50px;background:#555;",
-            "pid": "e1",
-            "children": []
-          }],
-          "pid": "c3"
-        },
-        {
-          "id": "e4",
-          "label": "容器-e4",
-          "type": "div",
-          "style": "width:100px;height:50px;background:#fed96e;",
-          "pid": "c3",
-          "children": [{
-            "id": "e5",
-            "label": "文字-e5",
-            "type": "span",
-            "config": [
-              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
-            ],
-            "style": "color: #000;",
-            "pid": "e4",
-            "children": []
-          }]
-        }
-      ]
+      "domProps": {
+        "innerHTML": "标签"
+      }
     }
   }
 ]

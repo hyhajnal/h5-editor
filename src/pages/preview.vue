@@ -22,7 +22,7 @@
 <script>
 import HeadArea from '@/modules/head-area'
 import PreviewArea from '@/modules/preview-area'
-import ResourceArea from '@/modules/resource-area/tpl'
+import ResourceArea from '@/modules/resource-area/templ'
 import CodeArea from '@/modules/code-area'
 
 export default {

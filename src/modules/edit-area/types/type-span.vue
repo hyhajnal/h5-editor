@@ -1,6 +1,6 @@
 <template>
   <span :style="ele.style">
-    <slot>{{ele.config[0].data}}</slot>
+    <slot>{{ele.content.props.text}}</slot>
   </span>
 </template>
 
