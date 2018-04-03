@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     goDetail () {
-      // this.$store.dispatch('changeModule', this.mod)
-      this.$router.push({name: 'ProjectDetail'})
+      // this.$store.dispatch('changeCurrent', this.mod)
+      this.$router.push({name: 'ProjectDetail', query: {id: this.project.id}})
     },
     open () {
       this.dialogVisible = true

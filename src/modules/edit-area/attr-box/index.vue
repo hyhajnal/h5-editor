@@ -12,7 +12,7 @@
       <div class="divider"></div>
     </template>
     <template v-if="current && current.config">
-      <config :attrData="current.config" :attrProps="current.content.props" />
+      <config :attrData="current.config" />
     </template>
   </div>
 </template>

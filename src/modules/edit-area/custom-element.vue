@@ -64,14 +64,36 @@ export default {
       })
     },
     changeActive () {
-      this.$store.commit('changeCurrent', this.element)
+      this.$store.commit('changeCurrentEl', this.element)
     },
     renderChild () {
       const type = this.element.type
       const content = JSON.parse(JSON.stringify(this.element.content))
+      const config = this.element.config
+      // Vue.component(`type-${type}`, {
+      //   render: function (createElement) {
+      //     return createElement(type, {
+      //       ...content, props
+      //     })
+      //   }
+      // })
       Vue.component(`type-${type}`, {
         render: function (createElement) {
-          return createElement(type, content)
+          let props = {}
+          config.forEach((item, idx) => {
+            props[item.name] = this.ele.config[idx].data
+          })
+          if (this.ele) {
+            return createElement(type, {...content, props})
+          } else {
+            return createElement('div', '渲染出错')
+          }
+        },
+        props: {
+          ele: {
+            type: Object,
+            required: true
+          }
         }
       })
     }

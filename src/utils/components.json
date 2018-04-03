@@ -4,19 +4,12 @@
     "name": "按钮",
     "type": "van-button",
     "content": {
-      "domProps": {
-        "innerHTML": "默认按钮"
-      },
-      "props": {
-        "type": "primary",
-        "size": "mini",
-        "text": "hh"
-      }
+      "domProps": {}
     },
     "config": [
-      { "name": "type", "label": "类型", "type": "input" },
-      { "name": "size", "label": "大小", "type": "input" },
-      { "name": "text", "label": "内容", "type": "input" }
+      { "name": "type", "label": "类型", "type": "select", "data": "default", "options": ["default", "primary", "danger"] },
+      { "name": "size", "label": "大小", "type": "select", "data": "small", "options": ["large", "small", "mini"] },
+      { "name": "text", "label": "内容", "type": "input", "data": "按钮" }
     ]
   },
   {
@@ -27,6 +20,7 @@
       "domProps": {
         "innerHTML": "标签"
       }
-    }
+    },
+    "config": []
   }
 ]

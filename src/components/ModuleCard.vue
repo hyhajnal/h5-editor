@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     goEdit () {
-      this.$store.dispatch('changeModule', this.mod)
-      this.$router.push({name: 'Edit'})
+      this.$store.dispatch('changeCurrent', this.mod)
+      this.$router.push({name: 'Edit', query: {id: this.mod.id}})
     },
     open () {
       this.dialogVisible = true

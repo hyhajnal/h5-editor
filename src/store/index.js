@@ -19,13 +19,14 @@ const state = {
 }
 
 const actions = {
-  changeModule ({ state, commit }, mod) {
+  changeCurrent ({ state, commit }, data) {
+    console.log(data)
     const info = {
-      id: mod.id,
-      name: mod.name
+      id: data.id,
+      name: data.name
     }
-    const list = JSON.parse(mod.elements).elements
-    commit('changeModule', { info, list })
+    const list = JSON.parse(data.elements).elements
+    commit('changeCurrent', { info, list })
   },
   updateStyle ({ state, commit }, style) {
     if (!state.current) return
@@ -42,7 +43,7 @@ const actions = {
     let { list, current } = JSON.parse(JSON.stringify(state))
     treeTravel(list, current.pid).then(item => {
       const idx = item.findIndex(d => d.id === current.id)
-      item[idx].content.props = config
+      item[idx].config = config
       commit('update', list)
     })
   },
@@ -141,13 +142,13 @@ const mutations = {
   clear (state) {
     Vue.set(state, 'list', [])
   },
-  changeCurrent (state, ele) {
+  changeCurrentEl (state, ele) {
     Vue.set(state, 'current', ele)
   },
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
   },
-  changeModule (state, { info, list }) {
+  changeCurrent (state, { info, list }) {
     Vue.set(state, 'pageInfo', info)
     Vue.set(state, 'list', list)
   }

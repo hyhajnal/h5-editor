@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     goDetail () {
-      // this.$store.dispatch('changeModule', this.page)
-      this.$router.push({name: 'PageDetail'})
+      // this.$router.push({name: 'PageDetail'})
+      this.$router.push({name: 'Edit', query: {id: this.page.id}})
     },
     open () {
       this.dialogVisible = true

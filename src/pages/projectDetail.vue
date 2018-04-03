@@ -1,18 +1,9 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="project">
     <header>
-      <head-area></head-area>
+      <head-area :title="project.name"></head-area>
     </header>
     <main>
-      <!-- <el-row type="flex" justify="center" class="search-box">
-        <el-input
-          prefix-icon="el-icon-search"
-          placeholder="请输入内容"
-          v-model="search"
-          class="search-input"
-        >
-        </el-input>
-      </el-row> -->
 
       <el-row :gutter="20" class="project-list">
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
@@ -32,7 +23,7 @@
           layout="total, prev, pager, next"
           :total="total"
           :page-size="11"
-          @current-change="getModules">
+          @current-change="getData">
         </el-pagination>
       </el-row>
 
@@ -58,11 +49,12 @@ export default {
       search: '',
       list: [],
       total: 1,
-      page: 1
+      page: 1,
+      project: null
     }
   },
   mounted () {
-    this.getModules()
+    this.getData()
   },
   components: {
     HeadArea,
@@ -74,17 +66,16 @@ export default {
     PageCard,
     ModuleCard
   },
-  watch: {
-    select () {
-      this.getModules()
-    }
-  },
   methods: {
-    getModules (page) {
+    getData (page) {
       this.page = page
-      this.axios.get(`${Config.URL}/editor/search/pages`, {
-        params: { page: page || 1 }
+      this.axios.get(`${Config.URL}/editor/project/detail`, {
+        params: {
+          id: this.$route.query.id,
+          page: page || 1
+        }
       }).then(data => {
+        this.project = data.project
         this.list = data.list
         this.total = data.total
       })

@@ -42,7 +42,7 @@
             "label": "文字-e5",
             "type": "span",
             "config": [
-              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+              { "name": "text", "label": "文字", "type": "input", "data": "sjhjd"  }
             ],
             "style": "color: #000;",
             "pid": "e4",
@@ -95,7 +95,7 @@
             "label": "文字-e5",
             "type": "span",
             "config": [
-              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+              { "name": "text", "label": "文字", "type": "input", "data": "sjhjd"  }
             ],
             "style": "color: #000;",
             "pid": "e4",
@@ -148,7 +148,7 @@
             "label": "文字-e5",
             "type": "span",
             "config": [
-              { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
+              { "name": "text", "label": "文字", "type": "input", "data": "sjhjd" }
             ],
             "style": "color: #000;",
             "pid": "e4",

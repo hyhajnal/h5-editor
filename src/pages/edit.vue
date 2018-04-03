@@ -33,13 +33,14 @@ export default {
     }
   },
   mounted () {
-    const mod = JSON.parse(window.localStorage.getItem('mod'))
-    let { pageInfo } = this.$store.state
+    this.getData()
+    // const mod = JSON.parse(window.localStorage.getItem('mod'))
+    // let { pageInfo } = this.$store.state
     // debugger
     // 刷新: localStorage 里有值
-    if (!pageInfo && mod) {
-      this.$store.dispatch('changeModule', mod)
-    }
+    // if (!pageInfo && mod) {
+    //   this.$store.dispatch('changeCurrent', mod)
+    // }
     // const modNew = {
     //   id: pageInfo ? pageInfo.id : mod.id,
     //   name: pageInfo ? pageInfo.name : mod.name,
@@ -65,7 +66,7 @@ export default {
     save () {
       const { pageInfo, list } = this.$store.state
       this.saveLocal(pageInfo, list)
-      this.axios.post(`${Config.URL}/editor/module/edit`, {
+      this.axios.post(`${Config.URL}/editor/page/edit`, {
         id: pageInfo.id,
         name: pageInfo.name,
         elements: JSON.stringify({elements: list})
@@ -79,7 +80,14 @@ export default {
         name: pageInfo.name,
         elements: JSON.stringify({elements: list})
       }
-      window.localStorage.setItem('mod', JSON.stringify(mod))
+      window.localStorage.setItem('page', JSON.stringify(mod))
+    },
+    getData () {
+      this.axios.get(`${Config.URL}/editor/page/detail`, {
+        params: { id: this.$route.query.id }
+      }).then(data => {
+        this.$store.dispatch('changeCurrent', data)
+      })
     }
   },
   components: {

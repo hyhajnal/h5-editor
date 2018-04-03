@@ -4,8 +4,8 @@
 
     <!-- Form -->
     <el-dialog :title="'创建' + typeStr" :visible.sync="show">
-      <el-form :model="form">
-        <el-form-item :label="typeStr +'名称'" :label-width="formLabelWidth">
+      <el-form :model="form" ref="add">
+        <el-form-item :label="typeStr +'名称'" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -63,10 +63,16 @@ export default {
   methods: {
     addModule () {
       this.show = false
-      this.axios.post(`${Config.URL}/editor/module/add`, {
+      let params = {
         page: this.page,
-        module: this.form
-      }).then(data => {
+        data: this.form
+      }
+      if (this.type === 'page') {
+        const projectId = parseInt(this.$route.query.id)
+        params.data = {...this.form, projectId}
+      }
+      this.axios.post(`${Config.URL}/editor/${this.type}/add`, params).then(data => {
+        this.$refs.add.resetFields()
         if (data !== 1000) {
           this.$message({type: 'success', message: '创建成功'})
           this.$emit('after-add', data)

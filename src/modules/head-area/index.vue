@@ -4,8 +4,8 @@
       <router-link :to="{name: 'Home'}">
         <i class="iconfont icon-design"></i>
       </router-link>
-      <router-link :to="{name: 'Edit'}" v-if="info">
-        {{info.name}}-{{info.id}}
+      <router-link :to="{name: 'Edit'}" v-if="title || info">
+        {{title || info.name}}
       </router-link>
     </h1>
     <!-- <menu-bar></menu-bar> -->
@@ -37,7 +37,8 @@ export default {
     isSaving: {
       type: Boolean,
       default: false
-    }
+    },
+    title: String
   },
   components: {
     ToolBar,

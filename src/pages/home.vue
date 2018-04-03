@@ -29,7 +29,7 @@
         class="search-input"
       >
         <el-select v-model="select" slot="append" placeholder="请选择">
-          <el-option label="模块库" value="module"></el-option>
+          <!-- <el-option label="模块库" value="module"></el-option> -->
           <el-option label="项目库" value="project"></el-option>
           <el-option label="页面库" value="page"></el-option>
         </el-select>
@@ -63,7 +63,7 @@
         </el-col>
       </el-row>
 
-      <el-row :gutter="20" class="project-list" v-if="select === 'module'">
+      <!-- <el-row :gutter="20" class="project-list" v-if="select === 'module'">
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
@@ -73,12 +73,12 @@
         >
           <module-card :mod="item"></module-card>
         </el-col>
-      </el-row>
+      </el-row> -->
 
       <el-row :gutter="20" class="project-list" v-if="select === 'page'">
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+        <!-- <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
-        </el-col>
+        </el-col> -->
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
           v-for="item in list"
           :key="item.id"
@@ -116,7 +116,7 @@ export default {
   data () {
     return {
       search: '',
-      select: 'module',
+      select: 'project',
       list: [],
       total: 1,
       page: 1
@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     getList (page) {
-      this.page = page
+      this.page = page || 1
       this.axios.get(`${Config.URL}/editor/search/${this.select}s`, {
         params: { page: page || 1 }
       }).then(data => {

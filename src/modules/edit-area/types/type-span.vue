@@ -1,6 +1,6 @@
 <template>
-  <span :style="ele.style">
-    <slot>{{ele.content.props.text}}</slot>
+  <span :style="ele.style" v-if="ele">
+    <slot>{{ele.config[0].data}}</slot>
   </span>
 </template>
 

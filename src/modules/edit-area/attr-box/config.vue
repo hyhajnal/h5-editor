@@ -4,7 +4,27 @@
     <el-row :gutter="10" v-for="(item,idx) in config" :key="item.name">
       <el-col :span="6" class="label">{{item.label}}:</el-col>
       <el-col :span="18">
-        <el-input v-model="configData[config[idx].name]" placeholder="请输入内容" size="small"/>
+
+        <el-input
+          v-if="config[idx].type === 'input'"
+          v-model="config[idx].data"
+          placeholder="请输入内容"
+          size="mini"
+        />
+
+        <el-select v-if="config[idx].type === 'select'"
+          v-model="config[idx].data"
+          placeholder="请选择"
+          size="mini"
+        >
+          <el-option
+            v-for="item in config[idx].options"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+
       </el-col>
     </el-row>
 
@@ -16,18 +36,15 @@ import { RadioBar, RadioItem } from '@/components/radio'
 export default {
   name: 'Config',
   props: {
-    attrData: Array,
-    attrProps: Object
+    attrData: Array
   },
   data () {
     return {
-      config: [],
-      configData: {}
+      config: []
     }
   },
   mounted () {
     this.config = this.attrData
-    this.configData = this.attrProps
   },
   watch: {
     attrData: {
@@ -36,9 +53,9 @@ export default {
       },
       deep: true
     },
-    configData: {
+    config: {
       handler () {
-        this.$store.dispatch('updateConfig', this.configData)
+        this.$store.dispatch('updateConfig', this.config)
       },
       deep: true
     }
