@@ -7,6 +7,7 @@ import TypeSwitch from './type-switch'
 import TypeNavbar from './type-navbar'
 import TypeTabbar from './type-tabbar'
 import TypeTag from './type-tag'
+import TypeImg from './type-img'
 
 export default {
   TypeButton,
@@ -17,5 +18,6 @@ export default {
   TypeSpan,
   TypeTabbar,
   TypeNavbar,
-  TypeTag
+  TypeTag,
+  TypeImg
 }

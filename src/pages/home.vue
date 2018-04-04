@@ -171,7 +171,7 @@ export default {
   .home {
     height: 100vh;
     overflow: auto;
-    background: #000;
+    background: #f2f2f2;
     // background: url(https://www.brainpickings.org/wp-content/themes/brainpickings/images/bckgd_body.png);
   }
   main {

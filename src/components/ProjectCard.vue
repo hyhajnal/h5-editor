@@ -68,6 +68,8 @@ export default {
   overflow: hidden;
   cursor: pointer;
   height: 270px;
+  border: 1px solid #f2f2f2;
+  border-radius: 4px;
 }
 .card-image {
   background-image: url('../assets/project.jpg');

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { styleToClass } from '@/utils/transformStyle'
+import { styleToClass, htmlRender } from '@/utils/transformStyle'
 const cssFormat = require('prettyugly')
 const Prism = require('prismjs')
 require('prismjs/themes/prism-okaidia.css')
@@ -31,10 +31,8 @@ export default {
     }
   },
   mounted () {
-    let htmlCode = prettifyHtml(document.getElementById('page').innerHTML
-      .replace(/data-v-\w{8}=""\s/g, '')
-      // .replace(/style="[\s\S]+"$/g, '')
-    )
+    const treeList = JSON.parse(JSON.stringify(this.$store.state.list))
+    let htmlCode = prettifyHtml(htmlRender(treeList))
     let jsCode = `
       export default {
         name: 'Module',
@@ -45,8 +43,7 @@ export default {
       }
     `
     // console.log(styleToClass(this.$store.state.list))
-    const list = JSON.parse(JSON.stringify(this.$store.state.list))
-    const cssCode = cssFormat.pretty(styleToClass(list))
+    const cssCode = cssFormat.pretty(styleToClass(treeList))
     let css = Prism.highlight(cssCode, Prism.languages.css)
     let html = Prism.highlight(htmlCode, Prism.languages.markup)
     const js = Prism.highlight(jsCode, Prism.languages.javascript)
@@ -77,7 +74,6 @@ export default {
         duration: 100,
         showClose: false
       })
-      // this.$message.info('代码复制成功，快去粘贴吧～')
     }
   }
 }

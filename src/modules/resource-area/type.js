@@ -1,7 +1,7 @@
 const components = [
   {icon: 'div', label: '容器', value: 'div'},
   {icon: 'span', label: '文字', value: 'span'},
-  {icon: 'image', label: '图片', value: 'image'},
+  {icon: 'image', label: '图片', value: 'img'},
   {icon: 'button', label: '按钮', value: 'button'},
   {icon: 'radio', label: '单选框', value: 'radio'},
   {icon: 'checkbox', label: '多选框', value: 'checkbox'},

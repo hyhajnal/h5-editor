@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import TypeDiv from '../edit-area/types/type-div'
-import TypeSpan from '../edit-area/types/type-span'
+import _Type from '../edit-area/types'
 
 export default {
   name: 'CustomElement',
@@ -25,8 +24,7 @@ export default {
     return {}
   },
   components: {
-    TypeDiv,
-    TypeSpan
+    ..._Type
   },
   methods: {
   }

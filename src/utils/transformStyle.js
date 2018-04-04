@@ -134,18 +134,25 @@ function toStyleObjItem (key, value) {
   return result
 }
 
-// const styleToClass = (tree, s) => {
-//   let str = s || ''
-//   console.log('hh', s)
-//   tree.forEach((item, idx) => {
-//     str = `${str}.${item.id}{${item.style}}`
-//     if (item.children && item.children.length > 0) {
-//       debugger
-//       styleToClass(item.children, str)
-//     }
-//   })
-//   return str
-// }
+const htmlRenderEle = (item) => {
+  let str = ''
+  str += `<${item.type} class="${item.id}">`
+  if (item.children && item.children.length > 0) {
+    item.children.forEach(child => {
+      str += `${htmlRenderEle(child)}`
+    })
+  }
+  str += `</${item.type}>`
+  return str
+}
+
+const htmlRender = (tree, s) => {
+  let str = s || ''
+  tree.forEach((item, idx) => {
+    str += htmlRenderEle(item)
+  })
+  return str
+}
 
 const styleToClass = (tree, s) => {
   let q = []
@@ -156,7 +163,9 @@ const styleToClass = (tree, s) => {
   // console.dir(q)
   while (q.length > 0) {
     let node = q.shift()
-    str = `${str}.${node.id}{${node.style}}`
+    if (node.style) {
+      str = `${str}.${node.id}{${node.style}}`
+    }
     if (node.children && node.children.length > 0) {
       node.children.forEach(item => {
         q.push(item)
@@ -166,4 +175,4 @@ const styleToClass = (tree, s) => {
   return str
 }
 
-export { toStyleObj, toStyleString, styleToClass }
+export { toStyleObj, toStyleString, styleToClass, htmlRender }
