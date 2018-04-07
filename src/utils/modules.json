@@ -1,0 +1,16 @@
+[
+  {
+    "id": "m-1",
+    "name": "模块1",
+    "elements": ["e2", "e3"],
+    "pid": "e1",
+    "developer": "开发者1"
+  },
+  {
+    "id": "m-2",
+    "name": "模块2",
+    "pid": "root",
+    "elements": ["e4"],
+    "developer": "开发者2"
+  }
+]

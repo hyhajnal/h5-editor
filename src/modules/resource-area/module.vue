@@ -1,71 +1,55 @@
 <template>
   <div class="tpl">
-    <!-- <ul style="padding: 15px;"> -->
-    <draggable
-      element="ul"
-      :options="{group:{name:'resource1',pull:'clone',put:false}}"
-      @end="onEnd"
-    >
-      <li v-for="item in templs" :key="item.id" :data-id="item.id" class="component-item">
+    <ul style="padding: 15px;">
+      <li v-for="(item, idx) in modules"
+        :key="item.id" :data-id="item.id"
+        class="component-item"
+        @click="onClick(idx)"
+      >
         <el-card :body-style="{ padding: '0px' }">
           <!-- <img :src="item.image" class="image"> -->
           <div class="image">
             <div class="component-preview">
-              <custom-element
+              <!-- <custom-element
                 v-for="el in item.content.children"
                 :key="el.id"
                 :element="el"
-              />
+              /> -->
             </div>
           </div>
           <div style="padding: 4px 14px 14px 14px;">
             <div class="bottom clearfix">
-              <span class="title">{{item.name}}-{{item.id}}</span>
+              <span class="title">{{item.name}}——{{item.developer}}</span>
               <!-- <el-button type="text" class="button">编辑</el-button> -->
               <i class="el-icon-search"></i>
-              <i class="el-icon-circle-close-outline"></i>
+              <i class="el-icon-edit"></i>
               <!-- <el-button type="text" class="button">预览</el-button> -->
             </div>
           </div>
         </el-card>
       </li>
-    <!-- </ul> -->
-    </draggable>
+    </ul>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import CustomElement from '@/modules/preview-area/custom-element'
-import draggable from 'vuedraggable'
+// import { treeTravel } from '@/utils/transformTree'
 export default {
-  name: 'Templ',
+  name: 'Module',
   data () {
     return {
       currentDate: new Date()
     }
   },
-  components: {
-    draggable,
-    CustomElement
-  },
   computed: {
     ...mapGetters({
-      templs: 'templs'
+      modules: 'modules'
     })
   },
   methods: {
-    onEnd (obj) {
-      const pid = obj.to.dataset.id || obj.to.children[0].dataset.pid || 'root'
-      const p = document.getElementById('page')
-      const el = p.getElementsByClassName('component-item')[0]
-      el && el.remove()
-      console.log('[Edit]', `${pid}的${obj.newIndex}新增组件${obj.item.dataset.id}`)
-      this.$store.dispatch('addTempl', {
-        type: obj.item.dataset.id,
-        pid: pid,
-        idx: obj.newIndex
-      })
+    onClick (i) {
+      this.$store.dispatch('changeCurrent', i)
     }
   }
 }
@@ -75,9 +59,6 @@ export default {
   .tpl {
     background: #fff;
     padding: 15px;
-  }
-  .component-item {
-    cursor: move;
   }
   .title {
     font-size: 14px;
@@ -94,8 +75,8 @@ export default {
     float: right;
     color: #666;
   }
-  .el-icon-search {
-    margin-left: 10px;
+  .el-icon-edit {
+    margin-right: 10px;
   }
 
   .image {
@@ -105,12 +86,10 @@ export default {
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #f2f2f2;
+    background-image: url('../../assets/2.jpg');
   }
   .component-preview {
     transform: scale(0.6);
-    // position: absolute;
-    // top: 0;
-    // left: 0;
   }
 
   .clearfix:before,
@@ -124,6 +103,7 @@ export default {
   }
   li {
     margin-bottom: 15px;
+    cursor: pointer;
   }
   li:last-child {
     margin-bottom: 0;

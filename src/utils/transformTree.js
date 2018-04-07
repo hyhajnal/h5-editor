@@ -41,30 +41,6 @@ const toList = (tree) => {
   return JSON.parse(JSON.stringify(list))
 }
 
-// const treeTravel = (tree, id) => {
-//   if (id === 'root') {
-//     return new Promise(resolve => resolve(tree))
-//   }
-//   let result = null
-//   for (let i = 0; i < tree.length; i++) {
-//     let item = tree[i]
-//     if (item.id === id) {
-//       console.log(`${item.id}-${id}`)
-//       result = item.children
-//       break
-//     } else if (item.children && item.children.length > 0) {
-//       treeTravel(item.children, id)
-//     }
-//   }
-//   if (result) {
-//     const p = new Promise(resolve => resolve(result))
-//     console.log(p)
-//     return p
-//   } else {
-//     return true
-//   }
-// }
-
 const treeTravel = (tree, id) => {
   if (id === 'root') {
     return new Promise(resolve => resolve(tree))
@@ -87,4 +63,25 @@ const treeTravel = (tree, id) => {
   }
 }
 
-export { toTree, toList, treeTravel }
+/**
+ * 模块编辑转换
+ */
+const moduleSelect = function (tree, ids, pid) {
+  let newElements = []
+  treeTravel(tree, pid).then(list => {
+    list.forEach(item => {
+      if (ids.indexOf(item.id) > -1) {
+        item.pid = 'root'
+        newElements.push(item)
+      }
+    })
+    const mod = {
+      id: 'mod-demo',
+      name: '模块-demo',
+      elements: newElements
+    }
+    return new Promise(resolve => resolve(mod))
+  })
+}
+
+export { toTree, toList, treeTravel, moduleSelect }

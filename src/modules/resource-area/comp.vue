@@ -46,7 +46,7 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log(`${pid}的${obj.newIndex}新增模版${obj.item.dataset.id}`)
+      console.log('[Edit]', `${pid}的${obj.newIndex}新增模版${obj.item.dataset.id}`)
       this.$store.dispatch('addComp', {
         type: obj.item.dataset.id,
         pid: pid,

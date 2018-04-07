@@ -30,6 +30,14 @@
         </template>
         <templ></templ>
       </el-tab-pane>
+
+      <el-tab-pane>
+        <template slot="label">
+          <span>模块</span>
+        </template>
+        <module></module>
+      </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
@@ -38,6 +46,7 @@
 import { components, layouts } from './type'
 import Templ from './templ'
 import Comp from './comp'
+import Module from './module'
 import draggable from 'vuedraggable'
 
 export default {
@@ -46,13 +55,14 @@ export default {
     return {
       components: components,
       layouts: layouts,
-      tabActive: '1'
+      tabActive: '3'
     }
   },
   components: {
     draggable,
     Comp,
-    Templ
+    Templ,
+    Module
   },
   methods: {
     onEnd (obj) {
@@ -60,7 +70,7 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log(`${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
+      console.log('[Edit]', `${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
         pid: pid,

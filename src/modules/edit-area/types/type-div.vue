@@ -44,7 +44,7 @@ export default {
         nPid = obj.to.dataset.id
       }
       let to = `${nPid}的${obj.newIndex}`
-      console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
+      console.log('[Edit]', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.item.dataset.pid,

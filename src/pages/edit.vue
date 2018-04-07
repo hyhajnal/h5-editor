@@ -4,7 +4,7 @@
       <head-area :isSaving="isSaving" @save="save"></head-area>
     </header>
     <main>
-      <div class="left">
+      <div class="left" v-if="!isModuleEdit">
         <resource-area></resource-area>
       </div>
       <div class="main">
@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted () {
-    this.getData()
+    // this.getData()
     // const mod = JSON.parse(window.localStorage.getItem('mod'))
     // let { pageInfo } = this.$store.state
     // debugger
@@ -55,12 +55,17 @@ export default {
     //   window.localStorage.setItem('mod', JSON.stringify(modNew))
     // }, 5000)
   },
-  destroyed () {
-    clearInterval(this.timer)
-  },
-  beforeRouteLeave (to, from, next) {
-    this.save()
-    next()
+  // destroyed () {
+  //   clearInterval(this.timer)
+  // },
+  // beforeRouteLeave (to, from, next) {
+  //   this.save()
+  //   next()
+  // },
+  computed: {
+    isModuleEdit () {
+      return this.$store.state.isModuleEdit
+    }
   },
   methods: {
     save () {

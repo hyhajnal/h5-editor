@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import Page from '@/utils/page.json'
+import Page from '@/utils/page.json'
 import Components from '@/utils/components.json'
+import Modules from '@/utils/modules.json'
 import Templs from '@/utils/templs.json'
 import { treeTravel } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
@@ -9,29 +10,50 @@ import { guid, getInit, mobiles } from '@/utils/help'
 Vue.use(Vuex)
 
 const state = {
-  pageInfo: null,
-  list: [], // 组件列表
+  info: Page.info, // id & name
+  list: Page.elements, // 页面-(组件列表)
+  moduleInfo: null,
+  moduleList: [], // 模块-(组件列表)
   current: null, //  当前选中组件的idx
   isDraging: false,
+  isModuleEdit: false, // 编辑的是否是模块
   components: Components,
+  modules: Modules,
   templs: Templs,
   device: {...mobiles[0], percent: 100}
 }
 
 const actions = {
   changeCurrent ({ state, commit }, data) {
-    console.log(data)
-    const info = {
-      id: data.id,
-      name: data.name
+    let info = {}
+    let list = []
+    const isModuleEdit = data.id ? 0 : 1
+    // 页面编辑的状态下
+    if (!isModuleEdit) {
+      info = { id: data.id, name: data.name }
+      list = JSON.parse(data.elements).elements
+      commit('changeCurrent', { info, list, isModuleEdit })
+    } else {
+      // 模块编辑的状态下,data为idx
+      const tree = JSON.parse(JSON.stringify(state.list))
+      const mod = state.modules[data]
+      const ids = mod.elements.toString()
+      const pid = mod.pid
+      info = { id: mod.id, name: mod.name, idx: data }
+      treeTravel(tree, pid).then(elements => {
+        elements.forEach(item => {
+          if (ids.indexOf(item.id) > -1) {
+            item.pid = 'root'
+            list.push(item)
+          }
+        })
+      })
+      commit('changeCurrent', { info, list, isModuleEdit })
     }
-    const list = JSON.parse(data.elements).elements
-    commit('changeCurrent', { info, list })
   },
   updateStyle ({ state, commit }, style) {
     if (!state.current) return
     let { list, current } = JSON.parse(JSON.stringify(state))
-    console.log(current.pid)
     treeTravel(list, current.pid).then(item => {
       const idx = item.findIndex(d => d.id === current.id)
       item[idx].style = style
@@ -148,9 +170,19 @@ const mutations = {
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
   },
-  changeCurrent (state, { info, list }) {
-    Vue.set(state, 'pageInfo', info)
-    Vue.set(state, 'list', list)
+  changeCurrent (state, { info, list, isModuleEdit }) {
+    Vue.set(state, 'isModuleEdit', isModuleEdit)
+    if (isModuleEdit) {
+      Vue.set(state, 'moduleInfo', info)
+      Vue.set(state, 'moduleList', list)
+    } else {
+      Vue.set(state, 'info', info)
+      Vue.set(state, 'list', list)
+    }
+  },
+  // 切换到页面编辑状态
+  changeToPage (state) {
+    Vue.set(state, 'isModuleEdit', false)
   }
 }
 
@@ -159,11 +191,10 @@ const getters = {
     return state.current
   },
   page: state => {
-    // return toTree(state.list)
-    return state.list
+    return state.isModuleEdit ? state.moduleList : state.list
   },
   pageInfo: state => {
-    return state.pageInfo
+    return state.isModuleEdit ? state.moduleInfo : state.info
   },
   device: state => {
     return state.device
@@ -173,6 +204,12 @@ const getters = {
   },
   templs: state => {
     return state.templs
+  },
+  modules: state => {
+    return state.modules
+  },
+  isModuleEdit: state => {
+    return state.isModuleEdit
   }
 }
 

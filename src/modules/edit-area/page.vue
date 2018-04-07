@@ -7,7 +7,6 @@
       id="page"
       class="page"
       data-id="root"
-      :style="style"
       :options="dragOptions"
       @end="onEnd"
     > 
@@ -77,7 +76,7 @@ export default {
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       let pid = obj.to.dataset.id || obj.to.children[0].dataset.pid
       const to = `${pid}的${obj.newIndex}`
-      console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
+      console.log('[Edit]', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.from.children[0].dataset.pid,
@@ -95,7 +94,9 @@ export default {
   // border: 1px solid #ddd;
   margin: 40px auto;
   background: #fff;
-  overflow: auto;
+  // overflow: auto;
+  width: 375px;
+  min-height: 667px;
 }
 // .element-active {
 //   border: 2px solid #03dafd;
