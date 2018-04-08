@@ -39,7 +39,13 @@ const actions = {
       const mod = state.modules[data]
       const ids = mod.elements.toString()
       const pid = mod.pid
-      info = { id: mod.id, name: mod.name, idx: data }
+      info = {
+        id: mod.id,
+        name: mod.name,
+        idx: data,
+        developer: mod.developer,
+        components: mod.components
+      }
       treeTravel(tree, pid).then(elements => {
         elements.forEach(item => {
           if (ids.indexOf(item.id) > -1) {

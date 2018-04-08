@@ -10,7 +10,7 @@
     </h1>
 
     <div class="center-area">
-      <h1 class="title">
+      <h1 class="title" v-if="route !== 'Preview'" >
         <i class="el-icon-arrow-left"
           v-if="show.prev"
           @click="prev"
@@ -23,9 +23,8 @@
           @click="next"
         />
       </h1>
-      <el-input
+      <el-input v-if="route === 'Home'"
         style="width: 400px;"
-        v-if="route === 'Home'"
         placeholder="请输入内容"
         class="search-input"
         v-model="input">
@@ -72,12 +71,13 @@ export default {
     pageInfo () {
       return this.$store.state.info
     },
+    // 切换按钮的显示状态
     show () {
       if (this.isModuleEdit) {
         const idx = this.info.idx
         return {
           prev: idx > 0 ? 1 : 0,
-          next: idx < this.$store.state.modules.length ? 1 : 0
+          next: idx < this.$store.state.modules.length - 1 ? 1 : 0
         }
       } else {
         return { next: false, prev: false }

@@ -4,13 +4,32 @@
     "name": "模块1",
     "elements": ["e2", "e3"],
     "pid": "e1",
-    "developer": "开发者1"
+    "developer": "开发者1",
+    "components": {
+      "id/comp1": {
+        "name": "demo-comp1",
+        "label": "组件1",
+        "elements": ["e2"]
+      },
+      "id/comp2": {
+        "name": "demo-comp2",
+        "label": "组件2",
+        "elements": ["e3"]
+      }
+    }
   },
   {
     "id": "m-2",
     "name": "模块2",
     "pid": "root",
     "elements": ["e4"],
-    "developer": "开发者2"
+    "developer": "开发者2",
+    "components": {
+      "id/comp1": {
+        "name": "demo-comp1",
+        "label": "组件1",
+        "elements": ["e5"]
+      }
+    }
   }
 ]

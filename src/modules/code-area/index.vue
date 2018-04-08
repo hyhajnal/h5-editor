@@ -4,35 +4,24 @@
       <h1 class="html-title">
         Vue<i class="iconfont icon-copy" @click="copy"></i>
       </h1>
-      <pre class="language-markup">
-        <code class="language-markup">
-          <div v-html="vue"></div>
-        </code>
-      </pre>
+      <pre v-highlightjs="vue"><code class="html"></code></pre>
     </div>
   </div>
 </template>
-
 <script>
 import { styleToClass, htmlRender } from '@/utils/transformStyle'
-const cssFormat = require('prettyugly')
-const Prism = require('prismjs')
-require('prismjs/themes/prism-okaidia.css')
-const prettifyHtml = require('prettify-html')
+import 'highlight.js/styles/monokai-sublime.css'
+const pretty = require('pretty')
 
 export default {
   name: 'CodeArea',
   data () {
     return {
-      html: '',
-      css: '',
-      js: '',
       vue: ''
     }
   },
   mounted () {
     const treeList = JSON.parse(JSON.stringify(this.$store.state.list))
-    let htmlCode = prettifyHtml(htmlRender(treeList))
     let jsCode = `
       export default {
         name: 'Module',
@@ -42,22 +31,13 @@ export default {
         components: {}
       }
     `
-    // console.log(styleToClass(this.$store.state.list))
-    const cssCode = cssFormat.pretty(styleToClass(treeList))
-    let css = Prism.highlight(cssCode, Prism.languages.css)
-    let html = Prism.highlight(htmlCode, Prism.languages.markup)
-    const js = Prism.highlight(jsCode, Prism.languages.javascript)
-    this.vue = `
-      &lt;template&gt;
-        ${html}
-      &lt;/template&gt;
-      &lt;script&gt;
-        ${js}
-      &lt;/script&gt;
-      &lt;style scoped&gt;
-        ${css}
-      &lt;/style&gt;
-    `
+    // let code = '<!-- html -->'
+    let code = `<template>${htmlRender(treeList)}</template>`
+    // code += '\n<!-- js code -->'
+    code += `<script>\n${jsCode}<\/script>`
+    // code += '\n<!-- style -->'
+    code += `<style scoped>${styleToClass(treeList)}\n</style>`
+    this.vue = pretty(code)
   },
   methods: {
     copy () {
@@ -70,9 +50,7 @@ export default {
       this.$notify({
         title: '成功',
         message: '代码复制成功，快去粘贴吧～',
-        type: 'success',
-        duration: 100,
-        showClose: false
+        type: 'success'
       })
     }
   }
