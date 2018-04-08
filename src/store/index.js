@@ -62,6 +62,7 @@ const actions = {
     let { list, current } = JSON.parse(JSON.stringify(state))
     treeTravel(list, current.pid).then(item => {
       const idx = item.findIndex(d => d.id === current.id)
+      if (!item[idx]) return
       item[idx].style = style
       commit('update', list)
     })
@@ -154,9 +155,13 @@ const actions = {
    * @param {*} idx
    */
   delEle ({ state, commit }, payload) {
-    const { pid, idx } = payload
+    let { pid, idx, id } = payload
+    if (id) {
+      commit('changeCurrentEl', null)
+    }
     let list = JSON.parse(JSON.stringify(state.list))
     treeTravel(list, pid).then(item => {
+      idx = idx || item.findIndex(c => c.id === id)
       item.splice(idx, 1)
       commit('update', list)
     })

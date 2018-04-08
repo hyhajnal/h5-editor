@@ -7,7 +7,7 @@
     {
       "id": "e1",
       "type": "div",
-      "style": "width:150px;height:150px;background:#4ED7EC",
+      "style": "width:150px;height:150px;background:#4ED7EC;",
       "label": "容器-e1",
       "children": [{
         "id": "e2",
@@ -30,7 +30,7 @@
       "id": "e4",
       "label": "容器-e4",
       "type": "div",
-      "style": "width:100px;height:50px;background:#FED96E",
+      "style": "width:100px;height:50px;background:#FED96E;",
       "pid": "root",
       "children": [{
         "id": "e5",

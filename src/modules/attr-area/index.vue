@@ -5,7 +5,7 @@
       <el-tab-pane label="结构" name="second">
         <struct></struct>
       </el-tab-pane>
-      <el-tab-pane label="属性" name="attr">
+      <el-tab-pane label="属性" name="attr" v-if="!isModuleEdit">
         <attr-box />
       </el-tab-pane>
     </el-tabs>
@@ -15,6 +15,7 @@
 <script>
 import Struct from './struct'
 import AttrBox from '@/modules/edit-area/attr-box/index'
+import { mapGetters } from 'vuex'
 export default {
   name: 'AttrArea',
   data () {
@@ -25,6 +26,11 @@ export default {
   components: {
     Struct,
     AttrBox
+  },
+  computed: {
+    ...mapGetters({
+      isModuleEdit: 'isModuleEdit'
+    })
   },
   methods: {
     handleClick (tab, event) {

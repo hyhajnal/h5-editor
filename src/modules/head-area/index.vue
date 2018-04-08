@@ -4,8 +4,15 @@
       <router-link :to="{name: 'Home'}">
         <i class="iconfont icon-design"></i>
       </router-link>
-      <span v-if="isModuleEdit" @click="changeToPage">{{pageInfo.name}}</span>
-      <span v-else>首页</span>
+      <span v-if="isModuleEdit && route == 'Edit'"
+        @click="changeToPage"
+      >
+        {{pageInfo.name}}
+      </span>
+      <span v-if="!isModuleEdit && route === 'Edit'">首页</span>
+      <span v-if="route === 'Preview'" @click="goBack">
+        {{info.name}}
+      </span>
 
     </h1>
 
@@ -85,10 +92,8 @@ export default {
     }
   },
   methods: {
-    goEdit () {
-      this.$router.push({
-        name: 'Edit'
-      })
+    goBack () {
+      this.$router.go(-1)
     },
     save () {
       this.$emit('save')
