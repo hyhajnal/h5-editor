@@ -8,6 +8,7 @@
       <span>
         <i :class="'icontype iconfont icon-' + data.type" />
         {{node.label}}
+        <el-tag size="mini" v-if="data.className">{{data.className}}</el-tag>
       </span>
       <span>
         <i class="iconfont icon-eye"
@@ -21,14 +22,9 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  // let id = 1000
 
   export default {
     name: 'Struct',
-    data () {
-      return {
-      }
-    },
     computed: {
       ...mapGetters({
         tree: 'page'

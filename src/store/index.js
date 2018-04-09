@@ -4,7 +4,7 @@ import Page from '@/utils/page.json'
 import Components from '@/utils/components.json'
 import Modules from '@/utils/modules.json'
 import Templs from '@/utils/templs.json'
-import { treeTravel } from '@/utils/transformTree'
+import { treeTravel, treeTravelById } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
 
 Vue.use(Vuex)
@@ -14,6 +14,7 @@ const state = {
   list: Page.elements, // 页面-(组件列表)
   moduleInfo: null,
   moduleList: [], // 模块-(组件列表)
+  currentComp: null, // preview页-当前组件
   current: null, //  当前选中组件的idx
   isDraging: false,
   isModuleEdit: false, // 编辑的是否是模块
@@ -57,16 +58,30 @@ const actions = {
       commit('changeCurrent', { info, list, isModuleEdit })
     }
   },
+
   updateStyle ({ state, commit }, style) {
     if (!state.current) return
     let { list, current } = JSON.parse(JSON.stringify(state))
-    treeTravel(list, current.pid).then(item => {
-      const idx = item.findIndex(d => d.id === current.id)
-      if (!item[idx]) return
-      item[idx].style = style
+    treeTravelById(list, current.id).then(item => {
+      item.style = style
       commit('update', list)
     })
   },
+
+  changeClassName ({state, commit}, {id, className}) {
+    let list = JSON.parse(JSON.stringify(state.list))
+    if (state.isModuleEdit) {
+      list = JSON.parse(JSON.stringify(state.moduleList))
+      const idx = state.moduleInfo.idx
+      commit('classId', { idx, id, className })
+    }
+    treeTravelById(list, id).then(item => {
+      item.className = className
+      console.log(item)
+      commit('update', list)
+    })
+  },
+
   updateConfig ({ state, commit }, config) {
     if (!state.current) return
     let { list, current } = JSON.parse(JSON.stringify(state))
@@ -76,6 +91,7 @@ const actions = {
       commit('update', list)
     })
   },
+
   moveEle ({ state, commit }, payload) {
     const { oIdx, oPid, nIdx, nPid } = payload
     let tmp = null
@@ -90,6 +106,7 @@ const actions = {
       commit('update', list)
     })
   },
+
   addEle ({ state, commit }, payload) {
     const { type, pid, idx } = payload
     let id = guid()
@@ -194,6 +211,15 @@ const mutations = {
   // 切换到页面编辑状态
   changeToPage (state) {
     Vue.set(state, 'isModuleEdit', false)
+  },
+  // 模块 class-id 的映射
+  classId (state, { idx, id, className }) {
+    let classId = state.modules[idx].classId
+    let newClassId = {}
+    Vue.set(newClassId, id, className)
+    classId = Object.assign(classId, newClassId)
+    console.log(classId)
+    Vue.set(state.modules[idx], 'classId', classId)
   }
 }
 
@@ -221,6 +247,15 @@ const getters = {
   },
   isModuleEdit: state => {
     return state.isModuleEdit
+  },
+  // 用到的组件列表
+  useComps: state => {
+    if (state.moduleInfo) {
+      const stateNew = JSON.parse(JSON.stringify(state))
+      return stateNew.moduleInfo.components
+    } else {
+      return null
+    }
   }
 }
 

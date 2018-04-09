@@ -41,8 +41,13 @@ const toList = (tree) => {
   return JSON.parse(JSON.stringify(list))
 }
 
-const treeTravel = (tree, id) => {
-  if (id === 'root') {
+/**
+ * 根据 pid 返回 children
+ * @param {*} tree
+ * @param {*} pid
+ */
+const treeTravel = (tree, pid) => {
+  if (pid === 'root') {
     return new Promise(resolve => resolve(tree))
   }
   let q = []
@@ -52,8 +57,31 @@ const treeTravel = (tree, id) => {
   // console.dir(q)
   while (q.length > 0) {
     let node = q.shift()
-    if (node.id === id) {
+    if (node.id === pid) {
       return new Promise(resolve => resolve(node.children))
+    }
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(item => {
+        q.push(item)
+      })
+    }
+  }
+}
+
+/**
+ * 根据 pid 返回 children
+ * @param {*} tree
+ * @param {*} id
+ */
+const treeTravelById = (tree, id) => {
+  let q = []
+  tree.forEach(item => {
+    q.push(item)
+  })
+  while (q.length > 0) {
+    let node = q.shift()
+    if (node.id === id) {
+      return new Promise(resolve => resolve(node))
     }
     if (node.children && node.children.length > 0) {
       node.children.forEach(item => {
@@ -84,4 +112,4 @@ const moduleSelect = function (tree, ids, pid) {
   })
 }
 
-export { toTree, toList, treeTravel, moduleSelect }
+export { toTree, toList, treeTravel, moduleSelect, treeTravelById }

@@ -7,6 +7,12 @@ const toStyleString = (data) => {
     if (key === 'height' && data[key] === 0) {
       return
     }
+    if (key === 'border' && data[key][0] === 0) {
+      return
+    }
+    if (key === 'borderRadius' && data[key][0] === 0) {
+      return
+    }
     const value = toStyleStrItem(key, data[key])
     styleStr = `${styleStr}${key}:${value};`
   })
@@ -136,7 +142,7 @@ function toStyleObjItem (key, value) {
 
 const htmlRenderEle = (item) => {
   let str = ''
-  str += `<${item.type} class="${item.id}">`
+  str += `<${item.type} class="${item.className || item.id}">`
   if (item.children && item.children.length > 0) {
     item.children.forEach(child => {
       str += `${htmlRenderEle(child)}`
@@ -164,7 +170,8 @@ const styleToClass = (tree, s) => {
   while (q.length > 0) {
     let node = q.shift()
     if (node.style) {
-      str = `${str}.${node.id}{${node.style}}`
+      let classStr = `.${node.className || node.id}`
+      str = `${str}${classStr}{${node.style}}`
     }
     if (node.children && node.children.length > 0) {
       node.children.forEach(item => {

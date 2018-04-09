@@ -7,10 +7,12 @@
     {
       "id": "e1",
       "type": "div",
-      "style": "width:150px;height:150px;background:#4ED7EC;",
+      "className": "",
+      "style": "width:150px;height:150px;border:1px solid #ccc;",
       "label": "容器-e1",
       "children": [{
         "id": "e2",
+        "className": "",
         "label": "容器-e2",
         "type": "div",
         "style": "width:50px;height:50px;background:#409EFF;",
@@ -18,6 +20,7 @@
         "children": []
       },{
         "id": "e3",
+        "className": "",
         "label": "容器-e3",
         "type": "div",
         "style": "width:50px;height:50px;background:#555;",
@@ -30,12 +33,14 @@
       "id": "e4",
       "label": "容器-e4",
       "type": "div",
+      "className": "",
       "style": "width:100px;height:50px;background:#FED96E;",
       "pid": "root",
       "children": [{
         "id": "e5",
         "label": "文字-e5",
         "type": "span",
+        "className": "",
         "config": [
           { "name": "text", "label": "文字", "type": "input", "data": "sajfg" }
         ],

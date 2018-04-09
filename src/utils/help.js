@@ -5,7 +5,7 @@ function guid () {
   return (`e-${S4() + S4()}`)
 }
 
-const getInit = type => {
+function getInit (type) {
   let attr
   switch (type) {
     case 'div':
@@ -61,4 +61,13 @@ const mobiles = [{
   height: 812
 }]
 
-export { guid, getInit, mobiles }
+function px2rem (value) {
+  if (value) {
+    value = value / 75
+    value = parseFloat(value).toFixed(6)
+    return (value + 'rem')
+  }
+  return null
+}
+
+export { guid, getInit, mobiles, px2rem }

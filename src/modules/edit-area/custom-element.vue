@@ -8,7 +8,7 @@
     @click.native.capture="changeActive"
     @click.native.right.prevent.stop="openMenu"
     v-clickoutside="closeMenu"
-    class="element"
+    :class="['element', { 'element-active': active }]"
   >
     <custom-element
       v-for="item in element.children"
@@ -16,18 +16,37 @@
       :key="item.id"
       v-if="element.children && element.children.length > 0"
     />
+    <!-- {{active}} -->
     <ul class="menu-box" v-if="menuShow">
       <li class="menu-item del" v-if="!isModuleEdit"
         @click.capture.stop="del">删除</li>
-      <template v-if="!isModuleEdit">
+      <template v-if="isModuleEdit">
         <!-- <li class="menu-item">id: {{element.id}}</li> -->
-        <li class="menu-item">
-          class:&nbsp;
-          <el-input
-            v-model="input"
-            size="mini"
-            class="input-class"
-          />
+        <li class="menu-item className">
+          <span>class:&nbsp;</span>
+          <div>
+            <el-tag v-if="className"
+              closable
+              :disable-transitions="false"
+              @close="handleClose">
+              {{className}}
+            </el-tag>
+            <el-button
+              v-if="!className && !inputVisible"
+              class="button-new-tag"
+              size="mini"
+              @click="showInput">
+            +</el-button>
+            <el-input
+              class="input-new-tag"
+              v-if="inputVisible"
+              v-model="inputValue"
+              ref="saveTagInput"
+              size="mini"
+              @keyup.enter.native="handleInputConfirm"
+            >
+            </el-input>
+          </div>
         </li>
       </template>
     </ul>
@@ -49,20 +68,21 @@ export default {
     return {
       ready: false,
       menuShow: false,
-      input: ''
+      className: '',
+      inputVisible: false,
+      inputValue: ''
     }
   },
   components: {..._Type, draggable},
   computed: {
-    canReceive () {
-      return this.$store.state.isDraging && this.element.type === 'div'
-    },
     active () {
-      const current = this.$store.state.current
-      return current && current.id === this.element.id
+      const current = this.current
+      const isCurrent = current && current.id === this.element.id
+      return (isCurrent || this.menuShow)
     },
     ...mapGetters({
-      isModuleEdit: 'isModuleEdit'
+      isModuleEdit: 'isModuleEdit',
+      current: 'current'
     })
   },
   mounted () {
@@ -71,6 +91,11 @@ export default {
       this.ready = true
     } else {
       this.ready = true
+    }
+  },
+  watch: {
+    'element.className' (o, n) {
+      this.className = n
     }
   },
   methods: {
@@ -122,6 +147,30 @@ export default {
           }
         }
       })
+    },
+
+    handleClose () {
+      this.className = ''
+    },
+
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+
+    handleInputConfirm () {
+      let inputValue = this.inputValue
+      if (inputValue) {
+        this.className = inputValue
+      }
+      this.inputVisible = false
+      this.inputValue = ''
+      this.$store.dispatch('changeClassName', {
+        id: this.element.id,
+        className: inputValue
+      })
     }
   }
 }
@@ -131,11 +180,13 @@ export default {
 <style scoped lang="scss">
 .element {
   cursor: move;
-  // transition: all .5s;
-  // &:hover {
-  //   border: 2px dashed #03dafd !important;
-  // }
   position: relative;
+  &:hover {
+    border: 2px dashed #4ED7EC !important;
+  }
+}
+.element-active {
+  border: 2px dashed #4ED7EC;
 }
 .menu-box {
   position: absolute;
@@ -149,6 +200,10 @@ export default {
   border: 1px solid #ebeef5;
   z-index: 9999;
   border-radius: 2px;
+  .del {
+    text-align: center;
+    border-bottom: 1px solid #ebeef5;
+  }
   .del:hover {
     background-color: #ecf5ff;
     color: #FD7F6B;
@@ -156,14 +211,15 @@ export default {
 }
 .menu-item {
   padding: 5px 10px;
-  text-align: center;
+  // text-align: center;
+}
+.className {
+  display: flex;
+  align-items: center;
 }
 // .menu-item:not(:last-child) {
 //   border-bottom: 1px solid #ebeef5;
 // }
-.input-class {
-  width: 65px;
-}
 .option-wrap {
   position: relative;
   display: inline-block;
@@ -188,7 +244,16 @@ export default {
   .el-input--mini .el-input__inner {
     height: 20px;
     padding: 0 2px;
+    min-width: 50px;
     font-size: 12px;
+  }
+  .el-tag {
+    height: 23px;
+    line-height: 20px;
+    margin-bottom: 2px;
+  }
+  .el-button--mini {
+    padding: 4px 6px;
   }
 }
 </style>

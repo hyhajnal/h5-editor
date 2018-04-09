@@ -3,12 +3,18 @@
     <header><head-area></head-area></header>
     <main>
       <div class="left">
-        <resource-area v-show="show"></resource-area>
+        <resource-module v-if="!isModuleEdit && show" />
+        <resource-comp v-if="isModuleEdit && show"/>
       </div>
       <div class="main">
         <preview-area></preview-area>
         <span class="on-off" @click="show = !show">
-          组<br>件<br>列<br>表<br>
+          <template v-if="isModuleEdit">
+            组<br>件<br>列<br>表<br>
+          </template>
+          <template v-else>
+            模<br>件<br>列<br>表<br>
+          </template>
           <i :class="!show ? 'el-icon-arrow-right' : 'el-icon-arrow-left'"></i>
         </span>
       </div>
@@ -22,8 +28,10 @@
 <script>
 import HeadArea from '@/modules/head-area'
 import PreviewArea from '@/modules/preview-area'
-import ResourceArea from '@/modules/resource-area/templ'
+import ResourceModule from '@/modules/resource-area/module'
+import ResourceComp from '@/modules/resource-area/compUse'
 import CodeArea from '@/modules/code-area'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Preview',
@@ -35,8 +43,14 @@ export default {
   components: {
     HeadArea,
     PreviewArea,
-    ResourceArea,
+    ResourceModule,
+    ResourceComp,
     CodeArea
+  },
+  computed: {
+    ...mapGetters({
+      isModuleEdit: 'isModuleEdit'
+    })
   }
 }
 </script>
