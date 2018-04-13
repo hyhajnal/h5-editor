@@ -1,10 +1,10 @@
 <template>
   <div class="project-join">
-    <el-row :gutter="20" class="project-list">
+    <el-row :gutter="30" class="project-list">
       <!-- <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
         <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
       </el-col> -->
-      <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
+      <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
         v-for="i in 10"
         :key="i"
       >
@@ -35,7 +35,7 @@ export default {
 <style lang="scss">
 .project-join {
   .el-col {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 }
 </style>

@@ -27,17 +27,20 @@
     <main>
       <div class="main">
         <el-row class="toolbar" type="flex" justify="space-around">
-          <span style="background: #8AE5F4;"><i class="iconfont icon-search"></i></span>
+          <span style="background: #FD7F6B;"><i class="iconfont icon-search"></i></span>
           <span style="background: #29C2C1;"><i class="iconfont icon-paixu"></i></span>
           <span style="background: #9124EC;"><i class="iconfont icon-add"></i></span>
         </el-row>
 
         <el-row>
           <el-col :span="5" class="menu-side">
-            <me-menu />
+            <me-menu @select="onSelect"/>
           </el-col>
           <el-col :span="19" class="content-list">
-            <project-join />
+            <me-project v-if="select.type === 'project'"/>
+            <me-templ v-if="select.type === 'templ'"/>
+            <me-comp v-if="select.type === 'comp'"/>
+            <me-mod v-if="select.type === 'mod'"></me-mod>
           </el-col>
         </el-row>
 
@@ -49,18 +52,32 @@
 
 <script>
 import MeMenu from '@/modules/me/Menu'
-import ProjectJoin from '@/modules/me/ProjectJoin'
+import MeProject from '@/modules/me/Project'
+import MeComp from '@/modules/me/Comp'
+import MeTempl from '@/modules/me/Templ'
+import MeMod from '@/modules/me/Mod'
 
 export default {
   name: 'Me',
   data () {
     return {
-      search: ''
+      search: '',
+      select: {
+        type: 'project'
+      }
     }
   },
   components: {
     MeMenu,
-    ProjectJoin
+    MeProject,
+    MeMod,
+    MeComp,
+    MeTempl
+  },
+  methods: {
+    onSelect (select) {
+      this.select = select
+    }
   }
 }
 </script>
@@ -144,8 +161,9 @@ main {
   height: 100%;
 }
 .content-list {
-  padding: 40px 20px;
+  padding: 40px 60px;
   background: #f2f2f2;
+  min-height: 100vh;
 }
 </style>
 
