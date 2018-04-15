@@ -28,38 +28,31 @@ function getInit (type) {
         ]
       }
       break
-    case 'radio':
-      attr = {}
-      break
-    case 'search':
-      attr = {}
-      break
-    case 'switch':
-      attr = {}
-      break
     default:
       attr = {}
   }
   return attr
 }
 
-const mobiles = [{
-  label: 'iPhone7',
-  width: 375,
-  height: 667
-}, {
-  label: 'iPhone7Plus',
-  width: 414,
-  height: 736
-}, {
-  label: 'iPhone5s',
-  width: 320,
-  height: 568
-}, {
-  label: 'iPhoneX',
-  width: 375,
-  height: 812
-}]
+const mobiles = [
+  {
+    label: 'iPhone7',
+    width: 375,
+    height: 667
+  }, {
+    label: 'iPhone7Plus',
+    width: 414,
+    height: 736
+  }, {
+    label: 'iPhone5s',
+    width: 320,
+    height: 568
+  }, {
+    label: 'iPhoneX',
+    width: 375,
+    height: 812
+  }
+]
 
 function px2rem (value) {
   if (value) {
@@ -70,4 +63,17 @@ function px2rem (value) {
   return null
 }
 
-export { guid, getInit, mobiles, px2rem }
+function createModule ({elements, pid, developer, name}) {
+  let mod = {
+    id: `m/${guid()}`,
+    name,
+    elements,
+    pid,
+    developer,
+    classId: {},
+    components: {}
+  }
+  return mod
+}
+
+export { guid, getInit, mobiles, px2rem, createModule }

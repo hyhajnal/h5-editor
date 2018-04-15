@@ -128,19 +128,14 @@ const actions = {
    */
   addTempl ({ state, commit }, payload) {
     const { type, pid, idx } = payload
-    let id = guid()
     let list = JSON.parse(JSON.stringify(state.list))
     const newCompIdx = state.templs.findIndex(c => c.id === type)
     let newComp = state.templs[newCompIdx].content
-    newComp.id = id
-    newComp.label = `组合容器/${id}`
-    newComp.children.map(item => {
-      item.pid = id
-    })
     treeTravel(list, pid).then(item => {
-      item.splice(idx, 0, {
-        ...state.templs[newCompIdx].content,
-        pid: pid
+      newComp.children.map((el, i) => {
+        el.id = guid()
+        el.pid = pid
+        item.splice((idx + i), 0, el)
       })
       commit('update', list)
     })
@@ -220,6 +215,10 @@ const mutations = {
     classId = Object.assign(classId, newClassId)
     console.log(classId)
     Vue.set(state.modules[idx], 'classId', classId)
+  },
+  // 发布模块
+  publishMod (state, mod) {
+    state.moduleList.push(mod)
   }
 }
 
