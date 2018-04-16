@@ -4,7 +4,7 @@ import Page from '@/utils/page.json'
 import Components from '@/utils/components.json'
 import Modules from '@/utils/modules.json'
 import Templs from '@/utils/templs.json'
-import { treeTravel, treeTravelById } from '@/utils/transformTree'
+import { treeTravel, treeTravelById, moduleSelect } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
 
 Vue.use(Vuex)
@@ -39,7 +39,6 @@ const actions = {
       const tree = JSON.parse(JSON.stringify(state.list))
       const mod = state.modules[data]
       const ids = mod.elements.toString()
-      const pid = mod.pid
       info = {
         id: mod.id,
         name: mod.name,
@@ -47,15 +46,9 @@ const actions = {
         developer: mod.developer,
         components: mod.components
       }
-      treeTravel(tree, pid).then(elements => {
-        elements.forEach(item => {
-          if (ids.indexOf(item.id) > -1) {
-            item.pid = 'root'
-            list.push(item)
-          }
-        })
+      moduleSelect(tree, ids).then(list => {
+        commit('changeCurrent', { info, list, isModuleEdit })
       })
-      commit('changeCurrent', { info, list, isModuleEdit })
     }
   },
 
@@ -213,12 +206,15 @@ const mutations = {
     let newClassId = {}
     Vue.set(newClassId, id, className)
     classId = Object.assign(classId, newClassId)
-    console.log(classId)
     Vue.set(state.modules[idx], 'classId', classId)
+  },
+  // 删除模块
+  delMod (state, idx) {
+    state.modules.splice(idx, 1)
   },
   // 发布模块
   publishMod (state, mod) {
-    state.moduleList.push(mod)
+    state.modules.push(mod)
   }
 }
 

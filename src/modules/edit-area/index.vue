@@ -1,23 +1,38 @@
 <template>
-  <div class="edit-area" ref="edit">
-    <!-- 框选区域 -->
-    <div class="shadow" :style="displayStyle"></div>
-    <div class="select-area" :style="selectStyle"></div>
-    <page />
+  <div>
+    <div class="edit-area" ref="edit">
+      <!-- 框选区域 -->
+      <div class="shadow" :style="displayStyle"></div>
+      <div class="select-area" :style="selectStyle"></div>
+      <page />
+    </div>
 
-    <el-dialog title="提示" :visible.sync="outerVisible" width="40%">
+    <el-dialog title="提示" :visible.sync="outerVisible" width="20%" class="mod-tip">
       <p>是否将选中元素划分成一个模块?</p>
       <el-dialog
+        class="mod-tip-inner"
         width="30%"
         title="模块信息"
         :visible.sync="innerVisible"
         @close="handleClose"
         append-to-body>
-        <el-form label-width="100px" :model="mod" class="demo-form-inline">
-          <el-form-item label="模块名称">
+        <el-form label-width="100px" :model="mod" ref="modInfo">
+          <el-form-item
+            label="模块名称"
+            prop="name"
+            :rules="[
+              { required: true, message: '请输入模块名称', trigger: 'blur' }
+            ]"
+          >
             <el-input v-model="mod.name" placeholder="模块名称"></el-input>
           </el-form-item>
-          <el-form-item label="模块开发者">
+          <el-form-item
+            label="开发者"
+            prop="developer"
+            :rules="[
+              { required: true, message: '请输入模块开发者', trigger: 'blur' }
+            ]"
+          >
             <el-input v-model="mod.developer" placeholder="模块开发者"></el-input>
           </el-form-item>
         </el-form>
@@ -30,7 +45,6 @@
         <el-button type="primary" @click="innerVisible = true">确定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -51,7 +65,7 @@ export default {
       left: 0,
       selectList: [],
       innerVisible: false,
-      outerVisible: true,
+      outerVisible: false,
       mod: {
         name: '',
         developer: ''
@@ -94,23 +108,34 @@ export default {
       this.left = e.clientX - left
       this.top = e.clientY - top
     },
+
     onUp (e) {
       this.isEnd = true
       let els = document.getElementsByClassName('element')
+      let pid = ''
+      let list = []
+      // 选出在区域内的元素
       for (let i = 0; i < els.length; i++) {
         let el = els[i]
         if (this.inArea(el)) {
-          this.selectList.push(el.dataset.id)
+          list.push(el.dataset.id)
           el.classList.add('selected')
         }
       }
-      this.outerVisible = true
+      // 赋值
+      this.selectList = list
+      this.mod.pid = pid || 'root'
+      if (list.length > 0) {
+        this.outerVisible = true
+      }
     },
+
     onMove (e) {
       if (this.isEnd) return
       this.width = Math.abs(e.clientX - this.x)
       this.height = Math.abs(e.clientY - this.y)
     },
+
     getOffset (element) {
       let top = element.offsetTop
       let left = element.offsetLeft
@@ -122,6 +147,7 @@ export default {
       }
       return { top, left }
     },
+
     // 在圈中的范围内
     inArea (el) {
       let { top, left } = this.getOffset(el)
@@ -135,32 +161,42 @@ export default {
       // console.log(`${el.dataset.id}:${left}(${minX}-${maxX}),${top}(${minY}-${maxY})`)
       return top > minY && top < maxY && left > minX && left < maxX
     },
+
     handleClose () {
       this.innerVisible = false
       this.outerVisible = false
       this.clearAll()
     },
+
     clearAll () {
       let els = document.getElementsByClassName('selected')
       for (let i = 0; i < els.length; i++) {
         els[i].classList.remove('selected')
       }
+      this.mod = { name: '', developer: '', pid: '' }
       this.selectList = []
     },
-    publish (developer, name) {
-      const mod = createModule({
-        elements: this.selectList.toString,
-        pid: this.pid,
-        ...this.mod
+
+    publish () {
+      this.$refs.modInfo.validate((valid) => {
+        if (valid) {
+          const mod = createModule({
+            elements: this.selectList,
+            ...this.mod
+          })
+          this.$store.commit('publishMod', mod)
+          this.innerVisible = false
+        } else {
+          return false
+        }
       })
-      this.$store.commit('publishMod', mod)
-      this.innerVisible = false
     }
+
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .edit-area {
     height: 100%;
     overflow: auto;
@@ -192,7 +228,15 @@ export default {
   top: 140px;
   right: 40px;
 }
-.el-dialog__body {
-  padding: 20px 20px 0px 20px;
+.mod-tip {
+  .el-dialog {
+    float: right;
+    margin-right: 15vh;
+  }
+}
+.mod-tip-inner {
+  .el-dialog__body {
+    padding: 20px 20px 0px 20px;
+  }
 }
 </style>

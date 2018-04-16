@@ -92,24 +92,26 @@ const treeTravelById = (tree, id) => {
 }
 
 /**
- * 模块编辑转换
+ * 模块编辑转换: 将ids -> element
  */
-const moduleSelect = function (tree, ids, pid) {
-  let newElements = []
-  treeTravel(tree, pid).then(list => {
-    list.forEach(item => {
-      if (ids.indexOf(item.id) > -1) {
-        item.pid = 'root'
-        newElements.push(item)
-      }
-    })
-    const mod = {
-      id: 'mod-demo',
-      name: '模块-demo',
-      elements: newElements
-    }
-    return new Promise(resolve => resolve(mod))
+const moduleSelect = function (tree, ids) {
+  let elements = []
+  let q = []
+  tree.forEach(item => {
+    q.push(item)
   })
+  while (q.length > 0) {
+    let node = q.shift()
+    if (ids.indexOf(node.id) > -1) {
+      node.pid = 'root'
+      elements.push(node)
+    } else if (node.children && node.children.length > 0) {
+      node.children.forEach(item => {
+        q.push(item)
+      })
+    }
+  }
+  return new Promise(resolve => resolve(elements))
 }
 
 export { toTree, toList, treeTravel, moduleSelect, treeTravelById }

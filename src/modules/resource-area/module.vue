@@ -19,11 +19,10 @@
           </div>
           <div style="padding: 4px 14px 14px 14px;">
             <div class="bottom clearfix">
-              <span class="title">{{item.name}}——{{item.developer}}</span>
-              <!-- <el-button type="text" class="button">编辑</el-button> -->
+              <span class="title"><strong>{{item.name}}</strong>{{item.developer}}</span>
+              <i class="el-icon-delete" @click.stop="del(idx)"></i>
               <i class="el-icon-search"></i>
               <i class="el-icon-edit"></i>
-              <!-- <el-button type="text" class="button">预览</el-button> -->
             </div>
           </div>
         </el-card>
@@ -50,6 +49,9 @@ export default {
   methods: {
     onClick (i) {
       this.$store.dispatch('changeCurrent', i)
+    },
+    del (i) {
+      this.$store.commit('delMod', i)
     }
   }
 }
@@ -70,13 +72,17 @@ export default {
     line-height: 12px;
   }
 
+  strong {
+    margin-right: 5px;
+  }
+
   i {
     padding: 0;
     float: right;
     color: #666;
   }
-  .el-icon-edit {
-    margin-right: 10px;
+  .el-icon-search {
+    margin: 0 5px;
   }
 
   .image {
