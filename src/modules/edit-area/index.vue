@@ -2,12 +2,17 @@
   <div>
     <div class="edit-area" ref="edit">
       <!-- 框选区域 -->
-      <div class="shadow" :style="displayStyle"></div>
+      <div class="shadow" v-show="divideStart" id="shadow"></div>
       <div class="select-area" :style="selectStyle"></div>
       <page />
     </div>
 
-    <el-dialog title="提示" :visible.sync="outerVisible" width="20%" class="mod-tip">
+    <el-dialog title="提示"
+      :visible.sync="outerVisible"
+      width="20%"
+      class="mod-tip"
+      @close="handleClose"
+    >
       <p>是否将选中元素划分成一个模块?</p>
       <el-dialog
         class="mod-tip-inner"
@@ -37,18 +42,18 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="publish">发布</el-button>
+          <el-button type="primary" @click="publish" size="small">发布</el-button>
         </span>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="innerVisible = true">确定</el-button>
+        <el-button type="primary" @click="innerVisible = true" size="small">确定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import hotkeys from 'hotkeys-js'
 import AttrBox from './attr-box/index'
 import Page from './page'
 import { createModule } from '@/utils/help'
@@ -66,6 +71,7 @@ export default {
       selectList: [],
       innerVisible: false,
       outerVisible: false,
+      divideStart: false,
       mod: {
         name: '',
         developer: ''
@@ -91,6 +97,21 @@ export default {
     el.addEventListener('mousemove', this.onMove, false)
     el.addEventListener('mouseup', this.onUp, false)
     el.addEventListener('mousedown', this.onDown, false)
+
+    hotkeys('e', (event, handler) => {
+      event.preventDefault()
+      const message = !this.divideStart ? '模块划分模式已开启' : '模块划分模式已关闭'
+      this.$notify({message})
+      this.divideStart = !this.divideStart
+    })
+
+    hotkeys('esc', (event, handler) => {
+      // event.preventDefault()
+      // const message = !this.divideStart ? '模块划分模式已开启' : '模块划分模式已关闭'
+      // this.$notify({message})
+      // this.divideStart = !this.divideStart
+      this.clear()
+    })
   },
   beforeDestroyed () {
     const el = this.$refs.edit
@@ -99,7 +120,9 @@ export default {
     el.removeEventListener('mousedown', this.onDown, false)
   },
   methods: {
+
     onDown (e) {
+      if (e.target.id !== 'shadow') return
       this.isEnd = false
       this.x = e.clientX
       this.y = e.clientY
@@ -110,7 +133,7 @@ export default {
     },
 
     onUp (e) {
-      this.isEnd = true
+      if (e.target.id !== 'shadow') return
       let els = document.getElementsByClassName('element')
       let pid = ''
       let list = []
@@ -128,10 +151,12 @@ export default {
       if (list.length > 0) {
         this.outerVisible = true
       }
+      // 重置框选参数
+      this.clear()
     },
 
     onMove (e) {
-      if (this.isEnd) return
+      if (e.target.id !== 'shadow' || this.isEnd) return
       this.width = Math.abs(e.clientX - this.x)
       this.height = Math.abs(e.clientY - this.y)
     },
@@ -170,11 +195,22 @@ export default {
 
     clearAll () {
       let els = document.getElementsByClassName('selected')
-      for (let i = 0; i < els.length; i++) {
-        els[i].classList.remove('selected')
+      const length = els.length
+      for (let i = 0; i < length; i++) {
+        document.querySelector('.selected').classList.remove('selected')
       }
-      this.mod = { name: '', developer: '', pid: '' }
+      this.mod = { name: '', developer: '' }
       this.selectList = []
+    },
+
+    clear () {
+      this.isEnd = true
+      this.x = 0
+      this.y = 0
+      this.width = 0
+      this.height = 0
+      this.top = 0
+      this.left = 0
     },
 
     publish () {

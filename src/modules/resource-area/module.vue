@@ -4,7 +4,6 @@
       <li v-for="(item, idx) in modules"
         :key="item.id" :data-id="item.id"
         class="component-item"
-        @click="onClick(idx)"
       >
         <el-card :body-style="{ padding: '0px' }">
           <!-- <img :src="item.image" class="image"> -->
@@ -17,13 +16,16 @@
               /> -->
             </div>
           </div>
-          <div style="padding: 4px 14px 14px 14px;">
-            <div class="bottom clearfix">
-              <span class="title"><strong>{{item.name}}</strong>{{item.developer}}</span>
+          <div style="padding: 4px 14px 10px 14px;">
+            <h1>{{item.name}}</h1>
+            <p class="clearfix">
+              <span class="title">{{item.developer}}</span>
               <i class="el-icon-delete" @click.stop="del(idx)"></i>
-              <i class="el-icon-search"></i>
-              <i class="el-icon-edit"></i>
-            </div>
+              <router-link :to="{name: 'Preview'}">
+                <i class="el-icon-search"></i>
+              </router-link>
+              <i class="el-icon-edit" @click="onClick(idx)"></i>
+            </p>
           </div>
         </el-card>
       </li>
@@ -62,14 +64,14 @@ export default {
     background: #fff;
     padding: 15px;
   }
+  h1 {
+    font-size: 16px;
+    color: #555;
+  }
   .title {
     font-size: 14px;
     color: #555;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
+    float: left;
   }
 
   strong {
@@ -78,11 +80,15 @@ export default {
 
   i {
     padding: 0;
-    float: right;
     color: #666;
+    cursor: pointer;
+    float: right;
+  }
+  .el-icon-delete {
+    margin-left: 5px;
   }
   .el-icon-search {
-    margin: 0 5px;
+    margin-left: 5px;
   }
 
   .image {
@@ -109,7 +115,6 @@ export default {
   }
   li {
     margin-bottom: 15px;
-    cursor: pointer;
   }
   li:last-child {
     margin-bottom: 0;
