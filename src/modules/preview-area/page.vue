@@ -1,7 +1,5 @@
 <template>
-  <div class="page" id="page" ref="page"
-    :style="style"
-  >
+  <div class="page" id="page" ref="page">
     <custom-element
       v-for="item in elements"
       :key="item.id"
@@ -16,25 +14,15 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Page',
   data () {
-    return {
-      width: 375,
-      height: 667
-    }
+    return {}
   },
   components: {
     CustomElement
   },
   computed: {
     ...mapGetters({
-      elements: 'page',
-      device: 'device'
-    }),
-    style () {
-      const width = this.device.width
-      const height = this.device.height
-      const scale = this.device.percent / 100
-      return `width: ${width}px;height:${height}px;transform:scale(${scale})`
-    }
+      elements: 'page'
+    })
   },
   methods: {}
 }
@@ -42,8 +30,6 @@ export default {
 
 <style scoped lang="scss">
 .page {
-  margin: 40px auto;
-  background: #fff;
   overflow: auto;
 }
 </style>

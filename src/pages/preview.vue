@@ -7,7 +7,7 @@
         <resource-comp v-if="isModuleEdit && show"/>
       </div>
       <div class="main">
-        <preview-area></preview-area>
+        <iframe src="./#/mobile" class="preview-area" :style="style"></iframe>
         <span class="on-off" @click="show = !show">
           <template v-if="isModuleEdit">
             组<br>件<br>列<br>表<br>
@@ -27,7 +27,6 @@
 
 <script>
 import HeadArea from '@/modules/head-area'
-import PreviewArea from '@/modules/preview-area'
 import ResourceModule from '@/modules/resource-area/module'
 import ResourceComp from '@/modules/resource-area/compUse'
 import CodeArea from '@/modules/code-area'
@@ -37,20 +36,29 @@ export default {
   name: 'Preview',
   data () {
     return {
-      show: false
+      show: false,
+      width: 375,
+      height: 667
     }
   },
   components: {
     HeadArea,
-    PreviewArea,
     ResourceModule,
     ResourceComp,
     CodeArea
   },
   computed: {
     ...mapGetters({
+      elements: 'page',
+      device: 'device',
       isModuleEdit: 'isModuleEdit'
-    })
+    }),
+    style () {
+      const width = this.device.width
+      const height = this.device.height
+      const scale = this.device.percent / 100
+      return `width: ${width}px;height:${height}px;transform:scale(${scale})`
+    }
   }
 }
 </script>
@@ -70,9 +78,18 @@ export default {
     display: flex;
     flex: 1;
     position: relative;
+    background: #f2f2f2;
   }
   .left {
     overflow: auto;
+  }
+  .preview-area {
+    display: block;
+    width: 375px;
+    height: 667px;
+    margin: 40px auto;
+    border: none;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   }
   .on-off {
     position: absolute;
@@ -93,5 +110,6 @@ export default {
   }
   .main {
     flex: 1;
+    overflow: auto;
   }
 </style>

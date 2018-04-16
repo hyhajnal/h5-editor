@@ -222,6 +222,7 @@ export default {
           })
           this.$store.commit('publishMod', mod)
           this.innerVisible = false
+          this.divideStart = false
         } else {
           return false
         }
