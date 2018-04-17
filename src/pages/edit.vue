@@ -130,5 +130,7 @@ export default {
   }
   .main {
     flex: 1;
+    height: 100%;
+    overflow: hidden;
   }
 </style>

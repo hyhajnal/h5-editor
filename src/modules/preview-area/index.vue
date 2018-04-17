@@ -1,33 +1,36 @@
 <template>
-  <div class="edit-area">
-    <page />
+  <div class="page" id="page" ref="page">
+    <custom-element
+      v-for="item in elements"
+      :key="item.id"
+      :element="item"
+    />
   </div>
 </template>
 
 <script>
-import Page from './page'
+import CustomElement from './custom-element'
+import { mapGetters } from 'vuex'
 export default {
-  name: 'PreviewArea',
+  name: 'Page',
   data () {
     return {}
   },
   components: {
-    Page
-  }
+    CustomElement
+  },
+  computed: {
+    ...mapGetters({
+      elements: 'page'
+    })
+  },
+  methods: {}
 }
 </script>
 
-<style scoped>
-  .edit-area {
-    height: 100%;
-    overflow: auto;
-    position: relative;
-    background: #F7F7F7;
-  }
-  .zoom-box {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-  }
+<style scoped lang="scss">
+.page {
+  overflow: auto;
+  height: 100%;
+}
 </style>

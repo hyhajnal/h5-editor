@@ -1,12 +1,13 @@
 <template>
-  <!-- <div class="page"
-    id="page"
-    :style="style"
-  > -->
+  <div class="page-wrap"
+    @mouseup="onUp"
+    @mousemove="onMove"
+  >
     <draggable element="div"
       id="page"
       class="page"
       data-id="root"
+      :style="'height:'+height+'px'"
       :options="dragOptions"
       @end="onEnd"
     > 
@@ -19,13 +20,15 @@
         :data-pid="item.pid"
       />
     </draggable>
-  <!-- </div> -->
+    <p @mousedown="onDown">
+      拖动调整高度 {{height}}px
+    </p>
+  </div>
 </template>
 
 <script>
 import CustomElement from './custom-element'
 import { mapGetters } from 'vuex'
-// import { toList, toTree } from '@/utils/transformTree'
 import draggable from 'vuedraggable'
 export default {
   name: 'Page',
@@ -36,43 +39,33 @@ export default {
         group: {
           name: 'page',
           put: ['resource1', 'resource2', 'page'],
-          // put: true,
           pull: true
         },
         disabled: false,
         ghostClass: 'ghost',
         chosenClass: 'element-active'
-      }
+      },
+      baseHeight: 667,
+      dHeight: 0,
+      lastY: 0,
+      isMoveEnd: false
     }
   },
   components: {
     CustomElement,
     draggable
   },
-  // watch: {
-  //   elements: {
-  //     handler () {
-  //       console.log('change')
-  //       this.$forceUpdate()
-  //     },
-  //     deep: true
-  //   }
-  // },
   computed: {
     ...mapGetters({
       elements: 'page',
       device: 'device'
     }),
-    style () {
-      const width = this.device.width
-      const height = this.device.height
-      const scale = this.device.percent / 100
-      return `width: ${width}px;height:${height}px;transform:scale(${scale})`
+    height () {
+      return this.baseHeight + this.dHeight
     }
   },
   methods: {
     onEnd (obj) {
-      // console.log(obj)
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       let pid = obj.to.dataset.id || obj.to.children[0].dataset.pid
       const to = `${pid}的${obj.newIndex}`
@@ -84,21 +77,48 @@ export default {
         nIdx: obj.newIndex,
         oIdx: obj.oldIndex
       })
+    },
+
+    onDown (e) {
+      this.isMoveEnd = true
+      this.lastY = e.clientY
+    },
+
+    onMove (e) {
+      if (!this.isMoveEnd) return
+      if (this.height > 666) {
+        this.dHeight = e.clientY - this.lastY
+      }
+    },
+
+    onUp (e) {
+      this.isMoveEnd = false
+      this.dHeight = 0
+      const baseHeight = this.baseHeight + e.clientY - this.lastY
+      this.baseHeight = baseHeight > 667 ? baseHeight : 667
+      this.lastY = e.clientY
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.page {
-  // border: 1px solid #ddd;
-  margin: 40px auto;
-  background: #fff;
-  // overflow: auto;
+.page-wrap {
+  margin: 0 auto;
+  padding: 40px 0 1000px 0;
   width: 375px;
-  min-height: 667px;
 }
-// .element-active {
-//   border: 2px solid #03dafd;
-// }
+.page {
+  background: #fff;
+}
+p {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: ns-resize;
+  background: #ddd;
+  // border: 1px dashed #ccc;
+  user-select: none;
+}
 </style>

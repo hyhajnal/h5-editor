@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="edit-wrap">
     <div class="edit-area" ref="edit">
       <!-- 框选区域 -->
       <div class="shadow" v-show="divideStart" id="shadow"></div>
@@ -106,10 +106,6 @@ export default {
     })
 
     hotkeys('esc', (event, handler) => {
-      // event.preventDefault()
-      // const message = !this.divideStart ? '模块划分模式已开启' : '模块划分模式已关闭'
-      // this.$notify({message})
-      // this.divideStart = !this.divideStart
       this.clear()
     })
   },
@@ -234,15 +230,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .edit-area {
+  .edit-wrap {
     height: 100%;
     overflow: auto;
-    position: relative;
     background: #F7F7F7;
+    position: relative;
+  }
+  .edit-area {
+    position: relative;
   }
   .shadow {
     width: 100%;
-    height: inherit;
+    height: 100%;
     position: absolute;
     z-index: 998;
     background: rgba(0,0,0,0.2);
