@@ -1,9 +1,11 @@
 <template>
   <div class="attr-area">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="页面" name="first">页面基本信息</el-tab-pane>
-      <el-tab-pane label="结构" name="second">
-        <struct></struct>
+      <el-tab-pane label="信息" name="info">
+        <info />
+      </el-tab-pane>
+      <el-tab-pane label="结构" name="struct">
+        <struct />
       </el-tab-pane>
       <el-tab-pane label="属性" name="attr" v-if="!isModuleEdit">
         <attr-box />
@@ -14,18 +16,20 @@
 
 <script>
 import Struct from './struct'
+import Info from './info'
 import AttrBox from '@/modules/edit-area/attr-box/index'
 import { mapGetters } from 'vuex'
 export default {
   name: 'AttrArea',
   data () {
     return {
-      activeName: 'attr'
+      activeName: 'info'
     }
   },
   components: {
     Struct,
-    AttrBox
+    AttrBox,
+    Info
   },
   computed: {
     ...mapGetters({

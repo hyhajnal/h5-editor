@@ -31,6 +31,6 @@ export default {
 <style scoped lang="scss">
 .page {
   overflow: auto;
-  height: 100%;
+  height: inherit;
 }
 </style>

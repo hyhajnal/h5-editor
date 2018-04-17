@@ -7,7 +7,7 @@
       id="page"
       class="page"
       data-id="root"
-      :style="'height:'+height+'px'"
+      :style="style"
       :options="dragOptions"
       @end="onEnd"
     > 
@@ -21,7 +21,7 @@
       />
     </draggable>
     <p @mousedown="onDown">
-      拖动调整高度 {{height}}px
+      拖动调整高度 <span style="color: #FB7F6E;">{{height}}px</span>
     </p>
   </div>
 </template>
@@ -58,10 +58,15 @@ export default {
   computed: {
     ...mapGetters({
       elements: 'page',
-      device: 'device'
+      device: 'device',
+      info: 'pageInfo'
     }),
     height () {
       return this.baseHeight + this.dHeight
+    },
+    style () {
+      const background = this.$store.state.info.background || '#fff'
+      return `height:${this.height}px;background:${background};`
     }
   },
   methods: {
@@ -113,12 +118,34 @@ export default {
 }
 p {
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 10px;
   text-align: center;
   cursor: ns-resize;
-  background: #ddd;
-  // border: 1px dashed #ccc;
+  position: relative;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  color: #969191;
   user-select: none;
+}
+p::after {
+  content: "";
+  height: 2px;
+  width: 90px;
+  background: #ccc;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+p::before {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 90px;
+  background: #ccc;
+  position: absolute;
+  top: 50%;
+  right: 0;
 }
 </style>

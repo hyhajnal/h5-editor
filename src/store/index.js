@@ -215,6 +215,10 @@ const mutations = {
   // 发布模块
   publishMod (state, mod) {
     state.modules.push(mod)
+  },
+  // 改变page infp
+  changeInfo (state, info) {
+    Vue.set(state, 'info', info)
   }
 }
 

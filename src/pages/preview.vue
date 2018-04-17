@@ -57,7 +57,8 @@ export default {
       const width = this.device.width
       const height = this.device.height
       const scale = this.device.percent / 100
-      return `width: ${width}px;height:${height}px;transform:scale(${scale})`
+      const background = this.$store.state.info.background || '#fff'
+      return `width: ${width}px;height:${height}px;transform:scale(${scale});background:${background};`
     }
   }
 }
