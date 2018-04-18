@@ -15,6 +15,8 @@
 
 <script>
 import _Type from '../edit-area/types'
+import Config from '@/utils/config'
+// import Bus from '@/utils/Bus'
 
 export default {
   name: 'CustomElement',
@@ -27,14 +29,16 @@ export default {
   mounted () {
     if (this.element.link) {
       document.getElementById(this.element.id).addEventListener('click', () => {
-        this.$router.push({name: 'Edit', query: {id: this.element.link}})
+        this.axios.get(`${Config.URL}/editor/page/detail`, {
+          params: { id: this.element.link }
+        }).then(data => {
+          this.$store.dispatch('changeCurrent', data)
+        })
       }, false)
     }
   },
   components: {
     ..._Type
-  },
-  methods: {
   }
 }
 </script>

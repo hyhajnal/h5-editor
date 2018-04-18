@@ -1,5 +1,5 @@
 <template>
-  <div class="page" id="page" ref="page">
+  <div class="page" id="page" ref="page" v-if="elements">
     <custom-element
       v-for="item in elements"
       :key="item.id"
@@ -24,7 +24,13 @@ export default {
       elements: 'page'
     })
   },
-  methods: {}
+  mounted () {
+    let mod = window.localStorage.getItem('page')
+    mod = JSON.parse(mod)
+    if (this.elements.length === 0) {
+      this.$store.dispatch('changeCurrent', mod)
+    }
+  }
 }
 </script>
 

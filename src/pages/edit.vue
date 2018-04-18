@@ -23,7 +23,7 @@ import EditArea from '@/modules/edit-area'
 import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
 import Config from '@/utils/config'
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Edit',

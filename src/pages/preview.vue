@@ -1,13 +1,16 @@
 <template>
   <div class="preview">
-    <header><head-area></head-area></header>
+    <header><head-area v-if="info"></head-area></header>
     <main>
       <div class="left">
         <resource-module v-if="!isModuleEdit && show" />
         <resource-comp v-if="isModuleEdit && show"/>
       </div>
       <div class="main">
-        <iframe src="./#/mobile" class="preview-area" :style="style"></iframe>
+        <!-- <iframe src="./#/mobile" class="preview-area" :style="style" /> -->
+        <div class="preview-area" :style="style" >
+          <router-view />
+        </div>
         <span class="on-off" @click="show = !show">
           <template v-if="isModuleEdit">
             组<br>件<br>列<br>表<br>
@@ -19,7 +22,7 @@
         </span>
       </div>
       <aside>
-        <code-area></code-area>
+        <code-area v-if="info"></code-area>
       </aside>
     </main>
   </div>
@@ -31,6 +34,8 @@ import ResourceModule from '@/modules/resource-area/module'
 import ResourceComp from '@/modules/resource-area/compUse'
 import CodeArea from '@/modules/code-area'
 import { mapGetters } from 'vuex'
+// import Bus from '@/utils/Bus'
+// import Config from '@/utils/config'
 
 export default {
   name: 'Preview',
@@ -51,13 +56,14 @@ export default {
     ...mapGetters({
       elements: 'page',
       device: 'device',
-      isModuleEdit: 'isModuleEdit'
+      isModuleEdit: 'isModuleEdit',
+      info: 'info'
     }),
     style () {
       const width = this.device.width
       const height = this.device.height
       const scale = this.device.percent / 100
-      const background = this.$store.state.info.background || '#fff'
+      const background = (this.$store.state.info && this.$store.state.info.background) || '#fff'
       return `width: ${width}px;height:${height}px;transform:scale(${scale});background:${background};`
     }
   }

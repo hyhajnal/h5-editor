@@ -26,12 +26,11 @@ export default new Router({
     {
       path: '/preview',
       name: 'Preview',
-      component: Preview
-    },
-    {
-      path: '/mobile',
-      name: 'Mobile',
-      component: Mobile
+      component: Preview,
+      children: [{
+        path: 'mobile',
+        component: Mobile
+      }]
     },
     {
       path: '/page',
