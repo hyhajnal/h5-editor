@@ -3,19 +3,19 @@
     <li>
       <span class="label">页面名:</span>
       <span class="value">
-        <input type="text" v-model="info.name">
+        <input type="text" v-model="pageInfo.name">
       </span>
     </li>
     <li>
       <span class="label">设计师:</span>
       <span class="value">
-        <input type="text" v-model="info.owner">
+        <input type="text" v-model="owner">
       </span>
     </li>
     <li>
       <span class="label">背景色:</span>
       <span class="value background">
-        <color-picker v-model="info.background" />
+        <color-picker v-model="pageInfo.background" />
       </span>
     </li>
   </ul>
@@ -23,24 +23,33 @@
 
 <script>
 import ColorPicker from '@/components/ColorPicker'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Info',
   data () {
     return {
-      info: {
-        name: '测试页面',
-        background: '#fff',
-        owner: 'desinger1'
-      }
+      pageInfo: {
+        name: '',
+        background: '#fff'
+      },
+      owner: 'desinger1'
     }
   },
+  mounted () {
+    this.pageInfo = this.info
+  },
   watch: {
-    info: {
+    pageInfo: {
       handler () {
         this.$store.commit('changeInfo', this.info)
       },
       deep: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      info: 'info'
+    })
   },
   components: { ColorPicker }
 }

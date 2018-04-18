@@ -1,7 +1,7 @@
 <template>
   <div class="attr-text">
 
-    <el-row :gutter="10" v-for="(item,idx) in config" :key="item.name">
+    <el-row :gutter="10" v-for="(item,idx) in config" :key="item.name" class="config-item">
       <el-col :span="6" class="label">{{item.label}}:</el-col>
       <el-col :span="18">
 
@@ -78,7 +78,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.config-item {
+  margin-bottom: 10px;
+}
 </style>
 
 <style lang="scss">

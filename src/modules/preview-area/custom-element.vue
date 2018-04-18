@@ -2,6 +2,7 @@
   <component :is="'type-'+element.type"
     :ele="element"
     :class="element.id"
+    :id="element.id"
   >
     <custom-element
       v-for="item in element.children"
@@ -22,6 +23,13 @@ export default {
   },
   data () {
     return {}
+  },
+  mounted () {
+    if (this.element.link) {
+      document.getElementById(this.element.id).addEventListener('click', () => {
+        this.$router.push({name: 'Edit', query: {id: this.element.link}})
+      }, false)
+    }
   },
   components: {
     ..._Type

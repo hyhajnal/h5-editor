@@ -14,6 +14,7 @@
     <template v-if="current && current.config">
       <config :attrData="current.config" />
     </template>
+    <attr-link v-if="current" :linkData="current.link" :id="current.id" />
   </div>
 </template>
 
@@ -21,6 +22,7 @@
 import Container from './container'
 import AttrText from './text'
 import Config from './config'
+import AttrLink from './link'
 import { toStyleObj } from '@/utils/transformStyle'
 import { mapGetters } from 'vuex'
 
@@ -39,7 +41,8 @@ export default {
   components: {
     Container,
     AttrText,
-    Config
+    Config,
+    AttrLink
   },
   computed: {
     ...mapGetters({

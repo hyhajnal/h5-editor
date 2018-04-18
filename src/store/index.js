@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Page from '@/utils/page.json'
+// import Page from '@/utils/page.json'
 import Components from '@/utils/components.json'
 import Modules from '@/utils/modules.json'
 import Templs from '@/utils/templs.json'
@@ -10,8 +10,8 @@ import { guid, getInit, mobiles } from '@/utils/help'
 Vue.use(Vuex)
 
 const state = {
-  info: Page.info, // id & name
-  list: Page.elements, // 页面-(组件列表)
+  info: null, // id & name
+  list: [], // 页面-(组件列表)
   moduleInfo: null,
   moduleList: [], // 模块-(组件列表)
   currentComp: null, // preview页-当前组件
@@ -31,7 +31,7 @@ const actions = {
     const isModuleEdit = data.id ? 0 : 1
     // 页面编辑的状态下
     if (!isModuleEdit) {
-      info = { id: data.id, name: data.name }
+      info = { id: data.id, name: data.name, projectId: data.projectId, background: data.background }
       list = JSON.parse(data.elements).elements
       commit('changeCurrent', { info, list, isModuleEdit })
     } else {
@@ -57,6 +57,22 @@ const actions = {
     let { list, current } = JSON.parse(JSON.stringify(state))
     treeTravelById(list, current.id).then(item => {
       item.style = style
+      commit('update', list)
+    })
+  },
+
+  /**
+   * 更新链接
+   */
+  updateLink ({ state, commit }, link) {
+    if (!state.current) return
+    let { list, current } = JSON.parse(JSON.stringify(state))
+    treeTravelById(list, current.id).then(item => {
+      if (!link) {
+        delete item['link']
+      } else {
+        item['link'] = link
+      }
       commit('update', list)
     })
   },
@@ -231,6 +247,9 @@ const getters = {
   },
   pageInfo: state => {
     return state.isModuleEdit ? state.moduleInfo : state.info
+  },
+  info: state => {
+    return state.info
   },
   device: state => {
     return state.device

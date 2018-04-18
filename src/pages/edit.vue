@@ -23,6 +23,7 @@ import EditArea from '@/modules/edit-area'
 import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
 import Config from '@/utils/config'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Edit',
@@ -33,7 +34,7 @@ export default {
     }
   },
   mounted () {
-    // this.getData()
+    this.getData()
     // const mod = JSON.parse(window.localStorage.getItem('mod'))
     // let { pageInfo } = this.$store.state
     // debugger
@@ -63,13 +64,16 @@ export default {
   //   next()
   // },
   computed: {
-    isModuleEdit () {
-      return this.$store.state.isModuleEdit
-    }
+    ...mapGetters({
+      isModuleEdit: 'isModuleEdit',
+      pageInfo: 'pageInfo',
+      list: 'page'
+    })
   },
   methods: {
     save () {
-      const { pageInfo, list } = this.$store.state
+      const pageInfo = this.pageInfo
+      const list = this.list
       this.saveLocal(pageInfo, list)
       this.axios.post(`${Config.URL}/editor/page/edit`, {
         id: pageInfo.id,

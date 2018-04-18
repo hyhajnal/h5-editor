@@ -1,7 +1,9 @@
 {
   "info": {
     "id": "M1",
-    "name": "测试页面"
+    "name": "测试页面",
+    "background": "#fff",
+    "projectId": 5
   },
   "elements": [
     {

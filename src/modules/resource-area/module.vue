@@ -63,15 +63,16 @@ export default {
   .tpl {
     background: #fff;
     padding: 15px;
+    color: #555;
   }
   h1 {
     font-size: 16px;
-    color: #555;
+    color: #4a4a4a;
+    font-weight: bold;
   }
   .title {
-    font-size: 14px;
-    color: #555;
     float: left;
+    font-size: 14px;
   }
 
   strong {

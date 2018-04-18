@@ -65,7 +65,7 @@ export default {
       return this.baseHeight + this.dHeight
     },
     style () {
-      const background = this.$store.state.info.background || '#fff'
+      const background = (this.$store.state.info && this.$store.state.info.background) || '#fff'
       return `height:${this.height}px;background:${background};`
     }
   },

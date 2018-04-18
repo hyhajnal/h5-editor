@@ -2,7 +2,7 @@
   <div class="attr-area">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="信息" name="info">
-        <info />
+        <info v-if="info"/>
       </el-tab-pane>
       <el-tab-pane label="结构" name="struct">
         <struct />
@@ -33,7 +33,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isModuleEdit: 'isModuleEdit'
+      isModuleEdit: 'isModuleEdit',
+      info: 'info'
     })
   },
   methods: {
