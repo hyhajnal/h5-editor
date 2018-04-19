@@ -75,6 +75,7 @@ export default {
   .tpl {
     background: #fff;
     padding: 15px;
+    width: 240px;
   }
   .component-item {
     cursor: move;

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // import Page from '@/utils/page.json'
 import Components from '@/utils/components.json'
-import Modules from '@/utils/modules.json'
+// import Modules from '@/utils/modules.json'
 import Templs from '@/utils/templs.json'
 import { treeTravel, treeTravelById, moduleSelect } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
@@ -19,7 +19,7 @@ const state = {
   isDraging: false,
   isModuleEdit: false, // 编辑的是否是模块
   components: Components,
-  modules: Modules,
+  modules: [],
   templs: Templs,
   device: {...mobiles[0], percent: 100}
 }
@@ -33,7 +33,8 @@ const actions = {
     if (!isModuleEdit) {
       info = { id: data.id, name: data.name, projectId: data.projectId, background: data.background }
       list = JSON.parse(data.elements).elements
-      commit('changeCurrent', { info, list, isModuleEdit })
+      const modules = data.modules
+      commit('changeCurrent', { info, list, isModuleEdit, modules })
     } else {
       // 模块编辑的状态下,data为idx
       const tree = JSON.parse(JSON.stringify(state.list))
@@ -202,7 +203,7 @@ const mutations = {
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
   },
-  changeCurrent (state, { info, list, isModuleEdit }) {
+  changeCurrent (state, { info, list, isModuleEdit, modules }) {
     Vue.set(state, 'isModuleEdit', isModuleEdit)
     if (isModuleEdit) {
       Vue.set(state, 'moduleInfo', info)
@@ -210,6 +211,7 @@ const mutations = {
     } else {
       Vue.set(state, 'info', info)
       Vue.set(state, 'list', list)
+      Vue.set(state, 'modules', modules)
     }
   },
   // 切换到页面编辑状态

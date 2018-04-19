@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     preview () {
-      this.$router.push({name: 'Preview'})
+      this.$router.push({ path: 'preview/mobile' })
     },
     save () {
       this.$emit('save')

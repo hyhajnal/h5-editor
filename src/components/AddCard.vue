@@ -56,7 +56,7 @@ export default {
       return str
     },
     cardStyle () {
-      const height = this.type === 'page' ? '470px' : '270px'
+      const height = this.type === 'comp' ? '100px' : '270px'
       return `height: ${height}`
     }
   },
@@ -90,11 +90,9 @@ export default {
   background: #fff;
   border: 1px solid #f2f2f2;
   border-radius: 4px;
-  // border: 2px dashed #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
-  // height: 270px;
 }
 i {
   font-size: 60px;

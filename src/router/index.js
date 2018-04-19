@@ -33,6 +33,11 @@ export default new Router({
       }]
     },
     {
+      path: '/mobile',
+      name: 'Mobile',
+      component: Mobile
+    },
+    {
       path: '/page',
       name: 'PageDetail',
       component: PageDetail

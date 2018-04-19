@@ -9,15 +9,14 @@
       >
         {{pageInfo.name}}
       </span>
-      <span v-if="!isModuleEdit && route === 'Edit'">首页</span>
-      <span v-if="route === 'Preview'" @click="goBack">
+      <span v-if="isPreview" @click="goBack">
         {{info.name}}
       </span>
 
     </h1>
 
     <div class="center-area">
-      <h1 class="title" v-if="route !== 'Preview'" >
+      <h1 class="title" v-if="!isPreview" >
         <i class="el-icon-arrow-left"
           v-if="show.prev"
           @click="prev"
@@ -37,7 +36,7 @@
         v-model="input">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>
-      <mobile v-if="route === 'Preview'" />
+      <mobile v-if="isPreview" />
     </div>
 
     <tool-bar :isSaving="isSaving" @save="save"></tool-bar>
@@ -74,6 +73,9 @@ export default {
     }),
     route () {
       return this.$route.name
+    },
+    isPreview () {
+      return this.$route.path.indexOf('preview') > -1
     },
     pageInfo () {
       return this.$store.state.info

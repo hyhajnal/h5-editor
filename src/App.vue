@@ -10,7 +10,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+// @import '../styles/common.scss';
 body {
   overflow: hidden;
 }
@@ -30,5 +31,13 @@ a {
 }
 li {
   list-style: none;
+}
+
+/* element-ui 样式 */
+.el-card {
+  box-shadow: none !important;
+}
+.el-select-dropdown__item.selected {
+  border: none !important;
 }
 </style>

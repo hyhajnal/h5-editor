@@ -1,6 +1,9 @@
 <template>
-  <div class="tpl">
-    <ul style="padding: 15px;">
+  <div class="module">
+    <p class="tip">
+      切换 'e' 键，进入／退出模块划分模式，选取元素即可划分模块；按 'esc' 键清除当前框选
+    </p>
+    <ul>
       <li v-for="(item, idx) in modules"
         :key="item.id" :data-id="item.id"
         class="component-item"
@@ -60,10 +63,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .tpl {
+  .module {
     background: #fff;
     padding: 15px;
     color: #555;
+    width: 240px;
+  }
+  .tip {
+    font-size: 12px;
+    background: #F6F7F8;
+    color: #5b6b73;
+    padding: 5px;
+    margin-bottom: 15px;
   }
   h1 {
     font-size: 16px;
@@ -99,7 +110,8 @@ export default {
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #f2f2f2;
-    background-image: url('../../assets/2.jpg');
+    background-image: url('../../assets/none.png');
+    background-size: cover;
   }
   .component-preview {
     transform: scale(0.6);

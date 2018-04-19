@@ -31,7 +31,8 @@
         <el-select v-model="select" slot="append" placeholder="请选择">
           <!-- <el-option label="模块库" value="module"></el-option> -->
           <el-option label="项目库" value="project"></el-option>
-          <el-option label="页面库" value="page"></el-option>
+          <el-option label="模版库" value="templ"></el-option>
+          <el-option label="组件库" value="comp"></el-option>
         </el-select>
       </el-input>
     </el-row>
@@ -63,7 +64,7 @@
         </el-col>
       </el-row>
 
-      <!-- <el-row :gutter="20" class="project-list" v-if="select === 'module'">
+      <el-row :gutter="20" class="project-list" v-if="select === 'templ'">
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
@@ -71,21 +72,22 @@
           v-for="item in list"
           :key="item.id"
         >
-          <module-card :mod="item"></module-card>
+          <templ-card :mod="item"></templ-card>
         </el-col>
-      </el-row> -->
+      </el-row>
 
-      <el-row :gutter="20" class="project-list" v-if="select === 'page'">
-        <!-- <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+      <el-row :gutter="20" class="project-list" v-if="select === 'comp'">
+        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
-        </el-col> -->
+        </el-col>
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
           v-for="item in list"
           :key="item.id"
         >
-          <page-card :page="item"></page-card>
+          <comp-card :mod="item"></comp-card>
         </el-col>
       </el-row>
+
 
       <el-row type="flex" justify="end" class="pagination">
         <el-pagination
@@ -108,6 +110,8 @@ import AttrArea from '@/modules/attr-area'
 import ProjectCard from '@/components/ProjectCard'
 import PageCard from '@/components/PageCard'
 import ModuleCard from '@/components/ModuleCard'
+import TemplCard from '@/components/TemplCard'
+import CompCard from '@/components/CompCard'
 import AddCard from '@/components/AddCard'
 import Config from '@/utils/config'
 
@@ -116,7 +120,7 @@ export default {
   data () {
     return {
       search: '',
-      select: 'project',
+      select: 'comp',
       list: [],
       total: 1,
       page: 1
@@ -142,7 +146,9 @@ export default {
     ProjectCard,
     AddCard,
     PageCard,
-    ModuleCard
+    ModuleCard,
+    TemplCard,
+    CompCard
   },
   watch: {
     select () {
@@ -152,7 +158,7 @@ export default {
   methods: {
     getList (page) {
       this.page = page || 1
-      this.axios.get(`${Config.URL}/editor/search/${this.select}s`, {
+      this.axios.get(`${Config.URL}/editor/search/projects`, {
         params: { page: page || 1 }
       }).then(data => {
         this.list = data.list

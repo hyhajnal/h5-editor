@@ -11,7 +11,7 @@
       <h3 class="title">{{mod.name}}</h3>
       <card-bottom />
     </section>
-    <span class="tag">模块</span>
+    <span class="tag">模版</span>
 
     <el-dialog
       title="二维码"

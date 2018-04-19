@@ -221,9 +221,9 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
 .std-radio-active i {
-  color: #FD7F6B;
+  color: $themeColor;
 }
 .el-radio + .el-radio {
   margin-left: 10px;
