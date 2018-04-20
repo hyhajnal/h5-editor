@@ -54,7 +54,7 @@ export default {
 
 h1 {
   text-align: center;
-  color: #FD7F6B;
+  color: $themeColor;
   margin: 20px;
 }
 
@@ -84,7 +84,7 @@ h1 {
 
 
 a {
-  color: #FD7F6B;
+  color: $themeColor;
   outline: 0;
   text-decoration: none;
 }

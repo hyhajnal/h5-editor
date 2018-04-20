@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="900px" height="1080px" viewBox="0 0 900 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #000000;">
+    <!-- Generator: Sketch 3.8.2 (29753) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="655" y="392" width="98" height="98"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="98" height="98" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <rect id="path-3" x="457.220933" y="241.220933" width="50.5581349" height="50.5581349"></rect>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="50.5581349" height="50.5581349" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+        <rect id="path-5" x="349" y="816" width="59" height="59"></rect>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="59" height="59" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+        <rect id="path-7" x="664" y="938" width="43" height="43"></rect>
+        <mask id="mask-8" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="43" height="43" fill="white">
+            <use xlink:href="#path-7"></use>
+        </mask>
+        <rect id="path-9" x="21.9285416" y="106.100417" width="29.4554169" height="29.4554169"></rect>
+        <mask id="mask-10" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="29.4554169" height="29.4554169" fill="white">
+            <use xlink:href="#path-9"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.803987873">
+        <g id="Artboard-1">
+            <g id="Group" transform="translate(101.000000, 37.000000)">
+                <circle id="Oval-1" stroke="#4E32F0" stroke-width="2" opacity="0.8" cx="537" cy="664" r="74"></circle>
+                <circle id="Oval-1-Copy-4" stroke="#4E32F0" stroke-width="2" opacity="0.8" cx="494.5" cy="968.5" r="8.5"></circle>
+                <circle id="Oval-1-Copy" stroke="#211F20" stroke-width="2" cx="349.5" cy="453.5" r="23.5"></circle>
+                <ellipse id="Oval-1-Copy-2" stroke="#4E32F0" stroke-width="2" opacity="0.8" cx="177.5" cy="212.5" rx="33.5" ry="33.5"></ellipse>
+                <ellipse id="Oval-1-Copy-3" stroke="#4E32F0" stroke-width="2" opacity="0.8" cx="678" cy="144" rx="8" ry="8"></ellipse>
+                <path d="M288,692.341084 C259.894531,697.702412 288.193359,736.921162 268.880859,749.206318 C249.568359,761.491474 230.353516,722.202412 212.580078,733.856709 C194.806641,745.511005 217.447266,775.221943 196.890625,790.305927 C176.333984,805.389912 160.144531,759.962177 141.046875,776.415302 C121.949219,792.868427 149.361328,816.161396 126.810547,831.718037 C104.259766,847.274677 92.1425781,801.848896 70.3769531,815.759052 C48.6113281,829.669209 77.8007812,857.610615 53.6464844,871.887959 C29.4921875,886.165302 19.7890625,846.059834 0.90625,857.018818" id="Path-1" stroke="#4E32F0" stroke-width="2" opacity="0.8"></path>
+                <path d="M505,0 C484.050152,3.99633994 505.14413,33.2300397 490.748571,42.3874088 C476.353012,51.5447779 462.030247,22.2586671 448.781906,30.945793 C435.533566,39.6329188 452.409913,61.7794846 437.086971,73.0231033 C421.764028,84.266722 409.696392,50.4048384 395.460977,62.669016 C381.225563,74.9331936 401.65858,92.2957984 384.849203,103.891736 C368.039825,115.487673 359.00766,81.627245 342.783539,91.9958909 C326.559418,102.364537 348.317269,123.192092 330.312629,133.83444 C312.30799,144.476788 305.075269,114.582127 291,122.750966" id="Path-1-Copy" stroke="#211F20" stroke-width="2"></path>
+                <use id="Rectangle-1" stroke="#4E32F0" mask="url(#mask-2)" stroke-width="2" opacity="0.8" xlink:href="#path-1"></use>
+                <use id="Rectangle-1-Copy-2" stroke="#211F20" mask="url(#mask-4)" stroke-width="4" transform="translate(482.500000, 266.500000) rotate(45.000000) translate(-482.500000, -266.500000) " xlink:href="#path-3"></use>
+                <use id="Rectangle-1-Copy" stroke="#211F20" mask="url(#mask-6)" stroke-width="4" xlink:href="#path-5"></use>
+                <use id="Rectangle-1-Copy-3" stroke="#211F20" mask="url(#mask-8)" stroke-width="4" transform="translate(685.500000, 959.500000) rotate(45.000000) translate(-685.500000, -959.500000) " xlink:href="#path-7"></use>
+                <path d="M229.5,886.5 L175.885636,940.114365" id="Line" stroke="#4E32F0" stroke-width="2" stroke-linecap="square" opacity="0.8" transform="translate(202.500000, 913.500000) scale(1, -1) translate(-202.500000, -913.500000) "></path>
+                <path d="M610.504084,196.495918 L579.885636,227.114365" id="Line-Copy" stroke="#4E32F0" stroke-width="2" stroke-linecap="square" opacity="0.8" transform="translate(595.000000, 212.000000) scale(1, -1) translate(-595.000000, -212.000000) "></path>
+                <path d="M287.178547,576.821455 L261.885636,602.114365" id="Line-Copy-2" stroke="#211F20" stroke-width="2" stroke-linecap="square" transform="translate(274.500000, 589.500000) scale(1, -1) translate(-274.500000, -589.500000) "></path>
+                <path d="M300.643293,230.356707 L287.885636,243.114365" id="Line-Copy-3" stroke="#211F20" stroke-width="2" stroke-linecap="square"></path>
+                <polygon id="Path-4" stroke="#474FCE" stroke-width="2" opacity="0.8" points="585.355469 812 537 837.132812 572.050781 850.001953"></polygon>
+                <polygon id="Path-4" stroke="#474FCE" stroke-width="3" opacity="0.8" transform="translate(338.177734, 340.000977) scale(-1, 1) translate(-338.177734, -340.000977) " points="362.355469 321 314 346.132812 349.050781 359.001953"></polygon>
+                <polygon id="Path-4-Copy" stroke="#211F20" stroke-width="4" transform="translate(584.531959, 71.531959) scale(-1, 1) rotate(45.000000) translate(-584.531959, -71.531959) " points="608.709694 52.5309827 560.354225 77.6637952 595.405006 90.5329359"></polygon>
+                <polyline id="Path-3" stroke="#211F20" stroke-width="2" points="472 405 472 437.795979 505.588867 437.795979 505.588867 470.672863 537.223657 470.672863 537.223657 502.725392"></polyline>
+                <polyline id="Path-3-Copy" stroke="#4E32F0" stroke-width="2" opacity="0.8" transform="translate(144.000000, 84.962865) scale(1, -1) translate(-144.000000, -84.962865) " points="122 52 122 74.1242281 144.659112 74.1242281 144.659112 96.3030354 166 96.3030354 166 117.92573"></polyline>
+                <use id="Rectangle-1-Copy-2" stroke="#211F20" mask="url(#mask-10)" stroke-width="4" transform="translate(36.656250, 120.828125) rotate(45.000000) translate(-36.656250, -120.828125) " xlink:href="#path-9"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -206,7 +206,7 @@ export default {
   }
   .del:hover {
     background-color: #ecf5ff;
-    color: #FD7F6B;
+    color: $themeColor;
   }
 }
 .menu-item {

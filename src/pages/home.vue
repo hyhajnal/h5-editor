@@ -1,62 +1,44 @@
 <template>
-  <div class="home unfixed">
+  <div class="home">
     <header>
       <h2>
         <i class="iconfont icon-design"></i>
         H5 Editor
       </h2>
-      <el-row type="flex" justify="center" class="search-box">
-        <el-input
-          prefix-icon="el-icon-search"
-          placeholder="请输入内容"
-          v-model="search"
-          class="search-input"
-        >
-          <!-- <el-select v-model="select" slot="append" placeholder="请选择">
-            <el-option label="模块库" value="module"></el-option>
-            <el-option label="项目库" value="project"></el-option>
-            <el-option label="页面库" value="page"></el-option>
-          </el-select> -->
-        </el-input>
-      </el-row>
-      <div class="avatar"></div>
-    </header>
-    <el-row type="flex" justify="center" class="search-box-bottom">
       <el-input
         prefix-icon="el-icon-search"
         placeholder="请输入内容"
         v-model="search"
         class="search-input"
-      >
-        <el-select v-model="select" slot="append" placeholder="请选择">
-          <!-- <el-option label="模块库" value="module"></el-option> -->
-          <el-option label="项目库" value="project"></el-option>
-          <el-option label="模版库" value="templ"></el-option>
-          <el-option label="组件库" value="comp"></el-option>
-        </el-select>
-      </el-input>
-    </el-row>
-    <main>
-      <!-- <el-row type="flex" justify="center" class="search-box">
-        <el-input
-          prefix-icon="el-icon-search"
-          placeholder="请输入内容"
-          v-model="search"
-          class="search-input"
-        >
-          <el-select v-model="select" slot="append" placeholder="请选择">
-            <el-option label="模块库" value="module"></el-option>
-            <el-option label="项目库" value="project"></el-option>
-            <el-option label="页面库" value="page"></el-option>
-          </el-select>
-        </el-input>
-      </el-row> -->
+      />
+      <div class="right">
+        <radio-bar v-model="select" class="select-bar">
+          <radio-item label="project" class="select-item">项目</radio-item>
+          <radio-item label="templ" class="select-item">模版</radio-item>
+          <radio-item label="comp" class="select-item">组件</radio-item>
+        </radio-bar>
+        <div class="avatar"></div>
+      </div>
+    </header>
 
-      <el-row :gutter="20" class="project-list" v-if="select === 'project'">
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+    <div class="search-box">
+      <el-input
+        prefix-icon="el-icon-search"
+        placeholder="请输入内容"
+        v-model="search"
+        class="search-input"
+      />
+    </div>
+
+    <home-select :type="select" />
+
+    <main>
+
+      <el-row :gutter="40" class="project-list" v-if="select === 'project'">
+        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
+        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
           :key="item.id"
         >
@@ -64,11 +46,11 @@
         </el-col>
       </el-row>
 
-      <el-row :gutter="20" class="project-list" v-if="select === 'templ'">
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+      <el-row :gutter="40" class="project-list" v-if="select === 'templ'">
+        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
+        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
           :key="item.id"
         >
@@ -76,15 +58,15 @@
         </el-col>
       </el-row>
 
-      <el-row :gutter="20" class="project-list" v-if="select === 'comp'">
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
+      <el-row :gutter="40" class="project-list" v-if="select === 'comp'">
+        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
           <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
         </el-col>
-        <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
-          v-for="item in list"
-          :key="item.id"
+        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
+          v-for="item in 14"
+          :key="item"
         >
-          <comp-card :mod="item"></comp-card>
+          <comp-card></comp-card>
         </el-col>
       </el-row>
 
@@ -114,6 +96,8 @@ import TemplCard from '@/components/TemplCard'
 import CompCard from '@/components/CompCard'
 import AddCard from '@/components/AddCard'
 import Config from '@/utils/config'
+import HomeSelect from '@/components/HomeSelect'
+import { RadioBar, RadioItem } from '@/components/radio'
 
 export default {
   name: 'Home',
@@ -129,16 +113,18 @@ export default {
   mounted () {
     this.getList()
     this.$el.addEventListener('scroll', e => {
-      if (this.$el.scrollTop < 200) {
-        this.$el.classList = 'home unfixed'
+      if (this.$el.scrollTop < 186) {
+        this.$el.classList.remove('search-fixed')
       } else {
-        this.$el.classList = 'home fixed'
+        this.$el.classList.add('search-fixed')
+      }
+      if (this.$el.scrollTop < 290) {
+        this.$el.classList.remove('select-fixed')
+      } else {
+        this.$el.classList.add('select-fixed')
       }
     }, false)
   },
-  // destroyed () {
-  //   this.$el.addEventListener('scroll')
-  // },
   components: {
     EditArea,
     ResourceArea,
@@ -148,7 +134,10 @@ export default {
     PageCard,
     ModuleCard,
     TemplCard,
-    CompCard
+    CompCard,
+    HomeSelect,
+    RadioBar,
+    RadioItem
   },
   watch: {
     select () {
@@ -177,38 +166,39 @@ export default {
   .home {
     height: 100vh;
     overflow: auto;
-    background: #f2f2f2;
-    // background: url(https://www.brainpickings.org/wp-content/themes/brainpickings/images/bckgd_body.png);
+    background: $lightBg;
   }
   main {
     height: 100%;
-    // padding-top: 60px;
     margin: 0 auto;
+    margin-top: 60px;
     max-width: 1200px;
+    width: 80%;
   }
   .project-list {
     width: 100%;
-    padding: 20px 10px;
     margin: 0 !important;
   }
   .search-box {
-    width: 600px;
-  }
-  .search-box-bottom {
-    padding: 0 20px;
-    margin: 200px 0 100px 0;
+    background: url('../assets/bg-1.svg');
+    height: 350px;
+    padding-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .search-input {
-    width: 50%;
+    width: 35%;
   }
   .pagination {
     margin: 40px 0 100px 0;
   }
+
+  // 头部区域
+
   header {
     width: 100vw;
     height: 60px;
-    background: #FD7F6B;
-    transition: all .5s;
     position: fixed;
     z-index: 999;
     display: flex;
@@ -216,37 +206,82 @@ export default {
     align-items: center;
     padding: 0 20px;
     color: #FFF;
-    .el-input__inner {
-      border: none;
+    background: transparent;
+    .search-input {
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-30%, -50%);
     }
   }
   .avatar {
     border-radius: 100%;
-    margin-left: 40px;
     background: url('../assets/2.jpg');
     background-size: cover;
     width: 40px;
     height: 40px;
+  }
+  .right {
+    display: flex;
+  }
+  .select-bar {
+    width: 240px !important;
+  }
+  .select-item {
+    color: #999;
+    font-weight: bold;
   }
 </style>
 
 <style lang="scss">
 .home {
   .el-col {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
   .el-select .el-input {
     width: 130px;
   }
-}
-.unfixed {
-  header {
-    opacity: 0;
+  .el-input--prefix .el-input__inner {
+    background: transparent;
+    border-radius: 30px;
   }
 }
-.fixed {
-  header {
-    opacity: 1;
+header {
+  .el-input--prefix .el-input__inner {
+    border: none;
+    background: #f2f2f2 !important;
+    width: 40%;
+    border-radius: 4px;
+    height: 30px;
   }
+  .el-input__icon {
+    height: 30px;
+    line-height: 32px;
+  }
+}
+
+.search-fixed {
+  header {
+    background: #000;
+    .search-input {
+      opacity: 1;
+    }
+  }
+}
+
+.select-fixed {
+  .home-select {
+    position: fixed;
+    top: 60px;
+    z-index: 999;
+  }
+  main { 
+    margin-top: 110px;
+  }
+}
+
+.std-radio-active {
+  color: #fff !important;
 }
 </style>

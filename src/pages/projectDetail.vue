@@ -88,9 +88,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   header {
-    background: #FD7F6B;
+    background: $themeColor;
   }
   .home {
     height: 100vh;
@@ -99,7 +99,7 @@ export default {
   }
   header {
     height: 60px;
-    background: #FD7F6B;
+    background: $themeColor;
     transition: all .5s;
   }
   main {

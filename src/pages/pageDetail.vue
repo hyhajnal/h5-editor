@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .preview {
     display: flex;
     flex-direction: column;
@@ -49,7 +49,7 @@ export default {
   }
   header {
     height: 60px;
-    background: #FD7F6B;
+    background: $themeColor;
     transition: all .5s;
   }
   main {
