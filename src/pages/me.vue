@@ -2,16 +2,9 @@
   <div class="me-wrap">
     <div class="shadow"></div>
     <header>
-      <h2><i class="iconfont icon-design"></i>H5 Editor</h2>
-      <el-row type="flex" justify="center" class="search-box">
-        <el-input
-          prefix-icon="el-icon-search"
-          placeholder="请输入内容"
-          v-model="search"
-          class="search-input"
-        >
-        </el-input>
-      </el-row>
+      <router-link :to="{name: 'Home'}">
+        <h2><i class="iconfont icon-design"></i>H5 Editor</h2>
+      </router-link>
     </header>
 
     <el-row class="me-info">
@@ -100,13 +93,18 @@ header {
   width: 100vw;
   height: 60px;
   transition: all .5s;
-  // z-index: 999;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   color: #FFF;
   position: fixed;
+  h2 {
+    color: #fff !important;
+  }
+  i {
+    margin-right: 10px;
+  }
 }
 .me-info {
   padding-top: 80px;

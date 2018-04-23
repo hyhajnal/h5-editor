@@ -7,7 +7,7 @@
       </h2>
       <el-input
         prefix-icon="el-icon-search"
-        placeholder="请输入内容"
+        placeholder="请输入你想要找的内容"
         v-model="search"
         class="search-input"
       />
@@ -17,14 +17,16 @@
           <radio-item label="templ" class="select-item">模版</radio-item>
           <radio-item label="comp" class="select-item">组件</radio-item>
         </radio-bar>
-        <div class="avatar"></div>
+        <router-link :to="{name: 'Me'}">
+          <div class="avatar"></div>
+        </router-link>
       </div>
     </header>
 
     <div class="search-box">
       <el-input
         prefix-icon="el-icon-search"
-        placeholder="请输入内容"
+        placeholder="请输入你想要找的内容"
         v-model="search"
         class="search-input"
       />
@@ -36,7 +38,7 @@
 
       <el-row :gutter="40" class="project-list" v-if="select === 'project'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
+          <project-add @after-add="afterAdd" :page="page"></project-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
@@ -48,7 +50,7 @@
 
       <el-row :gutter="40" class="project-list" v-if="select === 'templ'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
+          <templ-card @after-add="afterAdd" :page="page"></templ-card>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
@@ -60,13 +62,13 @@
 
       <el-row :gutter="40" class="project-list" v-if="select === 'comp'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
+          <comp-add @after-add="afterAdd" :page="page"></comp-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
-          v-for="item in 14"
-          :key="item"
+          v-for="item in list"
+          :key="item.id"
         >
-          <comp-card></comp-card>
+          <comp-card :comp="item"></comp-card>
         </el-col>
       </el-row>
 
@@ -94,7 +96,7 @@ import PageCard from '@/components/PageCard'
 import ModuleCard from '@/components/ModuleCard'
 import TemplCard from '@/components/TemplCard'
 import CompCard from '@/components/CompCard'
-import AddCard from '@/components/AddCard'
+import * as Add from '@/components/add'
 import Config from '@/utils/config'
 import HomeSelect from '@/components/HomeSelect'
 import { RadioBar, RadioItem } from '@/components/radio'
@@ -130,7 +132,7 @@ export default {
     ResourceArea,
     AttrArea,
     ProjectCard,
-    AddCard,
+    ...Add,
     PageCard,
     ModuleCard,
     TemplCard,
@@ -147,7 +149,7 @@ export default {
   methods: {
     getList (page) {
       this.page = page || 1
-      this.axios.get(`${Config.URL}/editor/search/projects`, {
+      this.axios.get(`${Config.URL}/editor/search/${this.select}s`, {
         params: { page: page || 1 }
       }).then(data => {
         this.list = data.list
@@ -216,11 +218,11 @@ export default {
     }
   }
   .avatar {
-    border-radius: 100%;
     background: url('../assets/2.jpg');
     background-size: cover;
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
   }
   .right {
     display: flex;
@@ -251,7 +253,7 @@ header {
   .el-input--prefix .el-input__inner {
     border: none;
     background: #f2f2f2 !important;
-    width: 40%;
+    width: 50%;
     border-radius: 4px;
     height: 30px;
   }

@@ -3,8 +3,8 @@
 
 <template>
   <div class="component">
-    <h1 class="title">{{item.name}}-{{item.id}}</h1>
-    <p class="desc">这是一段组件的介绍文字</p>
+    <h1 class="title">{{comp.name}}</h1>
+    <p class="desc">{{comp.desc}}</p>
     <card-bottom class="bottom" />
     <el-row class="shadow" type="flex" justify="space-around" align="middle">
       <i class="el-icon-circle-plus"></i>
@@ -18,12 +18,7 @@ import CardBottom from './Bottom'
 export default {
   name: 'CompCard',
   data () {
-    return {
-      item: {
-        name: '组件1',
-        id: 'comp1'
-      }
-    }
+    return {}
   },
   props: {
     comp: Object

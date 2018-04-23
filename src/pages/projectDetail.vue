@@ -7,7 +7,7 @@
 
       <el-row :gutter="20" class="project-list">
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1">
-          <add-card type="page" @after-add="afterAdd" :page="page"></add-card>
+          <page-add @after-add="afterAdd" :page="page"></page-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="6" :lg="6" :xl="1"
           v-for="item in list"
@@ -39,7 +39,7 @@ import AttrArea from '@/modules/attr-area'
 import ProjectCard from '@/components/ProjectCard'
 import PageCard from '@/components/PageCard'
 import ModuleCard from '@/components/ModuleCard'
-import AddCard from '@/components/AddCard'
+import { PageAdd } from '@/components/add'
 import Config from '@/utils/config'
 
 export default {
@@ -62,7 +62,7 @@ export default {
     ResourceArea,
     AttrArea,
     ProjectCard,
-    AddCard,
+    PageAdd,
     PageCard,
     ModuleCard
   },
