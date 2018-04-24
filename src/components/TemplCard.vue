@@ -1,17 +1,32 @@
 <template>
-  <div class="card" @click="goEdit" v-if="mod">
-    <figure class="card-image">
+  <div class="card" @click="goEdit" v-if="templ">
+    <!-- <figure class="card-image">
       <el-row class="shadow" type="flex" justify="space-around" align="middle">
         <i class="el-icon-circle-plus"></i>
         <i class="el-icon-search"></i>
         <i class="el-icon-menu" @click.stop="open"></i>
       </el-row>
-    </figure>
+    </figure> -->
+    <div class="card-image">
+      <custom-element
+        v-if="elements.length > 0"
+        v-for="el in elements"
+        :key="el.id"
+        :element="el"
+      />
+      <figure v-if="elements.length === 0"></figure>
+      <el-row class="shadow" type="flex" justify="space-around" align="middle">
+        <i class="el-icon-circle-plus" @click.stop="addTempl" v-if="!isAdd"></i>
+        <i class="el-icon-success" v-else></i>
+        <i class="el-icon-search"></i>
+        <i class="el-icon-menu" @click.stop="open"></i>
+      </el-row>
+    </div>
     <section class="card-body">
-      <h3 class="title">{{mod.name}}</h3>
+      <h3 class="title">{{templ.name}}</h3>
       <card-bottom />
     </section>
-    <span class="tag">模版</span>
+    <span class="tag">{{templ.tag}}</span>
 
     <el-dialog
       title="二维码"
@@ -26,28 +41,57 @@
 
 <script>
 import CardBottom from './Bottom'
+import CustomElement from '@/modules/preview-area/custom-element'
 export default {
   name: 'ProjectCard',
   data () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      elements: [],
+      isAdd: false
     }
   },
   props: {
-    mod: Object
+    templ: Object
   },
-  components: { CardBottom },
+  components: {
+    CardBottom,
+    CustomElement
+  },
+  mounted () {
+    if (this.templ.elements) {
+      this.elements = JSON.parse(this.templ.elements).children
+    }
+    const templs = this.$store.state.templs
+    templs.forEach(item => {
+      if (item.id === this.templ.id) {
+        this.isAdd = true
+        return false
+      }
+    })
+  },
   methods: {
     goEdit () {
-      this.$store.dispatch('changeCurrent', this.mod)
-      this.$router.push({name: 'Edit', query: {id: this.mod.id}})
+      this.$store.dispatch('changeCurrent', this.templ)
+      this.$router.push({name: 'Edit', query: {id: this.templ.id}})
     },
     open () {
       this.dialogVisible = true
     },
     close () {
       this.dialogVisible = false
-      // e.stopPropagation()
+    },
+    addTempl () {
+      const { id, name } = this.templ
+      this.$store.commit('addTempl', {
+        id, name, elements: this.elements
+      })
+      this.isAdd = true
+      this.$notify({
+        title: '成功',
+        message: '已添加至模版库',
+        type: 'success'
+      })
     }
   }
 }
@@ -60,12 +104,18 @@ export default {
   overflow: hidden;
   cursor: pointer;
   height: 270px;
+  background: #fff;
 }
 .card-image {
-  background-image: url('../assets/avatar.jpg');
   height: 200px;
-  background-size: cover;
   position: relative;
+  border-bottom: 1px solid #ddd;
+}
+figure {
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/none.png');
+  background-size: cover;
 }
 .shadow {
   width: 100%;
@@ -73,6 +123,8 @@ export default {
   background-color: rgba(0, 0, 0, 0.13);
   z-index: 100;
   position: absolute;
+  top: 0;
+  left:0;
   display: none;
   i {
     color: #fff;

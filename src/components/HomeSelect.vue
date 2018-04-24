@@ -58,7 +58,7 @@ export default {
   },
   data () {
     return {
-      tag: '1'
+      tag: '0'
     }
   },
   computed: {

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 // import Page from '@/utils/page.json'
-import Components from '@/utils/components.json'
+// import Components from '@/utils/components.json'
 // import Modules from '@/utils/modules.json'
-import Templs from '@/utils/templs.json'
+// import Templs from '@/utils/templs.json'
 import { treeTravel, treeTravelById, moduleSelect } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
 
@@ -18,9 +18,9 @@ const state = {
   current: null, //  当前选中组件的idx
   isDraging: false,
   isModuleEdit: false, // 编辑的是否是模块
-  components: Components,
+  components: [],
   modules: [],
-  templs: Templs,
+  templs: [],
   device: {...mobiles[0], percent: 100}
 }
 
@@ -138,11 +138,12 @@ const actions = {
    */
   addTempl ({ state, commit }, payload) {
     const { type, pid, idx } = payload
+    console.log(payload)
     let list = JSON.parse(JSON.stringify(state.list))
-    const newCompIdx = state.templs.findIndex(c => c.id === type)
-    let newComp = state.templs[newCompIdx].content
+    const newCompIdx = state.templs.findIndex(c => c.id.toString() === type)
+    let newComp = state.templs[newCompIdx]
     treeTravel(list, pid).then(item => {
-      newComp.children.map((el, i) => {
+      newComp.elements.map((el, i) => {
         el.id = guid()
         el.pid = pid
         item.splice((idx + i), 0, el)
@@ -229,6 +230,22 @@ const mutations = {
   // 删除模块
   delMod (state, idx) {
     state.modules.splice(idx, 1)
+  },
+  // 添加组件
+  addComp (state, comp) {
+    state.components.push(comp)
+  },
+  // 删除组件
+  delComp (state, idx) {
+    state.components.splice(idx, 1)
+  },
+  // 添加模版
+  addTempl (state, templ) {
+    state.templs.push(templ)
+  },
+  // 删除模版
+  delTempl (state, idx) {
+    state.templs.splice(idx, 1)
   },
   // 发布模块
   publishMod (state, mod) {

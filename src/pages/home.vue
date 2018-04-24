@@ -50,13 +50,13 @@
 
       <el-row :gutter="40" class="project-list" v-if="select === 'templ'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <templ-card @after-add="afterAdd" :page="page"></templ-card>
+          <templ-add @after-add="afterAdd" :page="page"></templ-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
           :key="item.id"
         >
-          <templ-card :mod="item"></templ-card>
+          <templ-card :templ="item"></templ-card>
         </el-col>
       </el-row>
 
@@ -106,7 +106,7 @@ export default {
   data () {
     return {
       search: '',
-      select: 'comp',
+      select: 'templ',
       list: [],
       total: 1,
       page: 1

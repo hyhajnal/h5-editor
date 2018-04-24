@@ -5,7 +5,7 @@
     <!-- Form -->
     <el-dialog title="创建项目" :visible.sync="show">
       <el-form :model="form" ref="add">
-        <el-form-item :label="typeStr +'名称'" :label-width="formLabelWidth" prop="name">
+        <el-form-item label="项目名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>

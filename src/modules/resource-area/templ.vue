@@ -6,13 +6,13 @@
       :options="{group:{name:'resource1',pull:'clone',put:false}}"
       @end="onEnd"
     >
-      <li v-for="item in templs" :key="item.id" :data-id="item.id" class="component-item">
+      <li v-for="(item, idx) in templs" :key="item.id" :data-id="item.id" class="component-item">
         <el-card :body-style="{ padding: '0px' }">
           <!-- <img :src="item.image" class="image"> -->
           <div class="image">
             <div class="component-preview">
               <custom-element
-                v-for="el in item.content.children"
+                v-for="el in item.elements"
                 :key="el.id"
                 :element="el"
               />
@@ -23,7 +23,7 @@
               <span class="title">{{item.name}}-{{item.id}}</span>
               <!-- <el-button type="text" class="button">编辑</el-button> -->
               <i class="el-icon-search"></i>
-              <i class="el-icon-circle-close-outline"></i>
+              <i class="el-icon-circle-close-outline" @click.stop="del(idx)"></i>
               <!-- <el-button type="text" class="button">预览</el-button> -->
             </div>
           </div>
@@ -66,6 +66,9 @@ export default {
         pid: pid,
         idx: obj.newIndex
       })
+    },
+    del (i) {
+      this.$store.commit('delTempl', i)
     }
   }
 }
@@ -76,9 +79,6 @@ export default {
     background: #fff;
     padding: 15px;
     width: 240px;
-  }
-  .component-item {
-    cursor: move;
   }
   .title {
     font-size: 14px;
@@ -94,6 +94,7 @@ export default {
     padding: 0;
     float: right;
     color: #666;
+    cursor: pointer;
   }
   .el-icon-search {
     margin-left: 10px;
@@ -106,6 +107,7 @@ export default {
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #f2f2f2;
+    cursor: move;
   }
   .component-preview {
     transform: scale(0.6);

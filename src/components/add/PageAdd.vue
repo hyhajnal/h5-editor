@@ -1,11 +1,11 @@
 <template>
-  <div class="card" :style="cardStyle">
+  <div class="card">
     <i class="el-icon-plus" @click="show = true"></i>
 
     <!-- Form -->
     <el-dialog :title="'创建' + typeStr" :visible.sync="show">
       <el-form :model="form" ref="add">
-        <el-form-item :label="typeStr +'名称'" :label-width="formLabelWidth" prop="name">
+        <el-form-item label="页面名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -39,27 +39,6 @@ export default {
       formLabelWidth: '120px'
     }
   },
-  computed: {
-    typeStr () {
-      let str = ''
-      switch (this.type) {
-        case 'module':
-          str = '模块'
-          break
-        case 'project':
-          str = '项目'
-          break
-        case 'page':
-          str = '页面'
-          break
-      }
-      return str
-    },
-    cardStyle () {
-      const height = this.type === 'comp' ? '100px' : '270px'
-      return `height: ${height}`
-    }
-  },
   methods: {
     addModule () {
       this.show = false
@@ -90,6 +69,7 @@ export default {
   background: #fff;
   border: 1px solid #f2f2f2;
   border-radius: 4px;
+  height: 470px;
   display: flex;
   align-items: center;
   justify-content: center;
