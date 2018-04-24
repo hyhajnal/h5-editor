@@ -2,7 +2,7 @@
 <div class="home-select">
   <el-tabs tab-position="top"
     style="height: 50px; width: 80%; padding-left: 30px;"
-    v-model="tag"
+    v-model="search.tag"
   >
     <el-tab-pane
       v-for="item in list"
@@ -12,15 +12,10 @@
     />
   </el-tabs>
   <div class="sort">
-    <el-dropdown>
-      <span class="el-dropdown-link">
-        排序<i class="el-icon-arrow-down el-icon--right"></i>
-      </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>最新</el-dropdown-item>
-        <el-dropdown-item>最热</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    <el-select v-model="search.sort" placeholder="请选择">
+      <el-option label="最新" value="created" key="created"></el-option>
+      <el-option label="最热" value="visit" key="visitCount"></el-option>
+    </el-select>
   </div>
 </div>
 </template>
@@ -58,12 +53,27 @@ export default {
   },
   data () {
     return {
-      tag: '0'
+      search: {
+        tag: '0',
+        sort: 'created'
+      }
     }
   },
   computed: {
     list () {
       return data[this.type]
+    }
+  },
+  watch: {
+    search: {
+      handler () {
+        const tag = data[this.type][parseInt(this.search.tag)].label
+        this.$emit('search-params', {
+          sort: this.search.sort,
+          tag
+        })
+      },
+      deep: true
     }
   },
   methods: {
@@ -110,6 +120,9 @@ $height: 50px;
   top: 50%;
   right: 20px;
   transform: translateY(-50%);
+  .el-input__inner {
+    border: none;
+  }
 }
 </style>
 

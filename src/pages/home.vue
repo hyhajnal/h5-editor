@@ -8,8 +8,9 @@
       <el-input
         prefix-icon="el-icon-search"
         placeholder="请输入你想要找的内容"
-        v-model="search"
+        v-model="keyword"
         class="search-input"
+        @keyup.enter.native="keywordChange"
       />
       <div class="right">
         <radio-bar v-model="select" class="select-bar">
@@ -27,18 +28,19 @@
       <el-input
         prefix-icon="el-icon-search"
         placeholder="请输入你想要找的内容"
-        v-model="search"
+        v-model="keyword"
         class="search-input"
+        @keyup.enter.native="keywordChange"
       />
     </div>
 
-    <home-select :type="select" />
+    <home-select :type="select" @search-params="paramsChange" />
 
     <main>
 
       <el-row :gutter="40" class="project-list" v-if="select === 'project'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <project-add @after-add="afterAdd" :page="page"></project-add>
+          <project-add @after-add="afterAdd" :page="search.page"></project-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
@@ -50,7 +52,7 @@
 
       <el-row :gutter="40" class="project-list" v-if="select === 'templ'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <templ-add @after-add="afterAdd" :page="page"></templ-add>
+          <templ-add @after-add="afterAdd" :page="search.page"></templ-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
@@ -62,7 +64,7 @@
 
       <el-row :gutter="40" class="project-list" v-if="select === 'comp'">
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
-          <comp-add @after-add="afterAdd" :page="page"></comp-add>
+          <comp-add @after-add="afterAdd" :page="search.page"></comp-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
@@ -79,7 +81,7 @@
           layout="total, prev, pager, next"
           :total="total"
           :page-size="11"
-          @current-change="getList">
+          @current-change="pageChange">
         </el-pagination>
       </el-row>
 
@@ -105,11 +107,16 @@ export default {
   name: 'Home',
   data () {
     return {
-      search: '',
+      search: {
+        keyword: '',
+        sort: 'created',
+        tag: '全部',
+        page: 1
+      },
+      keyword: '',
       select: 'templ',
       list: [],
-      total: 1,
-      page: 1
+      total: 1
     }
   },
   mounted () {
@@ -142,15 +149,36 @@ export default {
     RadioItem
   },
   watch: {
+    search: {
+      handler () {
+        this.getList()
+      },
+      deep: true
+    },
     select () {
+      this.keyword = ''
+      this.search.keyword = ''
       this.getList()
     }
   },
   methods: {
-    getList (page) {
-      this.page = page || 1
+    // 搜索条件change后
+    paramsChange ({tag, sort}) {
+      this.search.tag = tag
+      this.search.sort = sort
+    },
+    pageChange (page) {
+      this.search.page = page || 1
+    },
+    keywordChange () {
+      const keyword = this.keyword.trim()
+      // if (keyword && keyword.charCodeAt() !== 39) {
+      this.search.keyword = keyword
+      // }
+    },
+    getList () {
       this.axios.get(`${Config.URL}/editor/search/${this.select}s`, {
-        params: { page: page || 1 }
+        params: this.search
       }).then(data => {
         this.list = data.list
         this.total = data.total
