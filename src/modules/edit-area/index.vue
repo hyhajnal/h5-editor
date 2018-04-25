@@ -105,6 +105,16 @@ export default {
       this.divideStart = !this.divideStart
     })
 
+    hotkeys('⌘+v', (e) => {
+      event.preventDefault()
+      this.$notify({
+        title: '成功',
+        message: '成功将当前元素复制到编辑面板',
+        type: 'success'
+      })
+      this.$store.dispatch('copyEle')
+    })
+
     hotkeys('esc', (event, handler) => {
       this.clear()
     })

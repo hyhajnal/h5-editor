@@ -1,19 +1,16 @@
 const toStyleString = (data) => {
   let styleStr = 'position: relative;'
   Object.keys(data).forEach(key => {
-    if (key === 'width' && data[key] === 0) {
+    if ((key === 'width' || key === 'height') && data[key] === 0) {
       return
     }
-    if (key === 'height' && data[key] === 0) {
-      return
-    }
-    if (key === 'border' && data[key][0] === 0) {
-      return
-    }
-    if (key === 'borderRadius' && data[key][0] === 0) {
+    if ((key === 'border' || key === 'borderRadius') && data[key][0] === 0) {
       return
     }
     if ((key === 'top' || key === 'bottom' || key === 'left' || key === 'right') && data[key] === undefined) {
+      return
+    }
+    if ((key === 'padding' || key === 'margin') && data[key].toString() === '0,0,0,0') {
       return
     }
     const value = toStyleStrItem(key, data[key])
@@ -22,11 +19,21 @@ const toStyleString = (data) => {
   return styleStr
 }
 
+// 处理 padding,margin 的格式
+function fourValue (v1, v2, v3, v4) {
+  if (v1 === v3 && v2 === v4) {
+    return `${v1}px ${v2}px`
+  } else if ((v1 === v3 && v2 === v4 && v1 === v2)) {
+    return `${v1}px`
+  } else {
+    return `${v1}px ${v2}px ${v3}px ${v4}px`
+  }
+}
+
 function toStyleStrItem (key, value) {
   let result = ''
   switch (key) {
     case 'width':
-      // result = value === 0 ? '100%' : `${value}px`
       result = `${value}px`
       break
     case 'height':
@@ -45,10 +52,10 @@ function toStyleStrItem (key, value) {
       result = `${value}px`
       break
     case 'margin':
-      result = `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
+      result = fourValue(value[0], value[1], value[2], value[3])
       break
     case 'padding':
-      result = `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
+      result = fourValue(value[0], value[1], value[2], value[3])
       break
     case 'border':
       result = `${value[0]}px ${value[1]} ${value[2]}`

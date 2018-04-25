@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // import Components from '@/utils/components.json'
 // import Modules from '@/utils/modules.json'
 // import Templs from '@/utils/templs.json'
-import { treeTravel, treeTravelById, moduleSelect } from '@/utils/transformTree'
+import { treeTravel, treeTravelById, moduleSelect, copyElorTempl } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
 
 Vue.use(Vuex)
@@ -135,6 +135,21 @@ const actions = {
   },
 
   /**
+   * 复制元素
+   */
+  copyEle ({ state, commit }) {
+    if (!state.current) return
+    let { list, current } = JSON.parse(JSON.stringify(state))
+    treeTravelById(list, current.id).then(item => {
+      let newItem = JSON.parse(JSON.stringify(item))
+      // 改变所有child的id
+      copyElorTempl(newItem, 'root')
+      list.push(newItem)
+      commit('update', list)
+    })
+  },
+
+  /**
    * 复制模版
    * @param {组件的id} type
    * @param {拖入的父元素id} pid
@@ -148,8 +163,8 @@ const actions = {
     let newComp = state.templs[newCompIdx]
     treeTravel(list, pid).then(item => {
       newComp.elements.map((el, i) => {
-        el.id = guid()
-        el.pid = pid
+        // 改变所有child的id
+        copyElorTempl(el, pid)
         item.splice((idx + i), 0, el)
       })
       commit('update', list)
