@@ -1,5 +1,7 @@
 <template>
-  <van-button type="default">默认按钮</van-button>
+  <van-button :type="ele.config[0].data">
+    {{ele.config[2].data}}
+  </van-button>
 </template>
 
 <script>

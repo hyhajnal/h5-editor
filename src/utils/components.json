@@ -2,10 +2,8 @@
   {
     "id": "c1",
     "name": "按钮",
-    "type": "van-button",
-    "content": {
-      "domProps": {}
-    },
+    "type": "button",
+    "icon": "button",
     "config": [
       { "name": "type", "label": "类型", "type": "select", "data": "default", "options": ["default", "primary", "danger"] },
       { "name": "size", "label": "大小", "type": "select", "data": "small", "options": ["large", "small", "mini"] },
@@ -15,12 +13,51 @@
   {
     "id": "c2",
     "name": "标签",
-    "type": "van-tag",
-    "content": {
-      "domProps": {
-        "innerHTML": "标签"
-      }
-    },
+    "icon": "tag",
+    "type": "tag",
+    "config": []
+  },
+  {
+    "id": "c3",
+    "name": "单选框",
+    "icon": "radio",
+    "type": "radio",
+    "config": []
+  },
+  {
+    "id": "c4",
+    "name": "多选框",
+    "icon": "checkbox",
+    "type": "checkbox",
+    "config": []
+  },
+  {
+    "id": "c5",
+    "name": "开关",
+    "icon": "switch",
+    "type": "switch",
+    "config": []
+  },
+  {
+    "id": "c6",
+    "name": "搜索框",
+    "icon": "search",
+    "type": "search",
+    "config": []
+  },
+  {
+    "id": "c7",
+    "name": "底部栏",
+    "icon": "tabbar",
+    "type": "tabbar",
+    "config": []
+  },
+  {
+    "id": "c8",
+    "name": "导航栏",
+    "icon": "navbar",
+    "type": "navbar",
     "config": []
   }
+  
 ]

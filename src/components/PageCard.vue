@@ -1,6 +1,6 @@
 <template>
   <div class="card" @click="goDetail" v-if="page">
-    <figure class="card-image">
+    <figure class="card-image" :style="bgImg">
       <el-row class="shadow" type="flex" justify="space-around" align="middle">
         <i class="el-icon-circle-plus"></i>
         <i class="el-icon-search"></i>
@@ -35,15 +35,23 @@
 </template>
 
 <script>
+import Config from '@/utils/config'
+
 export default {
   name: 'ProjectCard',
   data () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      img: `${Config.URL}/static/${this.page.img}` || '../assets/page.jpg'
     }
   },
   props: {
     page: Object
+  },
+  computed: {
+    bgImg () {
+      return `background-image: url(${this.img});`
+    }
   },
   methods: {
     goDetail () {
@@ -72,15 +80,15 @@ export default {
   border-radius: 4px;
 }
 .card-image {
-  background-image: url('../assets/page.jpg');
   height: 400px;
   background-size: cover;
   position: relative;
+  box-shadow: #ddd 0px 2px 5px;
 }
 .shadow {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.13);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
   position: absolute;
   display: none;
@@ -96,8 +104,11 @@ export default {
 }
 .card-body {
   padding: 10px;
-  // border: 1px solid #ddd;
   background: #fff;
+}
+h3 {
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 .owner {
   img {

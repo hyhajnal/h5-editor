@@ -118,13 +118,17 @@ const actions = {
   },
 
   addEle ({ state, commit }, payload) {
-    const { type, pid, idx } = payload
+    const { type, pid, idx, compConfig } = payload
     let id = guid()
     let attr = getInit(type)
     let list = JSON.parse(JSON.stringify(state.list))
+    let config = null
+    if (compConfig) {
+      config = compConfig
+    }
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, ...attr, type, label: `${type}/${id}`, children: []
+        id, pid, ...attr, type, label: `${type}/${id}`, children: [], config
       })
       commit('update', list)
     })

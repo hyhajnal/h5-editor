@@ -115,6 +115,7 @@ export default {
 }
 .page {
   background: #fff;
+  position: relative;
 }
 p {
   width: 100%;

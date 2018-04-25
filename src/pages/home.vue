@@ -114,7 +114,7 @@ export default {
         page: 1
       },
       keyword: '',
-      select: 'templ',
+      select: 'project',
       list: [],
       total: 1
     }

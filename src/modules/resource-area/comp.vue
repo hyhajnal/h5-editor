@@ -1,6 +1,9 @@
 <template>
   <div class="tpl">
     <!-- <ul style="padding: 15px;"> -->
+    <p class="tip">
+      按 <i class="el-icon-circle-plus-outline"></i> 从资源库中选取需要的组件
+    </p>
     <draggable
       element="ul"
       :options="{group:{name:'resource1',pull:'clone',put:false}}"
@@ -62,6 +65,13 @@ export default {
     background: #fff;
     width: 240px;
   }
+  .tip {
+    font-size: 12px;
+    background: #F6F7F8;
+    color: #5b6b73;
+    padding: 5px;
+    margin: 15px;
+  }
   .component-item {
     cursor: move;
   }
@@ -73,15 +83,6 @@ export default {
   .bottom {
     margin-top: 13px;
     line-height: 12px;
-  }
-
-  i {
-    padding: 0;
-    float: right;
-    color: #666;
-  }
-  .el-icon-error {
-    margin-right: 10px;
   }
   .component-preview {
     transform: scale(0.6);
@@ -101,6 +102,14 @@ export default {
   }
   li {
     border-bottom: 1px solid #eee;
+    i {
+      padding: 0;
+      float: right;
+      color: #666;
+    }
+    .el-icon-error {
+      margin-right: 10px;
+    }
   }
   li:last-child {
     margin-bottom: 0;

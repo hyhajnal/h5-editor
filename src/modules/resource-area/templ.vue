@@ -1,6 +1,9 @@
 <template>
   <div class="tpl">
     <!-- <ul style="padding: 15px;"> -->
+    <p class="tip">
+      按 <i class="el-icon-circle-plus-outline"></i> 从资源库中选取需要的模版
+    </p>
     <draggable
       element="ul"
       :options="{group:{name:'resource1',pull:'clone',put:false}}"
@@ -80,6 +83,13 @@ export default {
     padding: 15px;
     width: 240px;
   }
+  .tip {
+    font-size: 12px;
+    background: #F6F7F8;
+    color: #5b6b73;
+    padding: 5px;
+    margin-bottom: 15px;
+  }
   .title {
     font-size: 14px;
     color: #555;
@@ -88,16 +98,6 @@ export default {
   .bottom {
     margin-top: 13px;
     line-height: 12px;
-  }
-
-  i {
-    padding: 0;
-    float: right;
-    color: #666;
-    cursor: pointer;
-  }
-  .el-icon-search {
-    margin-left: 10px;
   }
 
   .image {
@@ -127,6 +127,15 @@ export default {
   }
   li {
     margin-bottom: 15px;
+    i {
+      padding: 0;
+      float: right;
+      color: #666;
+      cursor: pointer;
+    }
+    .el-icon-search {
+      margin-left: 10px;
+    }
   }
   li:last-child {
     margin-bottom: 0;

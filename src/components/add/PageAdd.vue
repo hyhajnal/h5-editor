@@ -3,7 +3,7 @@
     <i class="el-icon-plus" @click="show = true"></i>
 
     <!-- Form -->
-    <el-dialog :title="'创建' + typeStr" :visible.sync="show">
+    <el-dialog title="创建页面" :visible.sync="show">
       <el-form :model="form" ref="add">
         <el-form-item label="页面名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" auto-complete="off"></el-input>

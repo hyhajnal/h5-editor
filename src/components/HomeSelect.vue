@@ -14,7 +14,7 @@
   <div class="sort">
     <el-select v-model="search.sort" placeholder="请选择">
       <el-option label="最新" value="created" key="created"></el-option>
-      <el-option label="最热" value="visit" key="visitCount"></el-option>
+      <el-option label="最热" value="visitCount" key="visitCount"></el-option>
     </el-select>
   </div>
 </div>

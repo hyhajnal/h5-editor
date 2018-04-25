@@ -13,7 +13,7 @@
           v-for="item in list"
           :key="item.id"
         >
-          <page-card :page="item"></page-card>
+          <page-card :page="item" v-if="item"></page-card>
         </el-col>
       </el-row>
 

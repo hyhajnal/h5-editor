@@ -3,26 +3,46 @@
     <el-row :gutter="10" v-if="attr.width || attr.height" type="flex" align="middle">
       <el-col :span="6" class="label">宽高:</el-col>
       <el-col :span="18" class="input-box">
-        <el-input-number size="small" v-model="attr.width" />
-        <el-input-number size="small" v-model="attr.height" />
+        <el-tooltip class="item" effect="dark" content="宽" placement="top-start">
+          <el-input-number size="small" v-model="attr.width" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="高" placement="top-start">
+          <el-input-number size="small" v-model="attr.height" />
+        </el-tooltip>
       </el-col>
     </el-row>
     <el-row :gutter="10" v-if="attr.padding" type="flex" align="middle">
       <el-col :span="6" class="label">内边距:</el-col>
       <el-col :span="18" class="input-box">
-        <el-input-number size="small" v-model="attr.padding[0]" />
-        <el-input-number size="small" v-model="attr.padding[1]" />
-        <el-input-number size="small" v-model="attr.padding[2]" />
-        <el-input-number size="small" v-model="attr.padding[3]" />
+        <el-tooltip class="item" effect="dark" content="上" placement="top-start">
+          <el-input-number size="small" v-model="attr.padding[0]" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="右" placement="top-start">
+          <el-input-number size="small" v-model="attr.padding[1]" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="下" placement="top-start">
+          <el-input-number size="small" v-model="attr.padding[2]" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="左" placement="top-start">
+          <el-input-number size="small" v-model="attr.padding[3]" />
+        </el-tooltip>
       </el-col>
     </el-row>
     <el-row :gutter="10" v-if="attr.margin" type="flex" align="middle">
       <el-col :span="6" class="label">外边距:</el-col>
       <el-col :span="18" class="input-box">
-        <el-input-number size="small" v-model="attr.margin[0]" />
-        <el-input-number size="small" v-model="attr.margin[1]" />
-        <el-input-number size="small" v-model="attr.margin[2]" />
-        <el-input-number size="small" v-model="attr.margin[3]" />
+        <el-tooltip class="item" effect="dark" content="上" placement="top-start">
+          <el-input-number size="small" v-model="attr.margin[0]" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="右" placement="top-start">
+          <el-input-number size="small" v-model="attr.margin[1]" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="下" placement="top-start">
+          <el-input-number size="small" v-model="attr.margin[2]" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="左" placement="top-start">
+          <el-input-number size="small" v-model="attr.margin[3]" />
+        </el-tooltip>
       </el-col>
     </el-row>
     <el-row :gutter="10" v-if="attr.background" type="flex" align="middle">
@@ -74,10 +94,18 @@
     <el-row :gutter="10" v-if="position" type="flex" align="middle">
       <el-col :span="6" class="label">定位:</el-col>
       <el-col :span="18" class="input-box">
-        <el-input-number size="small" v-model="attr.top" />
-        <el-input-number size="small" v-model="attr.right" />
-        <el-input-number size="small" v-model="attr.bottom" />
-        <el-input-number size="small" v-model="attr.left" />
+        <el-tooltip class="item" effect="dark" content="上" placement="top-start">
+          <el-input-number size="small" v-model="attr.top" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="右" placement="top-start">
+          <el-input-number size="small" v-model="attr.right" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="下" placement="top-start">
+          <el-input-number size="small" v-model="attr.bottom" />
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="左" placement="top-start">
+          <el-input-number size="small" v-model="attr.left" />
+        </el-tooltip>
       </el-col>
     </el-row>
 
@@ -179,7 +207,11 @@ export default {
     },
     attrData () {
       this.attr = { ...init, ...this.attrData }
-      this.position = this.position === 'absolute'
+      if (this.attrData && this.attrData.position === 'absolute') {
+        this.position = true
+      } else {
+        this.position = false
+      }
     },
     position () {
       this.attr.position = this.position ? 'absolute' : 'relative'
@@ -190,7 +222,7 @@ export default {
         this.$delete(this.attr, 'top')
         this.$delete(this.attr, 'zIndex')
       } else {
-        this.attr = {...this.attr, left: 0, top: 0, right: 0, bottom: 0, zIndex: 0}
+        this.attr = {left: undefined, top: undefined, right: undefined, bottom: undefined, zIndex: 0, ...this.attr}
       }
     },
     'attr.display' () {

@@ -5,6 +5,7 @@
         <template slot="label">
           <span>元件</span>
         </template>
+        <p><span>通用元件</span></p>
         <draggable
           class="components-box"
           element="ul"
@@ -13,6 +14,17 @@
         >
           <li class="component-item" v-for="item in components" :key="item.label" :data-id="item.value">
             <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
+          </li>
+        </draggable>
+        <p><span>基础组件</span></p>
+        <draggable
+          class="components-box"
+          element="ul"
+          :options="{group:{name:'resource1',pull:'clone',put:false}}"
+          @end="onCompEnd"
+        >
+          <li class="component-item" v-for="item in baseComps" :key="item.id" :data-id="item.type">
+            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.name}}</span>
           </li>
         </draggable>
       </el-tab-pane>
@@ -44,6 +56,7 @@
 
 <script>
 import { components, layouts } from './type'
+import BaseComps from '@/utils/components.json'
 import Templ from './templ'
 import Comp from './comp'
 import Module from './module'
@@ -55,7 +68,8 @@ export default {
     return {
       components: components,
       layouts: layouts,
-      tabActive: '3'
+      tabActive: '0',
+      baseComps: BaseComps
     }
   },
   components: {
@@ -70,11 +84,25 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log('[Edit]', `${pid}的${obj.newIndex}新增元素${obj.item.dataset.id}`)
+      console.log('[Edit]', `${pid}的${obj.newIndex}新增通用元件${obj.item.dataset.id}`)
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
         pid: pid,
         idx: obj.newIndex
+      })
+    },
+    onCompEnd (obj) {
+      const pid = obj.to.dataset.id || obj.to.children[0].dataset.pid || 'root'
+      const p = document.getElementById('page')
+      const el = p.getElementsByClassName('component-item')[0]
+      el && el.remove()
+      console.log('[Edit]', `${pid}的${obj.newIndex}新增基础组件${obj.item.dataset.id}`)
+      const index = BaseComps.findIndex(d => d.type === obj.item.dataset.id)
+      this.$store.dispatch('addEle', {
+        type: obj.item.dataset.id,
+        pid: pid,
+        idx: obj.newIndex,
+        compConfig: BaseComps[index].config
       })
     }
   }
@@ -91,6 +119,7 @@ export default {
   width: 240px;
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 20px;
 }
 .component-item {
   border-right: 1px solid #ddd;
@@ -123,6 +152,18 @@ export default {
   height: 100%;
   // position: absolute;
 
+}
+p {
+  font-size: 12px;
+  border-bottom: 1px solid #ddd;
+  color: #5b6b73;
+  height: 39px;
+  line-height: 39px;
+  padding: 0 5px;
+  span {
+    background: #F6F7F8;
+    padding: 5px;
+  }
 }
 </style>
 

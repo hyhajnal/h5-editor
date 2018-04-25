@@ -7,7 +7,7 @@
       <span v-if="isModuleEdit && route == 'Edit'"
         @click="changeToPage"
       >
-        {{pageInfo.name}}
+        {{pageInfo.name || title}}
       </span>
       <span v-if="isPreview" @click="goBack">
         {{info.name}}
