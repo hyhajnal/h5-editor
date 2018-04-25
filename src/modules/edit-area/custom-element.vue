@@ -6,10 +6,10 @@
     :data-id="element.id"
     :data-pid="element.pid"
     @click.native.capture="changeActive"
-    @click.native.right.prevent.stop="openMenu"
-    v-clickoutside="closeMenu"
     :class="['element', { 'element-active': active }]"
   >
+    <!-- @click.native.right.prevent.stop="openMenu" -->
+    <!-- v-clickoutside="closeMenu" -->
     <custom-element
       v-for="item in element.children"
       :element="item"
@@ -17,11 +17,10 @@
       v-if="element.children && element.children.length > 0"
     />
     <!-- {{active}} -->
-    <ul class="menu-box" v-if="menuShow">
+    <!-- <ul class="menu-box" v-if="menuShow">
       <li class="menu-item del" v-if="!isModuleEdit"
         @click.capture.stop="del">删除</li>
       <template v-if="isModuleEdit">
-        <!-- <li class="menu-item">id: {{element.id}}</li> -->
         <li class="menu-item className">
           <span>class:&nbsp;</span>
           <div>
@@ -49,7 +48,7 @@
           </div>
         </li>
       </template>
-    </ul>
+    </ul> -->
   </component>
 </template>
 
@@ -67,7 +66,7 @@ export default {
   data () {
     return {
       ready: false,
-      menuShow: false,
+      // menuShow: false,
       className: '',
       inputVisible: false,
       inputValue: ''
@@ -99,16 +98,16 @@ export default {
     }
   },
   methods: {
-    openMenu () {
-      this.menuShow = true
-    },
-    closeMenu () {
-      this.menuShow = false
-    },
-    del () {
-      const { pid, id } = this.element
-      this.$store.dispatch('delEle', { pid, id })
-    },
+    // openMenu () {
+    //   this.menuShow = true
+    // },
+    // closeMenu () {
+    //   this.menuShow = false
+    // },
+    // del () {
+    //   const { pid, id } = this.element
+    //   this.$store.dispatch('delEle', { pid, id })
+    // },
     onEnd (obj) {
       const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`

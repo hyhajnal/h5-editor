@@ -196,14 +196,23 @@ const actions = {
    * @param {*} pid
    * @param {*} idx
    */
+  // delEle ({ state, commit }, payload) {
+  //   let { pid, idx, id } = payload
+  //   if (id) {
+  //     commit('changeCurrentEl', null)
+  //   }
+  //   let list = JSON.parse(JSON.stringify(state.list))
+  //   treeTravel(list, pid).then(item => {
+  //     idx = idx || item.findIndex(c => c.id === id)
+  //     item.splice(idx, 1)
+  //     commit('update', list)
+  //   })
+  // }
   delEle ({ state, commit }, payload) {
-    let { pid, idx, id } = payload
-    if (id) {
-      commit('changeCurrentEl', null)
-    }
+    let { pid, id } = state.current
     let list = JSON.parse(JSON.stringify(state.list))
     treeTravel(list, pid).then(item => {
-      idx = idx || item.findIndex(c => c.id === id)
+      let idx = item.findIndex(c => c.id === id)
       item.splice(idx, 1)
       commit('update', list)
     })

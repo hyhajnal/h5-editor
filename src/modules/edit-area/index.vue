@@ -115,6 +115,16 @@ export default {
       this.$store.dispatch('copyEle')
     })
 
+    hotkeys('⌘+d', (e) => {
+      event.preventDefault()
+      this.$notify({
+        title: '成功',
+        message: '成功删除当前元素',
+        type: 'success'
+      })
+      this.$store.dispatch('delEle')
+    })
+
     hotkeys('esc', (event, handler) => {
       this.clear()
     })
