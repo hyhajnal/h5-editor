@@ -19,6 +19,7 @@ import Struct from './struct'
 import Info from './info'
 import AttrBox from '@/modules/edit-area/attr-box/index'
 import { mapGetters } from 'vuex'
+import Bus from '@/utils/Bus'
 export default {
   name: 'AttrArea',
   data () {
@@ -30,6 +31,11 @@ export default {
     Struct,
     AttrBox,
     Info
+  },
+  mounted () {
+    Bus.$on('changeCurrentEl', () => {
+      this.activeName = 'attr'
+    })
   },
   computed: {
     ...mapGetters({

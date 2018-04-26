@@ -58,6 +58,27 @@
     "icon": "navbar",
     "type": "navbar",
     "config": []
+  },
+  {
+    "id": "c9",
+    "name": "轮播图",
+    "icon": "swiper",
+    "type": "swiper",
+    "config": []
+  },
+  {
+    "id": "c10",
+    "name": "行排列",
+    "icon": "row",
+    "type": "row",
+    "config": []
+  },
+  {
+    "id": "c11",
+    "name": "竖排列",
+    "icon": "col",
+    "type": "col",
+    "config": []
   }
   
 ]

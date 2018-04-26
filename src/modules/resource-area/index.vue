@@ -16,6 +16,17 @@
             <i :class="'iconfont icon-' + item.icon"></i><span>{{item.label}}</span>
           </li>
         </draggable>
+        <p><span>布局组件</span></p>
+        <draggable
+          class="components-box"
+          element="ul"
+          :options="{group:{name:'resource1',pull:'clone',put:false}}"
+          @end="onCompEnd"
+        >
+          <li class="component-item" v-for="item in baseComps.slice(9,11)" :key="item.id" :data-id="item.type">
+            <i :class="'iconfont icon-' + item.icon"></i><span>{{item.name}}</span>
+          </li>
+        </draggable>
         <p><span>基础组件</span></p>
         <draggable
           class="components-box"
@@ -23,7 +34,7 @@
           :options="{group:{name:'resource1',pull:'clone',put:false}}"
           @end="onCompEnd"
         >
-          <li class="component-item" v-for="item in baseComps" :key="item.id" :data-id="item.type">
+          <li class="component-item" v-for="item in baseComps.slice(0,9)" :key="item.id" :data-id="item.type">
             <i :class="'iconfont icon-' + item.icon"></i><span>{{item.name}}</span>
           </li>
         </draggable>
@@ -56,7 +67,7 @@
 
 <script>
 import { components, layouts } from './type'
-import BaseComps from '@/utils/components.json'
+import BaseComps from './components.json'
 import Templ from './templ'
 import Comp from './comp'
 import Module from './module'

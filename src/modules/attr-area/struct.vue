@@ -4,7 +4,7 @@
     node-key="id"
     default-expand-all
     :expand-on-click-node="false">
-    <span class="custom-tree-node" slot-scope="{ node, data }">
+    <span class="custom-tree-node" slot-scope="{ node, data }" @mouseover.stop="() => onHover(node,data)">
       <span>
         <i :class="'icontype iconfont icon-' + data.type" />
         {{node.label}}
@@ -38,6 +38,13 @@
         const idx = children.findIndex(d => d.id === data.id)
         // children.splice(index, 1)
         this.$store.dispatch('delEle', { pid: data.pid, idx })
+      },
+
+      onHover (node, data) {
+        console.log(data.id)
+        const el = document.querySelector('.selected')
+        el && el.classList.remove('selected')
+        document.getElementById(data.id).classList.add('selected')
       }
 
     }

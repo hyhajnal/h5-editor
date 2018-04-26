@@ -4,6 +4,7 @@
     :is="'type-'+element.type"
     :ele="element"
     :data-id="element.id"
+    :id="element.id"
     :data-pid="element.pid"
     @click.native.capture="changeActive"
     :class="['element', { 'element-active': active }]"
@@ -57,6 +58,7 @@ import Vue from 'vue'
 import draggable from 'vuedraggable'
 import _Type from './types'
 import { mapGetters } from 'vuex'
+import Bus from '@/utils/Bus'
 
 export default {
   name: 'CustomElement',
@@ -122,6 +124,7 @@ export default {
     },
     changeActive () {
       this.$store.commit('changeCurrentEl', this.element)
+      Bus.$emit('changeCurrentEl')
     },
     renderChild () {
       const type = this.element.type
