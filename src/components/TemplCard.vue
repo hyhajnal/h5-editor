@@ -24,9 +24,13 @@
     </div>
     <section class="card-body">
       <h3 class="title">{{templ.name}}</h3>
-      <card-bottom />
+      <card-bottom
+        :visitCount="templ.visitCount"
+        :useCount="templ.useCount"
+        :collectCount="templ.collectCount"
+      />
     </section>
-    <span class="tag">{{templ.tag}}</span>
+    <span class="tag" v-if="tag">{{tag}}</span>
 
     <el-dialog
       title="二维码"
@@ -43,12 +47,13 @@
 import CardBottom from './Bottom'
 import CustomElement from '@/modules/preview-area/custom-element'
 export default {
-  name: 'ProjectCard',
+  name: 'TemplCard',
   data () {
     return {
       dialogVisible: false,
       elements: [],
-      isAdd: false
+      isAdd: false,
+      tag: ''
     }
   },
   props: {
@@ -62,6 +67,7 @@ export default {
     if (this.templ.elements) {
       this.elements = JSON.parse(this.templ.elements).children
     }
+    // isAdd 标记
     const templs = this.$store.state.templs
     templs.forEach(item => {
       if (item.id === this.templ.id) {
@@ -69,6 +75,8 @@ export default {
         return false
       }
     })
+    // tag
+    this.tag = (this.templ.tag.charCodeAt() === 39) ? '' : this.templ.tag
   },
   methods: {
     goEdit () {

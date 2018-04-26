@@ -38,7 +38,7 @@
 import Config from '@/utils/config'
 
 export default {
-  name: 'ProjectCard',
+  name: 'PageCard',
   data () {
     return {
       dialogVisible: false,

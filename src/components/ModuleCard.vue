@@ -27,7 +27,7 @@
 <script>
 import CardBottom from './Bottom'
 export default {
-  name: 'ProjectCard',
+  name: 'ModuleCard',
   data () {
     return {
       dialogVisible: false

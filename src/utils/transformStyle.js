@@ -1,16 +1,16 @@
 const toStyleString = (data) => {
   let styleStr = 'position: relative;'
   Object.keys(data).forEach(key => {
-    if ((key === 'width' || key === 'height') && data[key] === 0) {
+    if (('width|height'.indexOf(key) > -1) && data[key] === 0) {
       return
     }
-    if ((key === 'border' || key === 'borderRadius') && data[key][0] === 0) {
+    if (('border|borderRadius'.indexOf(key) > -1) && data[key][0] === 0) {
       return
     }
-    if ((key === 'top' || key === 'bottom' || key === 'left' || key === 'right') && data[key] === undefined) {
+    if (('top|bottom|left|right'.indexOf(key) > -1) && data[key] === undefined) {
       return
     }
-    if ((key === 'padding' || key === 'margin') && data[key].toString() === '0,0,0,0') {
+    if (('margin|padding'.indexOf(key) > -1) && data[key].toString() === '0,0,0,0') {
       return
     }
     const value = toStyleStrItem(key, data[key])

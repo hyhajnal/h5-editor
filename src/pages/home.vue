@@ -51,9 +51,9 @@
       </el-row>
 
       <el-row :gutter="40" class="project-list" v-if="select === 'templ'">
-        <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
+        <!-- <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1">
           <templ-add @after-add="afterAdd" :page="search.page"></templ-add>
-        </el-col>
+        </el-col> -->
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
           v-for="item in list"
           :key="item.id"
