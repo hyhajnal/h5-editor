@@ -76,4 +76,13 @@ function createModule ({elements, pid, developer, name}) {
   return mod
 }
 
-export { guid, getInit, mobiles, px2rem, createModule }
+function createTempl ({elements, name}) {
+  let mod = {
+    id: `m/${guid()}`,
+    name,
+    elements
+  }
+  return mod
+}
+
+export { guid, getInit, mobiles, px2rem, createModule, createTempl }

@@ -49,11 +49,12 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log('[Edit]', `${pid}的${obj.newIndex}新增模版${obj.item.dataset.id}`)
+      let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
+      console.log('[Edit]', `${pid}的${nIdx}新增模版${obj.item.dataset.id}`)
       this.$store.dispatch('addComp', {
         type: obj.item.dataset.id,
         pid: pid,
-        idx: obj.newIndex
+        idx: nIdx
       })
     }
   }

@@ -122,13 +122,10 @@ const actions = {
     let id = guid()
     let attr = getInit(type)
     let list = JSON.parse(JSON.stringify(state.list))
-    let config = null
-    if (compConfig) {
-      config = compConfig
-    }
+    const config = compConfig || null
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, ...attr, type, label: `${type}/${id}`, children: [], config
+        id, pid, type, label: `${type}/${id}`, children: [], config, idx, ...attr
       })
       commit('update', list)
     })
@@ -196,18 +193,6 @@ const actions = {
    * @param {*} pid
    * @param {*} idx
    */
-  // delEle ({ state, commit }, payload) {
-  //   let { pid, idx, id } = payload
-  //   if (id) {
-  //     commit('changeCurrentEl', null)
-  //   }
-  //   let list = JSON.parse(JSON.stringify(state.list))
-  //   treeTravel(list, pid).then(item => {
-  //     idx = idx || item.findIndex(c => c.id === id)
-  //     item.splice(idx, 1)
-  //     commit('update', list)
-  //   })
-  // }
   delEle ({ state, commit }, payload) {
     let { pid, id } = state.current
     let list = JSON.parse(JSON.stringify(state.list))

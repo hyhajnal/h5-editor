@@ -95,11 +95,13 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log('[Edit]', `${pid}的${obj.newIndex}新增通用元件${obj.item.dataset.id}`)
+      // 如果拖入的目的地是flexbox组件，则index有变化
+      let idx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
+      console.log('[Edit]', `${pid}的${idx}新增通用元件${obj.item.dataset.id}`)
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
         pid: pid,
-        idx: obj.newIndex
+        idx
       })
     },
     onCompEnd (obj) {
@@ -107,12 +109,15 @@ export default {
       const p = document.getElementById('page')
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
-      console.log('[Edit]', `${pid}的${obj.newIndex}新增基础组件${obj.item.dataset.id}`)
+      // 如果拖入的目的地是flexbox组件，则index有变化
+      let idx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
+      console.log('[Edit]', `${pid}的${idx}新增基础组件${obj.item.dataset.id}`)
       const index = BaseComps.findIndex(d => d.type === obj.item.dataset.id)
+      // const idx = this.obj.to.classList.indexOf('col-container') > -1 ? this.obj.to.
       this.$store.dispatch('addEle', {
         type: obj.item.dataset.id,
         pid: pid,
-        idx: obj.newIndex,
+        idx,
         compConfig: BaseComps[index].config
       })
     }

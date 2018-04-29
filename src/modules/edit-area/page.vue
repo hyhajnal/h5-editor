@@ -71,16 +71,18 @@ export default {
   },
   methods: {
     onEnd (obj) {
-      const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       let pid = obj.to.dataset.id || obj.to.children[0].dataset.pid
-      const to = `${pid}的${obj.newIndex}`
+      let oIdx = obj.from.classList[0] === 'col-container' ? parseInt(obj.from.dataset.index) : obj.oldIndex
+      let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
+      const from = `${obj.item.dataset.pid}的${oIdx}`
+      const to = `${pid}的${nIdx}`
       console.log('[Edit]', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.from.children[0].dataset.pid,
         nPid: pid,
-        nIdx: obj.newIndex,
-        oIdx: obj.oldIndex
+        nIdx,
+        oIdx
       })
     },
 

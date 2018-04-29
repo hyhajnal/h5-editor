@@ -8,6 +8,8 @@ import TypeNavbar from './type-navbar'
 import TypeTabbar from './type-tabbar'
 import TypeTag from './type-tag'
 import TypeImg from './type-img'
+import TypeRow from './type-row'
+import TypeCol from './type-col'
 
 export default {
   TypeButton,
@@ -19,5 +21,7 @@ export default {
   TypeTabbar,
   TypeNavbar,
   TypeTag,
-  TypeImg
+  TypeImg,
+  TypeRow,
+  TypeCol
 }

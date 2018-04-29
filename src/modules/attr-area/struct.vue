@@ -4,7 +4,10 @@
     node-key="id"
     default-expand-all
     :expand-on-click-node="false">
-    <span class="custom-tree-node" slot-scope="{ node, data }" @mouseover.stop="() => onHover(node,data)">
+    <span class="custom-tree-node" slot-scope="{ node, data }"
+      @mouseover.stop="() => onHover(node,data)"
+      @mouseout.stop="() => noHover(node,data)"
+    >
       <span>
         <i :class="'icontype iconfont icon-' + data.type" />
         {{node.label}}
@@ -41,10 +44,11 @@
       },
 
       onHover (node, data) {
-        console.log(data.id)
-        const el = document.querySelector('.selected')
-        el && el.classList.remove('selected')
         document.getElementById(data.id).classList.add('selected')
+      },
+
+      noHover (node, data) {
+        document.getElementById(data.id).classList.remove('selected')
       }
 
     }

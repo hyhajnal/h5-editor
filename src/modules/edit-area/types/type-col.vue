@@ -1,19 +1,18 @@
 <template>
-  <!-- <div :style="ele.style">
-    <slot></slot>
-  </div> -->
-  <draggable
-    :options="dragOptions"
-    @end="onEnd"
-    element="div"
-    :style="ele.style"
-  >
-    <slot></slot>
-  </draggable>
+  <flexbox-item class="col-container">
+    <draggable
+      :options="dragOptions"
+      @end="onEnd"
+      class="col"
+    >
+      <slot></slot>
+    </draggable>
+  </flexbox-item>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+import { FlexboxItem } from 'vux'
 
 export default {
   name: 'DIV',
@@ -38,30 +37,34 @@ export default {
   },
   methods: {
     onEnd (obj) {
+      const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
       let nPid = obj.to.children[0].dataset.pid
       if (obj.to.localName === 'div') {
         nPid = obj.to.dataset.id
       }
-      let oIdx = obj.from.classList[0] === 'col-container' ? parseInt(obj.from.dataset.index) : obj.oldIndex
-      let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
-      const from = `${obj.item.dataset.pid}的${oIdx}`
-      let to = `${nPid}的${nIdx}`
+      let to = `${nPid}的${obj.newIndex}`
       console.log('[Edit]', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.item.dataset.pid,
         nPid,
-        nIdx,
-        oIdx
+        nIdx: obj.newIndex,
+        oIdx: obj.oldIndex
       })
     }
   },
   components: {
-    draggable
+    draggable,
+    FlexboxItem
   }
 }
 </script>
 
 <style scoped>
+.col {
+  width: 80px;
+  height: 80px;
+  border: 1px dashed #ccc;
+}
 </style>
 

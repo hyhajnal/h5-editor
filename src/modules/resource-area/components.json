@@ -68,15 +68,31 @@
   },
   {
     "id": "c10",
-    "name": "行排列",
-    "icon": "row",
+    "name": "布局盒子",
+    "icon": "layout",
     "type": "row",
-    "config": []
+    "config": [
+      { "name": "num", "label": "数量", "type": "input", "data": 3 },
+      { "name": "gutter", "label": "间隔", "type": "input", "data": 8 },
+      { "name": "orient", "label": "间隔", "type": "select", "data": "horizontal", "options": ["horizontal", "vertical"]},
+      { "name": "justify", "label": "水平排列", "type": "select", "data": "flex-start",
+        "options": ["flex-start", "flex-end", "center", "space-between", "space-around"] 
+      },
+      { "name": "align", "label": "竖向排列", "type": "select", "data": "flex-start",
+        "options": ["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"]
+      },
+      { "name": "wrap", "label": "间隔", "type": "select", "data": "row",
+        "options": ["row", "row-reverse", "column", "column-reverse"]
+      },
+      { "name": "direction", "label": "间隔", "type": "select", "data": "wrap",
+        "options": ["wrap", "nowrap"]
+      }
+    ]
   },
   {
     "id": "c11",
-    "name": "竖排列",
-    "icon": "col",
+    "name": "网格布局",
+    "icon": "9box",
     "type": "col",
     "config": []
   }

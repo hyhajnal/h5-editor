@@ -9,47 +9,23 @@
     @click.native.capture="changeActive"
     :class="['element', { 'element-active': active }]"
   >
-    <!-- @click.native.right.prevent.stop="openMenu" -->
-    <!-- v-clickoutside="closeMenu" -->
-    <custom-element
-      v-for="item in element.children"
-      :element="item"
-      :key="item.id"
-      v-if="element.children && element.children.length > 0"
-    />
-    <!-- {{active}} -->
-    <!-- <ul class="menu-box" v-if="menuShow">
-      <li class="menu-item del" v-if="!isModuleEdit"
-        @click.capture.stop="del">删除</li>
-      <template v-if="isModuleEdit">
-        <li class="menu-item className">
-          <span>class:&nbsp;</span>
-          <div>
-            <el-tag v-if="className"
-              closable
-              :disable-transitions="false"
-              @close="handleClose">
-              {{className}}
-            </el-tag>
-            <el-button
-              v-if="!className && !inputVisible"
-              class="button-new-tag"
-              size="mini"
-              @click="showInput">
-            +</el-button>
-            <el-input
-              class="input-new-tag"
-              v-if="inputVisible"
-              v-model="inputValue"
-              ref="saveTagInput"
-              size="mini"
-              @keyup.enter.native="handleInputConfirm"
-            >
-            </el-input>
-          </div>
-        </li>
+    <template v-if="element.children && element.children.length > 0">
+      <template v-if="element.type === 'row'">
+        <custom-element
+          v-for="item in element.children"
+          :element="item"
+          :key="item.id"
+          :slot="'ele'+ item.idx"
+        />
       </template>
-    </ul> -->
+      <template v-else>
+        <custom-element
+          v-for="item in element.children"
+          :element="item"
+          :key="item.id"
+        />
+      </template>
+    </template>
   </component>
 </template>
 
@@ -100,26 +76,18 @@ export default {
     }
   },
   methods: {
-    // openMenu () {
-    //   this.menuShow = true
-    // },
-    // closeMenu () {
-    //   this.menuShow = false
-    // },
-    // del () {
-    //   const { pid, id } = this.element
-    //   this.$store.dispatch('delEle', { pid, id })
-    // },
     onEnd (obj) {
-      const from = `${obj.item.dataset.pid}的${obj.oldIndex}`
-      const to = `${obj.to.children[0].dataset.pid}的${obj.newIndex}`
+      let oIdx = obj.from.classList[0] === 'col-container' ? parseInt(obj.from.dataset.index) : obj.oldIndex
+      let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
+      const from = `${obj.item.dataset.pid}的${oIdx}`
+      const to = `${obj.to.children[0].dataset.pid}的${nIdx}`
       console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
       this.$store.dispatch('moveEle', {
         id: obj.item.dataset.id,
         oPid: obj.item.dataset.pid,
         nPid: obj.to.children[0].dataset.pid,
-        nIdx: obj.newIndex,
-        oIdx: obj.oldIndex
+        nIdx,
+        oIdx
       })
     },
     changeActive () {

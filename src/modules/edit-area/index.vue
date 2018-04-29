@@ -13,7 +13,7 @@
       class="mod-tip"
       @close="handleClose"
     >
-      <p>是否将选中元素划分成一个模块?</p>
+      <p>请选择将所选元素发布成模块或模版?</p>
       <el-dialog
         class="mod-tip-inner"
         width="30%"
@@ -21,7 +21,7 @@
         :visible.sync="innerVisible"
         @close="handleClose"
         append-to-body>
-        <el-form label-width="100px" :model="mod" ref="modInfo">
+        <el-form label-width="100px" :model="mod" ref="info" v-if="divideType === 'module'">
           <el-form-item
             label="模块名称"
             prop="name"
@@ -41,12 +41,24 @@
             <el-input v-model="mod.developer" placeholder="模块开发者"></el-input>
           </el-form-item>
         </el-form>
+        <el-form label-width="100px" :model="templ" ref="info" v-else>
+          <el-form-item
+            label="模版名称"
+            prop="name"
+            :rules="[
+              { required: true, message: '请输入模版名称', trigger: 'blur' }
+            ]"
+          >
+            <el-input v-model="templ.name" placeholder="模版名称"></el-input>
+          </el-form-item>
+        </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="publish" size="small">发布</el-button>
         </span>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="innerVisible = true" size="small">确定</el-button>
+        <el-button type="primary" @click="divideModule" size="small">模块</el-button>
+        <el-button type="primary" @click="innerVisible = true" size="small">模版</el-button>
       </div>
     </el-dialog>
   </div>
@@ -56,7 +68,7 @@
 import hotkeys from 'hotkeys-js'
 import AttrBox from './attr-box/index'
 import Page from './page'
-import { createModule } from '@/utils/help'
+import { createModule, createTempl } from '@/utils/help'
 export default {
   name: 'EditArea',
   data () {
@@ -72,9 +84,13 @@ export default {
       innerVisible: false,
       outerVisible: false,
       divideStart: false,
+      divideType: 'template',
       mod: {
         name: '',
         developer: ''
+      },
+      templ: {
+        name: ''
       }
     }
   },
@@ -230,19 +246,37 @@ export default {
     },
 
     publish () {
-      this.$refs.modInfo.validate((valid) => {
+      this.$refs.info.validate((valid) => {
         if (valid) {
-          const mod = createModule({
-            elements: this.selectList,
-            ...this.mod
-          })
-          this.$store.commit('publishMod', mod)
+          if (this.divideType === 'module') {
+            const mod = createModule({
+              elements: this.selectList,
+              ...this.mod
+            })
+            this.$store.commit('publishMod', mod)
+          } else {
+            const templ = createTempl({
+              elements: this.selectList,
+              ...this.mod
+            })
+            this.$store.commit('addTempl', templ)
+          }
           this.innerVisible = false
           this.divideStart = false
         } else {
           return false
         }
       })
+    },
+
+    divideModule () {
+      this.innerVisible = true
+      this.divideType = 'module'
+    },
+
+    divideTempl () {
+      this.innerVisible = true
+      this.divideType = 'templ'
     }
 
   }
