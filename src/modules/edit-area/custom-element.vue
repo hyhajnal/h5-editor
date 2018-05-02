@@ -10,7 +10,7 @@
     :class="['element', { 'element-active': active }]"
   >
     <template v-if="element.children && element.children.length > 0">
-      <template v-if="element.type === 'row'">
+      <template v-if="element.type === 'flexbox'">
         <custom-element
           v-for="item in element.children"
           :element="item"

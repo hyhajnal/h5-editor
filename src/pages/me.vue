@@ -7,13 +7,13 @@
       </router-link>
     </header>
 
-    <el-row class="me-info">
+    <el-row class="me-info" v-if="user">
       <el-col :span="5">
         <div class="avatar"></div>
       </el-col>
       <el-col :span="19">
-        <h1>一介草民游走</h1>
-        <p>这个同学很懒，都没有写签名哦～</p>
+        <h1>{{user.name}}</h1>
+        <p>{{user.desc || '这个同学很懒，都没有写签名哦～'}}</p>
       </el-col>
     </el-row>
 
@@ -29,11 +29,11 @@
           <el-col :span="5" class="menu-side">
             <me-menu @select="onSelect"/>
           </el-col>
-          <el-col :span="19" class="content-list">
-            <me-project v-if="select.type === 'project'"/>
-            <me-templ v-if="select.type === 'templ'"/>
-            <me-comp v-if="select.type === 'comp'"/>
-            <me-mod v-if="select.type === 'mod'"></me-mod>
+          <el-col :span="19" class="content-list" v-if="list">
+            <me-project v-if="select.type === 'project'" :list="list"/>
+            <me-templ v-if="select.type === 'templ'" :list="list"/>
+            <me-comp v-if="select.type === 'comp'" :list="list"/>
+            <me-mod v-if="select.type === 'mod'" :list="list"/>
           </el-col>
         </el-row>
 
@@ -49,6 +49,8 @@ import MeProject from '@/modules/me/Project'
 import MeComp from '@/modules/me/Comp'
 import MeTempl from '@/modules/me/Templ'
 import MeMod from '@/modules/me/Mod'
+import Config from '@/utils/config'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Me',
@@ -56,9 +58,17 @@ export default {
     return {
       search: '',
       select: {
-        type: 'project'
-      }
+        type: 'project',
+        key: 0
+      },
+      allData: null
     }
+  },
+  mounted () {
+    if (!this.user) {
+      this.$router.push({name: 'Login'})
+    }
+    this.getData()
   },
   components: {
     MeMenu,
@@ -67,9 +77,24 @@ export default {
     MeComp,
     MeTempl
   },
+  computed: {
+    list () {
+      return this.allData && this.allData[this.select.type][this.select.key]
+    },
+    ...mapGetters({
+      user: 'user'
+    })
+  },
   methods: {
     onSelect (select) {
       this.select = select
+    },
+    getData () {
+      this.axios.get(`${Config.URL}/editor/user`, {
+        params: this.search
+      }).then(data => {
+        this.allData = data
+      })
     }
   }
 }
@@ -134,8 +159,9 @@ main {
   height: 100vh;
   overflow: auto;
   .main {
-    background: #fff;
+    background: #f2f2f2;
     position: relative;
+    min-height: calc(100vh - 240px);
   }
 }
 .toolbar {

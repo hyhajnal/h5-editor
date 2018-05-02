@@ -1,5 +1,6 @@
 <template>
   <flexbox class="row"
+    v-if="num"
     :gutter="gutter"
     :orient="ele.config[2].data"
     :justify="ele.config[3].data"
@@ -28,7 +29,7 @@ import draggable from 'vuedraggable'
 import { Flexbox, FlexboxItem } from 'vux'
 
 export default {
-  name: 'Row',
+  name: 'CustomFlexbox',
   props: {
     ele: Object
   },
@@ -38,9 +39,6 @@ export default {
     },
     gutter () {
       return parseInt(this.ele.config[1].data)
-    },
-    children () {
-      return this.$slots.default
     }
   },
   components: { Flexbox, FlexboxItem, draggable },

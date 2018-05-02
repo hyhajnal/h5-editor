@@ -44,11 +44,13 @@
       },
 
       onHover (node, data) {
-        document.getElementById(data.id).classList.add('selected')
+        let el = document.getElementById(data.id)
+        el && el.classList.add('selected')
       },
 
       noHover (node, data) {
-        document.getElementById(data.id).classList.remove('selected')
+        let el = document.getElementById(data.id)
+        el && el.classList.remove('selected')
       }
 
     }

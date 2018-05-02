@@ -28,11 +28,11 @@
           >
         </div>
 
-        <el-button type="danger" class="submit" @click.native="submit">登录</el-button>
+        <el-button type="danger" class="submit" @click.native="submit">注册</el-button>
 
       </form>
-      <p class="text--center">还没有账号?
-        <router-link :to="{name: 'Register'}">马上注册</router-link>
+      <p class="text--center">已有账号?
+        <router-link :to="{name: 'Login'}">马上登录</router-link>
       </p>
     </div>
 
@@ -42,7 +42,7 @@
 <script>
 import Config from '@/utils/config'
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
     return {
       user: {
@@ -53,14 +53,13 @@ export default {
   },
   methods: {
     submit () {
-      this.axios.post(`${Config.URL}/editor/login/login`,
+      this.axios.post(`${Config.URL}/editor/login/register`,
         {user: this.user}
       ).then(data => {
         this.user = { name: '', psd: '' }
         if (data !== 1000) {
-          localStorage.setItem('user', data)
-          this.$store.commit('user', data)
-          this.$router.push({ name: 'Home' })
+          this.$message({type: 'success', message: '注册成功'})
+          this.$router.push({ name: 'Login' })
         }
       })
     }

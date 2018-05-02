@@ -10,7 +10,7 @@
         :collectCount="project.collectCount"
       />
     </section>
-    <span class="tag">项目</span>
+    <span class="tag" v-if="tag">{{tag}}</span>
   </div>
 </template>
 
@@ -19,7 +19,12 @@ import CardBottom from './Bottom'
 export default {
   name: 'ProjectCard',
   data () {
-    return {}
+    return {
+      tag: ''
+    }
+  },
+  mounted () {
+    this.tag = (this.project.tag.charCodeAt() === 39) ? '' : this.project.tag
   },
   props: {
     project: Object

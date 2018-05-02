@@ -31,7 +31,7 @@ axios.interceptors.response.use(response => {
     switch (error.response.status) {
       case 403:
         error.message = '你还未登录'
-        // location.href = `http://accounts.meili-inc.com/enter?redirect=${encodeURIComponent(location.href)}`
+        location.href = `http://localhost:8888/#/login?redirect=${encodeURIComponent(location.href)}`
         break
       case 500:
         error.message = '服务器发生错误了'

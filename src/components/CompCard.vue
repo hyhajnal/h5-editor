@@ -5,7 +5,12 @@
   <div class="component">
     <h1 class="title">{{comp.name}}</h1>
     <p class="desc">{{comp.desc}}</p>
-    <card-bottom class="bottom" />
+    <card-bottom
+      class="bottom"
+      :visitCount="comp.visitCount"
+      :useCount="comp.useCount"
+      :collectCount="comp.collectCount"
+    />
     <el-row class="shadow" type="flex" justify="space-around" align="middle">
       <i class="el-icon-circle-plus" @click.stop="addComp" v-if="!isAdd"></i>
       <i class="el-icon-success" v-else></i>

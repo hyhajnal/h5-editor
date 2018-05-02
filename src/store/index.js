@@ -10,6 +10,7 @@ import { guid, getInit, mobiles } from '@/utils/help'
 Vue.use(Vuex)
 
 const state = {
+  user: null, // 用户信息
   info: null, // id & name
   list: [], // 页面-(组件列表)
   moduleInfo: null,
@@ -112,6 +113,7 @@ const actions = {
     })
     treeTravel(list, nPid).then(item => {
       tmp.pid = nPid
+      tmp['idx'] = nIdx // 用于 flexbox 拖入子元素
       item.splice(nIdx, 0, tmp)
       commit('update', list)
     })
@@ -189,12 +191,20 @@ const actions = {
   },
 
   /**
-   * 删除元素
+   * 删除元素 (1.cmd＋d 删除当前元素，2.树结构上删除传入参数)
    * @param {*} pid
    * @param {*} idx
    */
   delEle ({ state, commit }, payload) {
-    let { pid, id } = state.current
+    let pid
+    let id
+    if (state.current) {
+      pid = state.current.pid
+      id = state.current.id
+    } else {
+      pid = payload.pid
+      id = payload.id
+    }
     let list = JSON.parse(JSON.stringify(state.list))
     treeTravel(list, pid).then(item => {
       let idx = item.findIndex(c => c.id === id)
@@ -267,6 +277,10 @@ const mutations = {
   // 改变page infp
   changeInfo (state, info) {
     Vue.set(state, 'info', info)
+  },
+  // 改变用户信息
+  user (state, user) {
+    Vue.set(state, 'user', user)
   }
 }
 
@@ -306,6 +320,9 @@ const getters = {
     } else {
       return null
     }
+  },
+  user: state => {
+    return state.user
   }
 }
 

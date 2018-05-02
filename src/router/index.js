@@ -8,6 +8,7 @@ import ProjectDetail from '@/pages/projectDetail'
 import Mobile from '@/modules/preview-area'
 import Me from '@/pages/me'
 import Login from '@/pages/login'
+import Register from '@/pages/register'
 
 Vue.use(Router)
 
@@ -56,6 +57,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ]
 })

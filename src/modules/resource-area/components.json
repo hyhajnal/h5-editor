@@ -70,7 +70,7 @@
     "id": "c10",
     "name": "布局盒子",
     "icon": "layout",
-    "type": "row",
+    "type": "flexbox",
     "config": [
       { "name": "num", "label": "数量", "type": "input", "data": 3 },
       { "name": "gutter", "label": "间隔", "type": "input", "data": 8 },
