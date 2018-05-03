@@ -1,5 +1,5 @@
 <template>
-  <div class="head-area" v-if="info">
+  <div class="head-area">
     <h1>
       <router-link :to="{name: 'Home'}">
         <i class="iconfont icon-design"></i>

@@ -1,10 +1,17 @@
 <template>
-  <van-search placeholder="请输入商品名称" v-model="value" />
+  <search
+      v-model="value"
+      position="absolute"
+      top="46px"
+      ref="search"
+      @search-bg-color="'#fff'"
+    />
 </template>
 
 <script>
+import { Search } from 'vux'
 export default {
-  name: 'Button',
+  name: 'CustomSearch',
   props: {
     ele: Object
   },
@@ -12,6 +19,12 @@ export default {
     return {
       value: ''
     }
+  },
+  components: { Search },
+  methods: {
+    // setFocus () {
+    //   this.$refs.search.setFocus()
+    // }
   }
 }
 </script>

@@ -19,11 +19,11 @@
 
     <main>
       <div class="main">
-        <el-row class="toolbar" type="flex" justify="space-around">
+        <!-- <el-row class="toolbar" type="flex" justify="space-around">
           <span style="background: #FD7F6B;"><i class="iconfont icon-search"></i></span>
           <span style="background: #29C2C1;"><i class="iconfont icon-paixu"></i></span>
           <span style="background: #9124EC;"><i class="iconfont icon-add"></i></span>
-        </el-row>
+        </el-row> -->
 
         <el-row>
           <el-col :span="5" class="menu-side">

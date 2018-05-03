@@ -12,6 +12,11 @@
           size="mini"
         />
 
+        <el-input-number v-if="config[idx].type === 'number'"
+          size="mini"
+          v-model="config[idx].data"
+        />
+
         <el-select v-if="config[idx].type === 'select'"
           v-model="config[idx].data"
           placeholder="请选择"
@@ -24,6 +29,10 @@
             :value="item">
           </el-option>
         </el-select>
+
+        <el-switch v-if="config[idx].type === 'bool'"
+          v-model="config[idx].data">
+        </el-switch>
 
       </el-col>
     </el-row>

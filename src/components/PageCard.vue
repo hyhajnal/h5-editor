@@ -21,7 +21,7 @@
         </div>
       </el-row>
     </section>
-    <span class="tag">页面</span>
+    <!-- <span class="tag">页面</span> -->
 
     <el-dialog
       title="二维码"
@@ -75,12 +75,12 @@ export default {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  height: 470px;
+  height: 487px;
   border: 1px solid #f2f2f2;
   border-radius: 4px;
 }
 .card-image {
-  height: 400px;
+  height: 417px;
   background-size: cover;
   position: relative;
   box-shadow: #ddd 0px 2px 5px;

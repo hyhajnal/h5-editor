@@ -72,8 +72,8 @@
     "icon": "layout",
     "type": "flexbox",
     "config": [
-      { "name": "num", "label": "数量", "type": "input", "data": 3 },
-      { "name": "gutter", "label": "间隔", "type": "input", "data": 8 },
+      { "name": "num", "label": "数量", "type": "number", "data": 3 },
+      { "name": "gutter", "label": "间隔", "type": "number", "data": 8 },
       { "name": "orient", "label": "间隔", "type": "select", "data": "horizontal", "options": ["horizontal", "vertical"]},
       { "name": "justify", "label": "水平排列", "type": "select", "data": "flex-start",
         "options": ["flex-start", "flex-end", "center", "space-between", "space-around"] 
@@ -93,8 +93,12 @@
     "id": "c11",
     "name": "网格布局",
     "icon": "9box",
-    "type": "col",
-    "config": []
+    "type": "grid",
+    "config": [
+      { "name": "cols", "label": "列数", "type": "number", "data": 3 },
+      { "name": "show-lr-borders", "label": "是否显示左右边框", "type": "bool", "data": true},
+      { "name": "show-vertical-dividers", "label": "是否显示分割线", "type": "bool", "data": true}
+    ]
   }
   
 ]

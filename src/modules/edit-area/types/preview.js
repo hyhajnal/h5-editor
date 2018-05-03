@@ -1,4 +1,4 @@
-import TypeDiv from './type-div'
+import TypeDiv from './preview/type-div'
 import TypeSpan from './type-span'
 import TypeButton from './type-button'
 import TypeRadio from './type-radio'
@@ -7,9 +7,9 @@ import TypeSwitch from './type-switch'
 import TypeNavbar from './type-navbar'
 import TypeTabbar from './type-tabbar'
 import TypeTag from './type-tag'
-import TypeImg from './type-img'
-import TypeFlexbox from './type-flexbox'
-import TypeGrid from './type-grid'
+import TypeImg from './preview/type-img'
+import TypeFlexbox from './preview/type-flexbox'
+import TypeGrid from './preview/type-grid'
 import TypeSwiper from './type-swiper'
 
 export default {

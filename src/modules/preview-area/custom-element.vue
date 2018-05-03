@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import _Type from '../edit-area/types'
+import _Type from '../edit-area/types/preview'
 import Config from '@/utils/config'
 // import Bus from '@/utils/Bus'
 

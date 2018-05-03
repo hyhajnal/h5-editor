@@ -10,7 +10,7 @@
     :class="['element', { 'element-active': active }]"
   >
     <template v-if="element.children && element.children.length > 0">
-      <template v-if="element.type === 'flexbox'">
+      <template v-if="'flexbox|grid'.indexOf(element.type) > -1">
         <custom-element
           v-for="item in element.children"
           :element="item"

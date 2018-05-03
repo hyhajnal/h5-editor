@@ -1,14 +1,10 @@
 <template>
-  <flexbox class="row"
-    v-if="num"
-    :gutter="gutter"
-    :orient="ele.config[2].data"
-    :justify="ele.config[3].data"
-    :align="ele.config[4].data"
-    :wrap="ele.config[5].data"
-    :direction="ele.config[6].data"
+  <grid class="row"
+    :cols="ele.config[0].data"
+    :show-lr-borders="ele.config[1].data"
+    :show-vertical-dividers="ele.config[2].data"
   >
-    <flexbox-item v-for="(item, index) in num" :key="item" class="col">
+    <grid-item v-for="(item, index) in ele.config[0].data" :key="item" class="col">
       <draggable
         :options="dragOptions"
         @end="onEnd"
@@ -20,28 +16,20 @@
       >
         <slot :name="'ele'+index"></slot>
       </draggable>
-    </flexbox-item>
-  </flexbox>
+    </grid-item>
+  </grid>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
-import { Flexbox, FlexboxItem } from 'vux'
+import { Grid, GridItem } from 'vux'
 
 export default {
   name: 'CustomFlexbox',
   props: {
     ele: Object
   },
-  computed: {
-    num () {
-      return parseInt(this.ele.config[0].data)
-    },
-    gutter () {
-      return parseInt(this.ele.config[1].data)
-    }
-  },
-  components: { Flexbox, FlexboxItem, draggable },
+  components: { Grid, GridItem, draggable },
   data () {
     return {
       dragOptions: {
@@ -83,14 +71,12 @@ export default {
 
 <style scoped lang="scss">
 .row {
-  border: 1px solid #ccc;
   background: #fff;
   width: 100%;
 }
 .col-container {
   min-height: 50px;
   height: auto;
-  border: 1px dashed #ccc;
 }
 </style>
 
