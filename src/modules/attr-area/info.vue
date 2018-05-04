@@ -41,7 +41,7 @@ export default {
   watch: {
     pageInfo: {
       handler () {
-        this.$store.commit('changeInfo', this.info)
+        this.$store.commit('changeInfo', {...this.info, ...this.pageInfo})
       },
       deep: true
     }

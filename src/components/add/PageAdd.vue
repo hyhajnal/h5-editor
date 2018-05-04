@@ -24,7 +24,6 @@ import Config from '@/utils/config'
 export default {
   name: 'AddCard',
   props: {
-    type: String,
     page: Number
   },
   data () {
@@ -42,15 +41,12 @@ export default {
   methods: {
     addModule () {
       this.show = false
+      const projectId = parseInt(this.$route.query.id)
       let params = {
         page: this.page,
-        data: this.form
+        data: { ...this.form, projectId }
       }
-      if (this.type === 'page') {
-        const projectId = parseInt(this.$route.query.id)
-        params.data = {...this.form, projectId}
-      }
-      this.axios.post(`${Config.URL}/editor/${this.type}/add`, params).then(data => {
+      this.axios.post(`${Config.URL}/editor/page/add`, params).then(data => {
         this.$refs.add.resetFields()
         if (data !== 1000) {
           this.$message({type: 'success', message: '创建成功'})

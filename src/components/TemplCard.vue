@@ -46,6 +46,7 @@
 <script>
 import CardBottom from './Bottom'
 import CustomElement from '@/modules/preview-area/custom-element'
+import Config from '@/utils/config'
 export default {
   name: 'TemplCard',
   data () {
@@ -89,16 +90,30 @@ export default {
     close () {
       this.dialogVisible = false
     },
+    // 保存至数据库
     addTempl () {
-      const { id, name } = this.templ
-      this.$store.commit('addTempl', {
-        id, name, elements: this.elements
-      })
-      this.isAdd = true
-      this.$notify({
-        title: '成功',
-        message: '已添加至模版库',
-        type: 'success'
+      if (!this.$store.state.info) {
+        this.$message.error('当前没有正在编辑的页面')
+        return
+      }
+      this.axios.get(`${Config.URL}/editor/page/addResource`, {
+        params: {
+          pageId: this.$store.state.info.id,
+          resourceId: this.templ.id,
+          type: 2}
+      }).then(data => {
+        if (data !== 1000) {
+          const { id, name } = this.templ
+          this.$store.commit('addTempl', {
+            id, name, elements: this.elements
+          })
+          this.isAdd = true
+          this.$notify({
+            title: '成功',
+            message: '已添加至模版库',
+            type: 'success'
+          })
+        }
       })
     }
   }

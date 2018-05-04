@@ -42,21 +42,28 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      img: `${Config.URL}/static/${this.page.img}` || '../assets/page.jpg'
+      img: this.page.img.charCodeAt() !== 39 ? this.page.img : 'none.png'
     }
   },
   props: {
-    page: Object
+    page: Object,
+    projectName: String
   },
   computed: {
     bgImg () {
-      return `background-image: url(${this.img});`
+      return `background-image: url(${Config.URL}/static/${this.img});`
     }
   },
   methods: {
     goDetail () {
       // this.$router.push({name: 'PageDetail'})
-      this.$router.push({name: 'Edit', query: {id: this.page.id}})
+      this.$router.push({
+        name: 'Edit',
+        query: {
+          id: this.page.id,
+          project: this.projectName
+        }
+      })
     },
     open () {
       this.dialogVisible = true
@@ -84,6 +91,7 @@ export default {
   background-size: cover;
   position: relative;
   box-shadow: #ddd 0px 2px 5px;
+  background: #fff;
 }
 .shadow {
   width: 100%;

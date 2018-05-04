@@ -27,7 +27,11 @@ export default {
   methods: {
     handleAvatarSuccess (res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw)
-      this.imageUrl = `${Config.URL}/static/upload/${res.data}`
+      const url = `${Config.URL}/static/upload/${res.data}`
+      this.imageUrl = url
+      this.$store.dispatch('updateConfig', [{
+        name: 'url', label: 'url', type: 'input', data: url
+      }])
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
@@ -45,15 +49,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+  .avatar-uploader {
+    display: inline-block;
+    width: 178px;
+    height: 178px;
+  }
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    width: 178px;
-    height: 178px;
   }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
@@ -66,7 +73,7 @@ export default {
     line-height: 178px;
     text-align: center;
   }
-  .avatar {
+  .avatar-uploader .avatar {
     width: 178px;
     height: 178px;
     display: block;

@@ -12,6 +12,9 @@
       <span v-if="isPreview" @click="goBack">
         {{info.name}}
       </span>
+      <span v-if="left" @click="goBack">
+        {{left}}
+      </span>
 
     </h1>
 
@@ -59,7 +62,8 @@ export default {
       type: Boolean,
       default: false
     },
-    title: String
+    title: String,
+    left: String
   },
   components: {
     ToolBar,

@@ -1,7 +1,7 @@
 <template>
   <div class="home" v-if="project">
     <header>
-      <head-area :title="project.name"></head-area>
+      <head-area :title="project.name" left="H5 Editor"></head-area>
     </header>
     <main>
 
@@ -13,7 +13,7 @@
           v-for="item in list"
           :key="item.id"
         >
-          <page-card :page="item" v-if="item"></page-card>
+          <page-card :page="item" v-if="item" :projectName="project.name"></page-card>
         </el-col>
       </el-row>
 

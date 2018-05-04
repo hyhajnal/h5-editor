@@ -7,6 +7,7 @@
     :align="ele.config[4].data"
     :wrap="ele.config[5].data"
     :direction="ele.config[6].data"
+    :style="ele.style"
   >
     <flexbox-item v-for="(item, index) in num" :key="item" class="col">
       <slot :name="'ele'+index"></slot>

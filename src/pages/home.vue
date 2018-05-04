@@ -86,6 +86,11 @@
       </el-row>
 
     </main>
+
+    <router-link :to="{name: 'Edit', query: {id: page.id}}" v-if="page">
+      <el-button type="danger" round class="page-link">点击进入当前编辑页面：{{page.name}}</el-button>
+    </router-link>
+
   </div>
 </template>
 
@@ -102,6 +107,7 @@ import * as Add from '@/components/add'
 import Config from '@/utils/config'
 import HomeSelect from '@/components/HomeSelect'
 import { RadioBar, RadioItem } from '@/components/radio'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -120,6 +126,7 @@ export default {
     }
   },
   mounted () {
+    this.select = this.$route.params.type || 'project'
     this.getList()
     this.$el.addEventListener('scroll', e => {
       if (this.$el.scrollTop < 186) {
@@ -147,6 +154,11 @@ export default {
     HomeSelect,
     RadioBar,
     RadioItem
+  },
+  computed: {
+    ...mapGetters({
+      page: 'pageInfo'
+    })
   },
   watch: {
     search: {
@@ -261,6 +273,13 @@ export default {
   .select-item {
     color: #999;
     font-weight: bold;
+  }
+  // 编辑页面跳转
+  .page-link {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    z-index: 2000;
   }
 </style>
 

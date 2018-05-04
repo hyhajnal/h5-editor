@@ -28,7 +28,8 @@ export default {
   },
   mounted () {
     if (this.element.link) {
-      document.getElementById(this.element.id).addEventListener('click', () => {
+      const el = document.getElementById(this.element.id)
+      el && el.addEventListener('click', () => {
         this.axios.get(`${Config.URL}/editor/page/detail`, {
           params: { id: this.element.link }
         }).then(data => {

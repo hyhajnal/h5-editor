@@ -33,9 +33,16 @@ const actions = {
     // 页面编辑的状态下
     if (!isModuleEdit) {
       info = { id: data.id, name: data.name, projectId: data.projectId, background: data.background }
-      list = JSON.parse(data.elements).elements
+      list = data.elements ? JSON.parse(data.elements) : []
       const modules = data.modules
-      commit('changeCurrent', { info, list, isModuleEdit, modules })
+      // 页面包含的templs
+      let templs = []
+      data.templs.forEach(templ => {
+        templ.elements = JSON.parse(templ.elements)
+        templs.push(templ)
+      })
+      const components = data.components
+      commit('changeCurrent', { info, list, isModuleEdit, modules, templs, components })
     } else {
       // 模块编辑的状态下,data为idx
       const tree = JSON.parse(JSON.stringify(state.list))
@@ -120,14 +127,15 @@ const actions = {
   },
 
   addEle ({ state, commit }, payload) {
-    const { type, pid, idx, compConfig } = payload
+    const { type, pid, idx, compConfig, attrConfig } = payload
     let id = guid()
     let attr = getInit(type)
     let list = JSON.parse(JSON.stringify(state.list))
     const config = compConfig || null
+    const attrShow = attrConfig || null
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, type, label: `${type}/${id}`, children: [], config, idx, ...attr
+        id, pid, type, label: `${type}/${id}`, style: '', children: [], config, attrShow, idx, ...attr
       })
       commit('update', list)
     })
@@ -161,7 +169,7 @@ const actions = {
     const newCompIdx = state.templs.findIndex(c => c.id.toString() === type)
     let newComp = state.templs[newCompIdx]
     treeTravel(list, pid).then(item => {
-      newComp.elements.map((el, i) => {
+      newComp.elements.children.map((el, i) => {
         // 改变所有child的id
         copyElorTempl(el, pid)
         item.splice((idx + i), 0, el)
@@ -227,7 +235,7 @@ const mutations = {
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
   },
-  changeCurrent (state, { info, list, isModuleEdit, modules }) {
+  changeCurrent (state, { info, list, isModuleEdit, modules, templs, components }) {
     Vue.set(state, 'isModuleEdit', isModuleEdit)
     if (isModuleEdit) {
       Vue.set(state, 'moduleInfo', info)
@@ -236,6 +244,8 @@ const mutations = {
       Vue.set(state, 'info', info)
       Vue.set(state, 'list', list)
       Vue.set(state, 'modules', modules)
+      Vue.set(state, 'templs', templs)
+      Vue.set(state, 'components', components)
     }
   },
   // 切换到页面编辑状态

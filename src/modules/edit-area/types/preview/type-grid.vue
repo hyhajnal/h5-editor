@@ -3,6 +3,7 @@
     :cols="ele.config[0].data"
     :show-lr-borders="ele.config[1].data"
     :show-vertical-dividers="ele.config[2].data"
+    :style="ele.style"
   >
     <grid-item v-for="(item, index) in ele.config[0].data" :key="item" class="col">
       <slot :name="'ele'+index"></slot>

@@ -3,16 +3,13 @@
     ref="attrbox"
   >
     <p v-if="!current"><span class="el-tree__empty-text">暂无选中元素</span></p>
-    <template v-if="current && current.type === 'div' && attr" >
-      <container :attrData="attr"/>
+    <template v-if="current && current.attrShow && attr" >
+      <container :attrData="attr" :attrShow="current.attrShow" />
       <div class="divider"></div>
     </template>
-    <template v-if="current && current.type === 'span' && attr">
-      <attr-text :attrData="attr" />
-      <div class="divider"></div>
-    </template>
-    <template v-if="current && current.config">
+    <template v-if="current && current.config.length > 0">
       <config :attrData="current.config" />
+      <div class="divider"></div>
     </template>
     <attr-link v-if="current" :linkData="current.link" :id="current.id" />
   </div>
@@ -20,7 +17,6 @@
 
 <script>
 import Container from './container'
-import AttrText from './text'
 import Config from './config'
 import AttrLink from './link'
 import { toStyleObj } from '@/utils/transformStyle'
@@ -30,17 +26,11 @@ export default {
   name: 'AtrrBox',
   data () {
     return {
-      type: 'container',
-      dx: 0,
-      dy: 0,
-      offsetX: 0,
-      offsetY: 0,
-      isDrag: false
+      type: 'container'
     }
   },
   components: {
     Container,
-    AttrText,
     Config,
     AttrLink
   },
@@ -49,28 +39,7 @@ export default {
       current: 'current'
     }),
     attr () {
-      return toStyleObj(this.current.style)
-    },
-    styleObj () {
-      return { transform: `translate(${this.dx}px, ${this.dy}px)` }
-    }
-  },
-  methods: {
-    onMouseDown (e) {
-      this.isDrag = true
-      this.offsetX = e.pageX - this.offsetX
-      this.offsetY = e.pageY - this.offsetY
-    },
-    onMouseUp (e) {
-      this.isDrag = false
-      this.offsetX = this.dx
-      this.offsetY = this.dy
-    },
-    onMouseMove (e) {
-      if (this.isDrag) {
-        this.dx = e.pageX - this.offsetX
-        this.dy = e.pageY - this.offsetY
-      }
+      return (this.current.style && toStyleObj(this.current.style)) || null
     }
   }
 }

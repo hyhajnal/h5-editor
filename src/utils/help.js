@@ -10,21 +10,25 @@ function getInit (type) {
   switch (type) {
     case 'div':
       attr = {
-        style: 'width:100%;height:100px;border:1px solid #ccc;'
+        style: 'width:100%;height:100px;border:1px solid #ccc;',
+        attrShow: {padding: true, margin: true, wh: true, background: true, borderRadius: true, border: true, position: true, display: true}
       }
       break
     case 'span':
       attr = {
         style: 'color:#000;',
+        attrShow: {padding: true, margin: true, wh: true, background: true, borderRadius: true, border: true, position: true, display: true, fontSize: true, color: true, fontWeight: true},
         config: [
           { name: 'text', label: '文字', type: 'input', data: '文字' }
         ]
       }
       break
-    case 'button':
+    case 'img':
       attr = {
+        style: 'width:100px;height: 80px;',
+        attrShow: {margin: true, wh: true, borderRadius: true, border: true, position: true, display: true},
         config: [
-          { name: 'size', label: '文字', type: 'input', data: '文字' }
+          { name: 'url', label: 'url', type: 'upload', data: '' }
         ]
       }
       break

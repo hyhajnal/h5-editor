@@ -89,6 +89,7 @@ export default {
   }
   .left {
     overflow: auto;
+    background: #fff;
   }
   .preview-area {
     display: block;

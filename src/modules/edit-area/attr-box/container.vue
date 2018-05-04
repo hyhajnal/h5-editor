@@ -1,6 +1,33 @@
 <template>
   <div class="container">
-    <el-row :gutter="10" v-if="attr.width || attr.height" type="flex" align="middle">
+    <el-row :gutter="10" v-if="attrShow.color">
+      <el-col :span="6" class="label">字体色:</el-col>
+      <el-col :span="18">
+        <color-picker v-model="attr.color" />
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" v-if="attrShow.fontSize">
+      <el-col :span="6" class="label">字号:</el-col>
+      <el-col :span="18">
+        <el-slider v-model="attr.fontSize" show-input size="small" />
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" v-if="attrShow.fontWeight">
+      <el-col :span="6" class="label">粗细:</el-col>
+      <el-col :span="18">
+        <el-slider v-model="attr.fontWeight"
+          size="small"
+          :step="10"
+          show-stops
+          :max="90"
+          :format-tooltip="formatWeight"
+        />
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" v-if="attrShow.wh" type="flex" align="middle">
       <el-col :span="6" class="label">宽高:</el-col>
       <el-col :span="18" class="input-box">
         <el-tooltip class="item" effect="dark" content="宽" placement="top-start">
@@ -11,7 +38,7 @@
         </el-tooltip>
       </el-col>
     </el-row>
-    <el-row :gutter="10" v-if="attr.padding" type="flex" align="middle">
+    <el-row :gutter="10" v-if="attrShow.padding" type="flex" align="middle">
       <el-col :span="6" class="label">内边距:</el-col>
       <el-col :span="18" class="input-box">
         <el-tooltip class="item" effect="dark" content="上" placement="top-start">
@@ -28,7 +55,7 @@
         </el-tooltip>
       </el-col>
     </el-row>
-    <el-row :gutter="10" v-if="attr.margin" type="flex" align="middle">
+    <el-row :gutter="10" v-if="attrShow.margin" type="flex" align="middle">
       <el-col :span="6" class="label">外边距:</el-col>
       <el-col :span="18" class="input-box">
         <el-tooltip class="item" effect="dark" content="上" placement="top-start">
@@ -45,7 +72,7 @@
         </el-tooltip>
       </el-col>
     </el-row>
-    <el-row :gutter="10" v-if="attr.background" type="flex" align="middle">
+    <el-row :gutter="10" v-if="attrShow.background" type="flex" align="middle">
       <el-col :span="6" class="label">背景色:</el-col>
       <el-col :span="18">
         <color-picker v-model="attr.background" />
@@ -61,7 +88,7 @@
         </el-radio-group>
       </el-col>
     </el-row>
-    <el-row :gutter="10" v-if="attr.border" type="flex" align="middle">
+    <el-row :gutter="10" v-if="attrShow.border" type="flex" align="middle">
       <el-col :span="6" class="label">边框:</el-col>
       <el-col :span="18" class="border-box">
         <el-input-number size="small" v-model="attr.border[0]" />
@@ -80,7 +107,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="10" type="flex" align="middle">
+    <el-row :gutter="10" type="flex" align="middle" v-if="attrShow.position">
       <el-col :span="6" class="label">绝对定位:</el-col>
       <el-col :span="18" class="input-box">
         <el-switch
@@ -121,7 +148,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="10" type="flex" align="middle">
+    <el-row :gutter="10" type="flex" align="middle" v-if="attrShow.display">
       <el-col :span="6" class="label">盒子:</el-col>
       <el-col :span="18" class="input-box">
         <el-radio-group v-model="attr.display" size="mini">
@@ -167,6 +194,9 @@ import { RadioBar, RadioItem } from '@/components/radio'
 import ColorPicker from '@/components/ColorPicker'
 import { toStyleString } from '@/utils/transformStyle'
 const init = {
+  color: '#000',
+  fontSize: 16,
+  fontWeight: 40,
   width: 0,
   height: 0,
   margin: [0, 0, 0, 0],
@@ -180,7 +210,8 @@ const init = {
 export default {
   name: 'Container',
   props: {
-    attrData: Object
+    attrData: Object,
+    attrShow: Object
   },
   data () {
     return {
@@ -266,6 +297,29 @@ export default {
 .el-radio__inner {
   width: 10px;
   height: 10px;
+}
+.container {
+  .el-slider__runway.show-input {
+    margin-right: 60px;
+  }
+  .el-slider__runway {
+    margin: 10px 0;
+    height: 4px;
+  }
+  .el-slider__bar {
+    height: 4px;
+  }
+  .el-slider__button {
+    width: 12px;
+    height: 12px;
+  }
+  .el-slider__button-wrapper {
+    top: -16px;
+  }
+  .el-slider__stop {
+    width: 4px;
+    height: 4px;
+  }
 }
 </style>
 

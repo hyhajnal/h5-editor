@@ -34,6 +34,18 @@
           v-model="config[idx].data">
         </el-switch>
 
+        <el-upload v-if="config[idx].type === 'upload'"
+          class="upload"
+          action="http://localhost:8360/editor/img/upload"
+          :show-file-list="false"
+          name="image"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+          multiple
+          :limit="1">
+          <el-button size="small" type="primary">点击上传</el-button>
+        </el-upload>
+
       </el-col>
     </el-row>
 
@@ -42,6 +54,7 @@
 
 <script>
 import { RadioBar, RadioItem } from '@/components/radio'
+import Config from '@/utils/config'
 export default {
   name: 'Config',
   props: {
@@ -81,6 +94,21 @@ export default {
         return 'bold'
       }
       return val * 10
+    },
+    handleAvatarSuccess (res, file) {
+      // this.imageUrl = URL.createObjectURL(file.raw)
+      const url = `${Config.URL}/static/upload/${res.data}`
+      // this.imageUrl = url
+      this.$store.dispatch('updateConfig', [{
+        name: 'url', label: 'url', type: 'input', data: url
+      }])
+    },
+    beforeAvatarUpload (file) {
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isLt2M
     }
   }
 }

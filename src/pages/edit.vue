@@ -1,7 +1,7 @@
 <template>
   <div class="edit">
     <header>
-      <head-area :isSaving="isSaving" @save="save"></head-area>
+      <head-area :isSaving="isSaving" @save="save" :left="left"></head-area>
     </header>
     <main>
       <div class="left" v-if="!isModuleEdit">
@@ -59,16 +59,19 @@ export default {
   // destroyed () {
   //   clearInterval(this.timer)
   // },
-  // beforeRouteLeave (to, from, next) {
-  //   this.save()
-  //   next()
-  // },
+  beforeRouteLeave (to, from, next) {
+    this.save()
+    next()
+  },
   computed: {
     ...mapGetters({
       isModuleEdit: 'isModuleEdit',
       pageInfo: 'pageInfo',
       list: 'page'
-    })
+    }),
+    left () {
+      return this.isModuleEdit ? this.pageInfo.name : this.$route.query.project
+    }
   },
   methods: {
     save () {
@@ -78,7 +81,8 @@ export default {
       this.axios.post(`${Config.URL}/editor/page/edit`, {
         id: pageInfo.id,
         name: pageInfo.name,
-        elements: JSON.stringify({elements: list})
+        background: pageInfo.background,
+        elements: JSON.stringify(list)
       }).then(data => {
         data !== 1000 && this.$message({type: 'success', message: '保存成功'})
       })
@@ -87,7 +91,7 @@ export default {
       const mod = {
         id: pageInfo.id,
         name: pageInfo.name,
-        elements: JSON.stringify({elements: list})
+        elements: JSON.stringify(list)
       }
       window.localStorage.setItem('page', JSON.stringify(mod))
     },

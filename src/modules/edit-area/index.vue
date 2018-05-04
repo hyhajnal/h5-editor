@@ -114,36 +114,8 @@ export default {
     el.addEventListener('mouseup', this.onUp, false)
     el.addEventListener('mousedown', this.onDown, false)
 
-    hotkeys('e', (event, handler) => {
-      event.preventDefault()
-      const message = !this.divideStart ? '模块划分模式已开启' : '模块划分模式已关闭'
-      this.$notify({message})
-      this.divideStart = !this.divideStart
-    })
-
-    hotkeys('⌘+v', (e) => {
-      event.preventDefault()
-      this.$notify({
-        title: '成功',
-        message: '成功将当前元素复制到编辑面板',
-        type: 'success'
-      })
-      this.$store.dispatch('copyEle')
-    })
-
-    hotkeys('⌘+d', (e) => {
-      event.preventDefault()
-      this.$notify({
-        title: '成功',
-        message: '成功删除当前元素',
-        type: 'success'
-      })
-      this.$store.dispatch('delEle')
-    })
-
-    hotkeys('esc', (event, handler) => {
-      this.clear()
-    })
+    // 设置快捷键
+    this.bindHotKey()
   },
   beforeDestroyed () {
     const el = this.$refs.edit
@@ -277,6 +249,39 @@ export default {
     divideTempl () {
       this.innerVisible = true
       this.divideType = 'templ'
+    },
+
+    bindHotKey () {
+      hotkeys('e', (event, handler) => {
+        event.preventDefault()
+        const message = !this.divideStart ? '模块划分模式已开启' : '模块划分模式已关闭'
+        this.$notify({message})
+        this.divideStart = !this.divideStart
+      })
+
+      hotkeys('⌘+v', (e) => {
+        event.preventDefault()
+        this.$notify({
+          title: '成功',
+          message: '成功将当前元素复制到编辑面板',
+          type: 'success'
+        })
+        this.$store.dispatch('copyEle')
+      })
+
+      hotkeys('⌘+d', (e) => {
+        event.preventDefault()
+        this.$notify({
+          title: '成功',
+          message: '成功删除当前元素',
+          type: 'success'
+        })
+        this.$store.dispatch('delEle')
+      })
+
+      hotkeys('esc', (event, handler) => {
+        this.clear()
+      })
     }
 
   }

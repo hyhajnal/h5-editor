@@ -51,6 +51,7 @@
 
 <script>
 import CardBottom from './Bottom'
+import Config from '@/utils/config'
 export default {
   name: 'CompCard',
   data () {
@@ -94,12 +95,25 @@ export default {
   },
   methods: {
     addComp () {
-      this.$store.commit('addComp', this.comp)
-      this.isAdd = true
-      this.$notify({
-        title: '成功',
-        message: '已添加至组件库',
-        type: 'success'
+      if (!this.$store.state.info) {
+        this.$message.error('当前没有正在编辑的页面')
+        return
+      }
+      this.axios.get(`${Config.URL}/editor/page/addResource`, {
+        params: {
+          pageId: this.$store.state.info.id,
+          resourceId: this.comp.id,
+          type: 1}
+      }).then(data => {
+        if (data !== 1000) {
+          this.$store.commit('addComp', this.comp)
+          this.isAdd = true
+          this.$notify({
+            title: '成功',
+            message: '已添加至组件库',
+            type: 'success'
+          })
+        }
       })
     },
     openInfo () {

@@ -2,7 +2,11 @@
   <div class="tpl">
     <!-- <ul style="padding: 15px;"> -->
     <p class="tip">
-      按 <i class="el-icon-circle-plus-outline"></i> 从资源库中选取需要的组件
+      按
+      <router-link :to="{name: 'Home', params: {type: 'comp'}}">
+        <i class="el-icon-circle-plus-outline"></i>
+      </router-link>
+      从资源库中选取需要的组件
     </p>
     <draggable
       element="ul"

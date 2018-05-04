@@ -4,6 +4,7 @@
     "name": "按钮",
     "type": "button",
     "icon": "button",
+    "attrShow": {"padding": true, "margin": true, "position": true},
     "config": [
       { "name": "type", "label": "类型", "type": "select", "data": "default", "options": ["default", "primary", "danger"] },
       { "name": "size", "label": "大小", "type": "select", "data": "small", "options": ["large", "small", "mini"] },
@@ -71,6 +72,7 @@
     "name": "布局盒子",
     "icon": "layout",
     "type": "flexbox",
+    "attrShow": {"padding": true, "margin": true, "position": true},
     "config": [
       { "name": "num", "label": "数量", "type": "number", "data": 3 },
       { "name": "gutter", "label": "间隔", "type": "number", "data": 8 },
@@ -94,6 +96,7 @@
     "name": "网格布局",
     "icon": "9box",
     "type": "grid",
+    "attrShow": {"padding": true, "margin": true, "position": true},
     "config": [
       { "name": "cols", "label": "列数", "type": "number", "data": 3 },
       { "name": "show-lr-borders", "label": "是否显示左右边框", "type": "bool", "data": true},

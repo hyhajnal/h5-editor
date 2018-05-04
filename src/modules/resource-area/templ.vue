@@ -2,7 +2,11 @@
   <div class="tpl">
     <!-- <ul style="padding: 15px;"> -->
     <p class="tip">
-      按 <i class="el-icon-circle-plus-outline"></i> 从资源库中选取需要的模版
+      按
+      <router-link :to="{name: 'Home', params: {type: 'templ'}}">
+        <i class="el-icon-circle-plus-outline"></i>
+      </router-link>
+      从资源库中选取需要的模版
     </p>
     <draggable
       element="ul"
@@ -15,7 +19,7 @@
           <div class="image">
             <div class="component-preview">
               <custom-element
-                v-for="el in item.elements"
+                v-for="el in item.elements.children"
                 :key="el.id"
                 :element="el"
               />
