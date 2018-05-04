@@ -19,7 +19,7 @@
           <div class="image">
             <div class="component-preview">
               <custom-element
-                v-for="el in item.elements.children"
+                v-for="el in item.elements"
                 :key="el.id"
                 :element="el"
               />
@@ -30,7 +30,7 @@
               <span class="title">{{item.name}}-{{item.id}}</span>
               <!-- <el-button type="text" class="button">编辑</el-button> -->
               <i class="el-icon-search"></i>
-              <i class="el-icon-circle-close-outline" @click.stop="del(idx)"></i>
+              <i class="el-icon-circle-close-outline" @click.stop="del(idx, item.resourceId)"></i>
               <!-- <el-button type="text" class="button">预览</el-button> -->
             </div>
           </div>
@@ -45,6 +45,7 @@
 import { mapGetters } from 'vuex'
 import CustomElement from '@/modules/preview-area/custom-element'
 import draggable from 'vuedraggable'
+import Config from '@/utils/config'
 export default {
   name: 'Templ',
   data () {
@@ -75,8 +76,18 @@ export default {
         idx: nIdx
       })
     },
-    del (i) {
-      this.$store.commit('delTempl', i)
+    del (i, id) {
+      this.axios.get(`${Config.URL}/editor/page/removeResource`, {
+        params: {
+          pageId: this.$store.state.info.id,
+          resourceId: id,
+          type: 2}
+      }).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '成功移除该模版'})
+          this.$store.commit('delTempl', i)
+        }
+      })
     }
   }
 }

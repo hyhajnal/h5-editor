@@ -3,11 +3,11 @@
     ref="attrbox"
   >
     <p v-if="!current"><span class="el-tree__empty-text">暂无选中元素</span></p>
-    <template v-if="current && current.attrShow && attr" >
-      <container :attrData="attr" :attrShow="current.attrShow" />
+    <template v-if="current && attrShow" >
+      <container :attrData="attr" :attrShow="attrShow" />
       <div class="divider"></div>
     </template>
-    <template v-if="current && current.config.length > 0">
+    <template v-if="current && current.config && current.config.length > 0">
       <config :attrData="current.config" />
       <div class="divider"></div>
     </template>
@@ -21,14 +21,10 @@ import Config from './config'
 import AttrLink from './link'
 import { toStyleObj } from '@/utils/transformStyle'
 import { mapGetters } from 'vuex'
+import AttrShow from '@/utils/attrShow'
 
 export default {
   name: 'AtrrBox',
-  data () {
-    return {
-      type: 'container'
-    }
-  },
   components: {
     Container,
     Config,
@@ -40,6 +36,9 @@ export default {
     }),
     attr () {
       return (this.current.style && toStyleObj(this.current.style)) || null
+    },
+    attrShow () {
+      return AttrShow[this.current.type]
     }
   }
 }

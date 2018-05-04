@@ -13,12 +13,12 @@
       :options="{group:{name:'resource1',pull:'clone',put:false}}"
       @end="onEnd"
     >
-      <li v-for="item in components" :key="item.id" :data-id="item.id" class="component-item">
+      <li v-for="(item,idx) in components" :key="item.id" :data-id="item.id" class="component-item">
         <div style="padding: 4px 14px 14px 14px;">
           <div class="bottom clearfix">
             <span class="title">{{item.name}}-{{item.id}}</span>
             <i class="el-icon-info"></i>
-            <i class="el-icon-error"></i>
+            <i class="el-icon-error" @click.stop="del(idx, item.resourceId)"></i>
           </div>
         </div>
       </li>
@@ -31,6 +31,7 @@
 import { mapGetters } from 'vuex'
 import CustomElement from '@/modules/preview-area/custom-element'
 import draggable from 'vuedraggable'
+import Config from '@/utils/config'
 export default {
   name: 'Tpl',
   data () {
@@ -59,6 +60,19 @@ export default {
         type: obj.item.dataset.id,
         pid: pid,
         idx: nIdx
+      })
+    },
+    del (i, id) {
+      this.axios.get(`${Config.URL}/editor/page/removeResource`, {
+        params: {
+          pageId: this.$store.state.info.id,
+          resourceId: id,
+          type: 1}
+      }).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '成功移除该组件'})
+          this.$store.commit('delComp', i)
+        }
       })
     }
   }

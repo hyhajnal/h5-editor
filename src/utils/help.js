@@ -10,14 +10,12 @@ function getInit (type) {
   switch (type) {
     case 'div':
       attr = {
-        style: 'width:100%;height:100px;border:1px solid #ccc;',
-        attrShow: {padding: true, margin: true, wh: true, background: true, borderRadius: true, border: true, position: true, display: true}
+        style: 'width:100%;height:100px;border:1px solid #ccc;'
       }
       break
     case 'span':
       attr = {
         style: 'color:#000;',
-        attrShow: {padding: true, margin: true, wh: true, background: true, borderRadius: true, border: true, position: true, display: true, fontSize: true, color: true, fontWeight: true},
         config: [
           { name: 'text', label: '文字', type: 'input', data: '文字' }
         ]
@@ -26,7 +24,6 @@ function getInit (type) {
     case 'img':
       attr = {
         style: 'width:100px;height: 80px;',
-        attrShow: {margin: true, wh: true, borderRadius: true, border: true, position: true, display: true},
         config: [
           { name: 'url', label: 'url', type: 'upload', data: '' }
         ]
@@ -81,12 +78,12 @@ function createModule ({elements, pid, developer, name}) {
 }
 
 function createTempl ({elements, name}) {
-  let mod = {
-    id: `m/${guid()}`,
+  let templ = {
+    id: `t/${guid()}`,
     name,
     elements
   }
-  return mod
+  return templ
 }
 
 export { guid, getInit, mobiles, px2rem, createModule, createTempl }

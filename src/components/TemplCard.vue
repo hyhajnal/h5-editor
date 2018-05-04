@@ -66,7 +66,7 @@ export default {
   },
   mounted () {
     if (this.templ.elements) {
-      this.elements = JSON.parse(this.templ.elements).children
+      this.elements = JSON.parse(this.templ.elements)
     }
     // isAdd 标记
     const templs = this.$store.state.templs
@@ -133,6 +133,7 @@ export default {
   height: 200px;
   position: relative;
   border-bottom: 1px solid #ddd;
+  overflow: hidden;
 }
 figure {
   width: 100%;

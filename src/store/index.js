@@ -127,15 +127,14 @@ const actions = {
   },
 
   addEle ({ state, commit }, payload) {
-    const { type, pid, idx, compConfig, attrConfig } = payload
+    const { type, pid, idx, compConfig } = payload
     let id = guid()
     let attr = getInit(type)
     let list = JSON.parse(JSON.stringify(state.list))
     const config = compConfig || null
-    const attrShow = attrConfig || null
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, type, label: `${type}/${id}`, style: '', children: [], config, attrShow, idx, ...attr
+        id, pid, type, label: `${type}/${id}`, style: '', children: [], config, idx, ...attr
       })
       commit('update', list)
     })
@@ -169,7 +168,7 @@ const actions = {
     const newCompIdx = state.templs.findIndex(c => c.id.toString() === type)
     let newComp = state.templs[newCompIdx]
     treeTravel(list, pid).then(item => {
-      newComp.elements.children.map((el, i) => {
+      newComp.elements.map((el, i) => {
         // 改变所有child的id
         copyElorTempl(el, pid)
         item.splice((idx + i), 0, el)

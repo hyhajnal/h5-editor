@@ -13,7 +13,7 @@
           v-for="item in list"
           :key="item.id"
         >
-          <page-card :page="item" v-if="item" :projectName="project.name"></page-card>
+          <page-card :page="item" v-if="item"></page-card>
         </el-col>
       </el-row>
 
@@ -78,6 +78,7 @@ export default {
         this.project = data.project
         this.list = data.list
         this.total = data.total
+        localStorage.setItem('project', data.project.name)
       })
     },
     afterAdd ({ list, total }) {

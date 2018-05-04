@@ -118,8 +118,7 @@ export default {
         type: obj.item.dataset.id,
         pid: pid,
         idx,
-        compConfig: BaseComps[index].config,
-        attrConfig: BaseComps[index].attrShow
+        compConfig: BaseComps[index].config
       })
     }
   }

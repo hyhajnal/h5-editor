@@ -70,7 +70,7 @@ export default {
       list: 'page'
     }),
     left () {
-      return this.isModuleEdit ? this.pageInfo.name : this.$route.query.project
+      return this.isModuleEdit ? this.pageInfo.name : localStorage.getItem('project')
     }
   },
   methods: {

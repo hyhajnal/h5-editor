@@ -46,8 +46,7 @@ export default {
     }
   },
   props: {
-    page: Object,
-    projectName: String
+    page: Object
   },
   computed: {
     bgImg () {
@@ -60,8 +59,7 @@ export default {
       this.$router.push({
         name: 'Edit',
         query: {
-          id: this.page.id,
-          project: this.projectName
+          id: this.page.id
         }
       })
     },

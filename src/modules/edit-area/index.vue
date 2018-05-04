@@ -51,6 +51,15 @@
           >
             <el-input v-model="templ.name" placeholder="模版名称"></el-input>
           </el-form-item>
+          <el-form-item
+            label="模版标签"
+            prop="tag"
+            :rules="[
+              { required: true, message: '请输入模版标签', trigger: 'blur' }
+            ]"
+          >
+            <el-input v-model="templ.tag" placeholder="模版名称"></el-input>
+          </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="publish" size="small">发布</el-button>
@@ -68,7 +77,9 @@
 import hotkeys from 'hotkeys-js'
 import AttrBox from './attr-box/index'
 import Page from './page'
-import { createModule, createTempl } from '@/utils/help'
+import { moduleSelect } from '@/utils/transformTree'
+// import { createModule, createTempl } from '@/utils/help'
+import Config from '@/utils/config'
 export default {
   name: 'EditArea',
   data () {
@@ -90,7 +101,8 @@ export default {
         developer: ''
       },
       templ: {
-        name: ''
+        name: '',
+        tag: ''
       }
     }
   },
@@ -122,6 +134,10 @@ export default {
     el.removeEventListener('mousemove', this.onMove, false)
     el.removeEventListener('mouseup', this.onUp, false)
     el.removeEventListener('mousedown', this.onDown, false)
+    hotkeys.unbind('a')
+    hotkeys.unbind('⌘+v')
+    hotkeys.unbind('⌘+d')
+    hotkeys.unbind('esc')
   },
   methods: {
 
@@ -221,22 +237,46 @@ export default {
       this.$refs.info.validate((valid) => {
         if (valid) {
           if (this.divideType === 'module') {
-            const mod = createModule({
+            this.saveModule({
               elements: this.selectList,
               ...this.mod
             })
-            this.$store.commit('publishMod', mod)
           } else {
-            const templ = createTempl({
-              elements: this.selectList,
-              ...this.mod
+            const tree = this.$store.state.list
+            moduleSelect(tree, this.selectList.toString()).then(list => {
+              this.saveTempl({
+                elements: JSON.stringify(list),
+                ...this.templ,
+                pageId: parseInt(this.$route.query.id)
+              })
             })
-            this.$store.commit('addTempl', templ)
           }
           this.innerVisible = false
           this.divideStart = false
         } else {
           return false
+        }
+      })
+    },
+
+    // 将创建好的模块保存至数据库
+    saveModule (mod) {
+      this.axios.post(`${Config.URL}/editor/page/addMod`, mod).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '创建成功'})
+          this.$store.commit('publishMod', data)
+        }
+      })
+    },
+
+    // 将创建好的模版保存至数据库
+    saveTempl (templ) {
+      this.axios.post(`${Config.URL}/editor/templ/add`, templ).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '创建成功'})
+          let templ = {...data}
+          templ.elements = JSON.parse(data.elements)
+          this.$store.commit('addTempl', templ)
         }
       })
     },

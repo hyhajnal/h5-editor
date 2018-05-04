@@ -27,7 +27,7 @@
               <router-link :to="{name: 'Preview'}">
                 <i class="el-icon-search"></i>
               </router-link>
-              <i class="el-icon-edit" @click="onClick(idx)"></i>
+              <i class="el-icon-edit" @click.stop="onClick(idx, item.id)"></i>
             </p>
           </div>
         </el-card>
@@ -39,13 +39,9 @@
 <script>
 import { mapGetters } from 'vuex'
 // import { treeTravel } from '@/utils/transformTree'
+import Config from '@/utils/config'
 export default {
   name: 'Module',
-  data () {
-    return {
-      currentDate: new Date()
-    }
-  },
   computed: {
     ...mapGetters({
       modules: 'modules'
@@ -55,8 +51,15 @@ export default {
     onClick (i) {
       this.$store.dispatch('changeCurrent', i)
     },
-    del (i) {
-      this.$store.commit('delMod', i)
+    del (i, id) {
+      this.axios.get(`${Config.URL}/editor/page/removeMod`, {
+        params: id
+      }).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '成功删除该模块'})
+          this.$store.commit('delMod', i)
+        }
+      })
     }
   }
 }
