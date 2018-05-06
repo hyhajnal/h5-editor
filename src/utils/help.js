@@ -23,9 +23,17 @@ function getInit (type) {
       break
     case 'img':
       attr = {
-        style: 'width:100px;height: 80px;',
+        style: 'width:100px;height:80px;',
         config: [
           { name: 'url', label: 'url', type: 'upload', data: '' }
+        ]
+      }
+      break
+    case 'icon':
+      attr = {
+        style: 'display:inline;',
+        config: [
+          { name: 'name', label: '图标名', type: 'input', data: 'info' }
         ]
       }
       break

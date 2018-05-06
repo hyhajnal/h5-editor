@@ -3,7 +3,8 @@ const components = [
   {icon: 'span', label: '文字', value: 'span'},
   {icon: 'image', label: '图片', value: 'img'},
   {icon: 'h-divider', label: '横分隔', value: 'h-divider'},
-  {icon: 'v-divider', label: '竖分隔', value: 'v-divider'}
+  {icon: 'v-divider', label: '竖分隔', value: 'v-divider'},
+  {icon: 'info', label: '图标', value: 'icon'}
 ]
 
 const layouts = [

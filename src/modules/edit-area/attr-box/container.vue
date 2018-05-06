@@ -78,7 +78,7 @@
         <color-picker v-model="attr.background" />
       </el-col>
     </el-row>
-    <el-row :gutter="10" type="flex" align="middle">
+    <el-row :gutter="10" type="flex" align="middle" v-if="attrShow.borderRadius">
       <el-col :span="6" class="label">圆角:</el-col>
       <el-col :span="18" class="border-box">
         <el-input-number size="small" v-model="attr.borderRadius[0]" style="margin-right: 10px;"/>
@@ -267,6 +267,17 @@ export default {
   },
   components: {
     RadioBar, RadioItem, ColorPicker
+  },
+  methods: {
+    formatWeight (val) {
+      if (val === 40) {
+        return 'normal'
+      }
+      if (val === 70) {
+        return 'bold'
+      }
+      return val * 10
+    }
   }
 }
 </script>

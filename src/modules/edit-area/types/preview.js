@@ -11,6 +11,7 @@ import TypeImg from './preview/type-img'
 import TypeFlexbox from './preview/type-flexbox'
 import TypeGrid from './preview/type-grid'
 import TypeSwiper from './type-swiper'
+import TypeIcon from './type-icon'
 
 export default {
   TypeButton,
@@ -25,5 +26,6 @@ export default {
   TypeImg,
   TypeFlexbox,
   TypeGrid,
-  TypeSwiper
+  TypeSwiper,
+  TypeIcon
 }

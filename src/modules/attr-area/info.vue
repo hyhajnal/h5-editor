@@ -18,6 +18,12 @@
         <color-picker v-model="pageInfo.background" />
       </span>
     </li>
+    <li>
+      <span class="label">图标链接:</span>
+      <span class="value">
+        <input type="text" v-model="pageInfo.iconLink">
+      </span>
+    </li>
   </ul>
 </template>
 
@@ -30,7 +36,8 @@ export default {
     return {
       pageInfo: {
         name: '',
-        background: '#fff'
+        background: '#fff',
+        iconLink: ''
       },
       owner: 'desinger1'
     }
@@ -44,6 +51,24 @@ export default {
         this.$store.commit('changeInfo', {...this.info, ...this.pageInfo})
       },
       deep: true
+    },
+    'pageInfo.iconLink' () {
+      this.addCssByLink()
+    }
+  },
+  methods: {
+    addCssByLink () {
+      if (!this.pageInfo.iconLink) return
+      let url = `https:${this.pageInfo.iconLink}`
+      if (document.getElementsByTagName('link').length === 3) {
+        document.getElementsByTagName('link')[1].setAttribute('href', url)
+      } else {
+        let link = document.createElement('link')
+        link.setAttribute('rel', 'stylesheet')
+        link.setAttribute('type', 'text/css')
+        link.setAttribute('href', url)
+        document.documentElement.appendChild(link)
+      }
     }
   },
   computed: {
@@ -66,7 +91,7 @@ li {
   margin-bottom: 15px;
 }
 .label {
-  width: 60px;
+  width: 70px;
   display: inline-block;
 }
 .value {

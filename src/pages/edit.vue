@@ -79,9 +79,7 @@ export default {
       const list = this.list
       this.saveLocal(pageInfo, list)
       this.axios.post(`${Config.URL}/editor/page/edit`, {
-        id: pageInfo.id,
-        name: pageInfo.name,
-        background: pageInfo.background,
+        ...pageInfo,
         elements: JSON.stringify(list)
       }).then(data => {
         data !== 1000 && this.$message({type: 'success', message: '保存成功'})

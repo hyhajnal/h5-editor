@@ -32,7 +32,13 @@ const actions = {
     const isModuleEdit = data.id ? 0 : 1
     // 页面编辑的状态下
     if (!isModuleEdit) {
-      info = { id: data.id, name: data.name, projectId: data.projectId, background: data.background }
+      info = {
+        id: data.id,
+        name: data.name,
+        projectId: data.projectId,
+        background: data.background,
+        iconLink: data.iconLink
+      }
       list = data.elements ? JSON.parse(data.elements) : []
       const modules = data.modules
       // 页面包含的templs
@@ -208,6 +214,7 @@ const actions = {
     if (state.current) {
       pid = state.current.pid
       id = state.current.id
+      commit('changeCurrentEl', null)
     } else {
       pid = payload.pid
       id = payload.id
