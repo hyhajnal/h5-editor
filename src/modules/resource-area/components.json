@@ -64,7 +64,12 @@
     "name": "轮播图",
     "icon": "swiper",
     "type": "swiper",
-    "config": []
+    "config": [
+      { "name": "image", "label": "图片", "type": "table", "data": [
+        {"url": "http://localhost:8360/static/1.jpg"},
+        {"url": "http://localhost:8360/static/2.jpg"}
+      ]}
+    ]
   },
   {
     "id": "c10",

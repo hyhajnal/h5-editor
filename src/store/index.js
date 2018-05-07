@@ -22,6 +22,7 @@ const state = {
   components: [],
   modules: [],
   templs: [],
+  images: [], // 图片资源
   device: {...mobiles[0], percent: 100}
 }
 
@@ -41,6 +42,7 @@ const actions = {
       }
       list = data.elements ? JSON.parse(data.elements) : []
       const modules = data.modules
+      const images = data.images
       // 页面包含的templs
       let templs = []
       data.templs.forEach(templ => {
@@ -48,7 +50,7 @@ const actions = {
         templs.push(templ)
       })
       const components = data.components
-      commit('changeCurrent', { info, list, isModuleEdit, modules, templs, components })
+      commit('changeCurrent', { info, list, isModuleEdit, modules, templs, components, images })
     } else {
       // 模块编辑的状态下,data为idx
       const tree = JSON.parse(JSON.stringify(state.list))
@@ -241,7 +243,7 @@ const mutations = {
   changeDevice (state, device) {
     Vue.set(state, 'device', device)
   },
-  changeCurrent (state, { info, list, isModuleEdit, modules, templs, components }) {
+  changeCurrent (state, { info, list, isModuleEdit, modules, templs, components, images }) {
     Vue.set(state, 'isModuleEdit', isModuleEdit)
     if (isModuleEdit) {
       Vue.set(state, 'moduleInfo', info)
@@ -252,6 +254,7 @@ const mutations = {
       Vue.set(state, 'modules', modules)
       Vue.set(state, 'templs', templs)
       Vue.set(state, 'components', components)
+      Vue.set(state, 'images', images)
     }
   },
   // 切换到页面编辑状态
@@ -290,6 +293,14 @@ const mutations = {
   publishMod (state, mod) {
     state.modules.push(mod)
   },
+  // 增加图片
+  addImage (state, image) {
+    state.images.push(image)
+  },
+  // 删除图片
+  delImage (state, idx) {
+    state.images.splice(idx, 1)
+  },
   // 改变page infp
   changeInfo (state, info) {
     Vue.set(state, 'info', info)
@@ -319,11 +330,17 @@ const getters = {
   components: state => {
     return state.components
   },
+  // 模版资源
   templs: state => {
     return state.templs
   },
+  // 模块资源
   modules: state => {
     return state.modules
+  },
+  // 图片资源
+  images: state => {
+    return state.images
   },
   isModuleEdit: state => {
     return state.isModuleEdit

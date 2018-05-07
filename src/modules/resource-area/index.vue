@@ -61,6 +61,13 @@
         <module></module>
       </el-tab-pane>
 
+      <el-tab-pane>
+        <template slot="label">
+          <span>图片</span>
+        </template>
+        <image-resource></image-resource>
+      </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
@@ -71,6 +78,7 @@ import BaseComps from './components.json'
 import Templ from './templ'
 import Comp from './comp'
 import Module from './module'
+import ImageResource from './images'
 import draggable from 'vuedraggable'
 
 export default {
@@ -87,7 +95,8 @@ export default {
     draggable,
     Comp,
     Templ,
-    Module
+    Module,
+    ImageResource
   },
   methods: {
     onEnd (obj) {

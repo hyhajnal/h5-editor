@@ -2,51 +2,59 @@
   <div class="attr-text">
 
     <el-row :gutter="10" v-for="(item,idx) in config" :key="item.name" class="config-item">
-      <el-col :span="6" class="label">{{item.label}}:</el-col>
-      <el-col :span="18">
+      <template v-if="config[idx].type !== 'table'">
+        <el-col :span="6" class="label">{{item.label}}:</el-col>
+        <el-col :span="18">
 
-        <el-input
-          v-if="config[idx].type === 'input'"
-          v-model="config[idx].data"
-          placeholder="请输入内容"
-          size="mini"
-        />
+          <el-input
+            v-if="config[idx].type === 'input'"
+            v-model="config[idx].data"
+            placeholder="请输入内容"
+            size="mini"
+          />
 
-        <el-input-number v-if="config[idx].type === 'number'"
-          size="mini"
-          v-model="config[idx].data"
-        />
+          <el-input-number v-if="config[idx].type === 'number'"
+            size="mini"
+            v-model="config[idx].data"
+          />
 
-        <el-select v-if="config[idx].type === 'select'"
-          v-model="config[idx].data"
-          placeholder="请选择"
-          size="mini"
-        >
-          <el-option
-            v-for="item in config[idx].options"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
+          <el-select v-if="config[idx].type === 'select'"
+            v-model="config[idx].data"
+            placeholder="请选择"
+            size="mini"
+          >
+            <el-option
+              v-for="item in config[idx].options"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
 
-        <el-switch v-if="config[idx].type === 'bool'"
-          v-model="config[idx].data">
-        </el-switch>
+          <el-switch v-if="config[idx].type === 'bool'"
+            v-model="config[idx].data">
+          </el-switch>
 
-        <el-upload v-if="config[idx].type === 'upload'"
-          class="upload"
-          action="http://localhost:8360/editor/img/upload"
-          :show-file-list="false"
-          name="image"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-          multiple
-          :limit="1">
-          <el-button size="small" type="primary">点击上传</el-button>
-        </el-upload>
+          <el-upload v-if="config[idx].type === 'upload'"
+            class="upload"
+            action="http://localhost:8360/editor/img/upload"
+            :show-file-list="false"
+            name="image"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            multiple
+            :limit="1">
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
 
-      </el-col>
+        </el-col>
+      </template>
+
+      <template v-else>
+        <config-table v-model="config[idx].data" v-if="config[idx].data" @change="change"/>
+      </template>
+
+
     </el-row>
 
   </div>
@@ -54,6 +62,7 @@
 
 <script>
 import { RadioBar, RadioItem } from '@/components/radio'
+import ConfigTable from './configTable'
 import Config from '@/utils/config'
 export default {
   name: 'Config',
@@ -83,9 +92,13 @@ export default {
     }
   },
   components: {
-    RadioBar, RadioItem
+    RadioBar, RadioItem, ConfigTable
   },
   methods: {
+    change () {
+      console.log('change')
+      this.$store.dispatch('updateConfig', this.config)
+    },
     formatWeight (val) {
       if (val === 40) {
         return 'normal'

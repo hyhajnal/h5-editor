@@ -58,16 +58,23 @@ export default {
   },
   methods: {
     addCssByLink () {
-      if (!this.pageInfo.iconLink) return
+      const len = document.getElementsByTagName('link').length
+
+      // 如果iconLink为空，则删除之前添加的link
+      if (!this.pageInfo.iconLink && len === 3) {
+        document.getElementsByTagName('link')[2].remove()
+      }
       let url = `https:${this.pageInfo.iconLink}`
-      if (document.getElementsByTagName('link').length === 3) {
-        document.getElementsByTagName('link')[1].setAttribute('href', url)
+
+      // 修改link的url  或 添加link
+      if (len === 3) {
+        document.getElementsByTagName('link')[2].setAttribute('href', url)
       } else {
         let link = document.createElement('link')
         link.setAttribute('rel', 'stylesheet')
-        link.setAttribute('type', 'text/css')
         link.setAttribute('href', url)
-        document.documentElement.appendChild(link)
+        const head = document.getElementsByTagName('head')[0]
+        head.appendChild(link)
       }
     }
   },

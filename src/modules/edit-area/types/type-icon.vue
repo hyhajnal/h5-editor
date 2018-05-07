@@ -12,7 +12,7 @@ export default {
   },
   computed: {
     classStr () {
-      return `iconfont icon-${this.ele.config[0].data}`
+      return `iconfont ${this.ele.config[0].data}`
     }
   }
 }

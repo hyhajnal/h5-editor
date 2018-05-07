@@ -1,7 +1,7 @@
 <template>
   <van-swipe :autoplay="3000">
-    <van-swipe-item v-for="(image, index) in images" :key="index">
-      <img :src="image" />
+    <van-swipe-item v-for="(item, index) in images" :key="index">
+      <img :src="item.url" />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -12,17 +12,18 @@ export default {
   props: {
     ele: Object
   },
-  data () {
-    return {
-      images: [
-        'http://localhost:8360/static/1.jpg',
-        'http://localhost:8360/static/2.jpg'
-      ]
+  computed: {
+    images () {
+      return this.ele.config[0].data
     }
   }
 }
 </script>
 
 <style scoped>
+img {
+  width: 100%;
+  height: 200px;
+}
 </style>
 

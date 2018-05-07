@@ -25,7 +25,7 @@ function getInit (type) {
       attr = {
         style: 'width:100px;height:80px;',
         config: [
-          { name: 'url', label: 'url', type: 'upload', data: '' }
+          { name: 'url', label: 'url', type: 'input', data: '' }
         ]
       }
       break
@@ -33,7 +33,7 @@ function getInit (type) {
       attr = {
         style: 'display:inline;',
         config: [
-          { name: 'name', label: '图标名', type: 'input', data: 'info' }
+          { name: 'name', label: '图标名', type: 'input', data: 'icon-info' }
         ]
       }
       break
