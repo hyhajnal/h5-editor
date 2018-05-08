@@ -23,7 +23,7 @@ function getInit (type) {
       break
     case 'img':
       attr = {
-        style: 'width:100px;height:80px;',
+        style: 'display:inline-block;width:100px;height:80px;',
         config: [
           { name: 'url', label: 'url', type: 'input', data: '' }
         ]

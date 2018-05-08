@@ -171,7 +171,6 @@ const actions = {
    */
   addTempl ({ state, commit }, payload) {
     const { type, pid, idx } = payload
-    console.log(payload)
     let list = JSON.parse(JSON.stringify(state.list))
     const newCompIdx = state.templs.findIndex(c => c.id.toString() === type)
     let newComp = state.templs[newCompIdx]

@@ -6,10 +6,6 @@
           <i class="iconfont icon-delete"></i>
           <span>清空</span>
         </li>
-        <!-- <li @click="preview">
-          <i class="iconfont icon-reverse"></i>
-          <span>撤销</span>
-        </li> -->
         <li v-show="!isSaving" @click="save">
           <i class="iconfont icon-save"></i>
           <span>保存</span>
@@ -38,11 +34,17 @@
         </li>
       </template>
     </ul>
-    <img src="../../assets/2.jpg" class="avatar" alt="avatar" width="40" height="40">
+    <router-link :to="{name: 'Login'}" v-if="!user">
+      <el-button type="danger" size="mini">登录</el-button>
+    </router-link>
+    <router-link :to="{name: 'Me'}" v-else>
+      <div class="avatar"></div>
+    </router-link>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'ToolBar',
   data () {
@@ -70,7 +72,10 @@ export default {
   computed: {
     route () {
       return this.$route.name
-    }
+    },
+    ...mapGetters({
+      user: 'user'
+    })
   }
 }
 </script>
@@ -99,8 +104,11 @@ export default {
     font-size: 18px;
   }
   .avatar {
-    border-radius: 100%;
-    margin-left: 40px;
+    background: url('../../assets/2.jpg');
+    background-size: cover;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
   }
   li {
     cursor: pointer;

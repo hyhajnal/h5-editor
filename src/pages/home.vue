@@ -18,7 +18,10 @@
           <radio-item label="templ" class="select-item">模版</radio-item>
           <radio-item label="comp" class="select-item">组件</radio-item>
         </radio-bar>
-        <router-link :to="{name: 'Me'}">
+        <router-link :to="{name: 'Login'}" v-if="!user">
+          <el-button type="danger" size="mini">登录</el-button>
+        </router-link>
+        <router-link :to="{name: 'Me'}" v-else>
           <div class="avatar"></div>
         </router-link>
       </div>
@@ -157,7 +160,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      page: 'pageInfo'
+      page: 'pageInfo',
+      user: 'user'
     })
   },
   watch: {

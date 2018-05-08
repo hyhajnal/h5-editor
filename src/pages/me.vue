@@ -124,11 +124,13 @@ header {
   padding: 0 20px;
   color: #FFF;
   position: fixed;
+  z-index: 2000;
   h2 {
     color: #fff !important;
   }
   i {
     margin-right: 10px;
+    cursor: pointer;
   }
 }
 .me-info {

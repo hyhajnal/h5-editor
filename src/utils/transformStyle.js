@@ -1,7 +1,7 @@
 const toStyleString = (data) => {
   let styleStr = 'position: relative;'
   Object.keys(data).forEach(key => {
-    if (('width|height'.indexOf(key) > -1) && data[key] === 0) {
+    if (('width|height'.indexOf(key) > -1) && data[key] === undefined) {
       return
     }
     if (('border|borderRadius'.indexOf(key) > -1) && data[key][0] === 0) {

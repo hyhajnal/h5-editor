@@ -58,7 +58,7 @@ export default {
       ).then(data => {
         this.user = { name: '', psd: '' }
         if (data !== 1000) {
-          localStorage.setItem('user', data)
+          localStorage.setItem('user', JSON.stringify(data))
           this.$store.commit('user', data)
           this.$router.push({ name: 'Home' })
         }

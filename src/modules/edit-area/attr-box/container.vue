@@ -88,6 +88,7 @@
         </el-radio-group>
       </el-col>
     </el-row>
+
     <el-row :gutter="10" v-if="attrShow.border" type="flex" align="middle">
       <el-col :span="6" class="label">边框:</el-col>
       <el-col :span="18" class="border-box">
@@ -197,8 +198,8 @@ const init = {
   color: '#000',
   fontSize: 16,
   fontWeight: 40,
-  width: 0,
-  height: 0,
+  width: undefined,
+  height: undefined,
   margin: [0, 0, 0, 0],
   padding: [0, 0, 0, 0],
   border: [0, 'solid', '#000'],
