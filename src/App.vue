@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import 'flex.css'
 export default {
   name: 'App'
 }

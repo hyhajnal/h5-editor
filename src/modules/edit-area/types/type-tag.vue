@@ -1,5 +1,7 @@
 <template>
-  <van-tag>标签</van-tag>
+  <span :style="ele.style" v-if="ele.config">
+    {{ele.config[0].data}}
+  </span>
 </template>
 
 <script>
@@ -10,7 +12,4 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>
 

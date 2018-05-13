@@ -10,14 +10,39 @@ function getInit (type) {
   switch (type) {
     case 'div':
       attr = {
-        style: 'width:100%;height:100px;border:1px solid #ccc;'
+        style: 'height:100px;border:1px solid #ccc;',
+        config: [
+          { name: 'p', label: '父元素', type: 'bool', data: false },
+          { name: 'dir', label: '主轴方向', type: 'select', options: ['top', 'right', 'bottom', 'left'], data: 'left', show: 1 },
+          { name: 'main', label: '主轴对齐方式', type: 'select', options: ['right', 'left', 'justify', 'center'], data: 'left', show: 1 },
+          { name: 'cross', label: '交叉轴对齐方式', type: 'select', options: ['top', 'bottom', 'baseline', 'center', 'stretch'], data: 'top', show: 1 },
+          { name: 'box', label: '子元素设置', type: 'select', options: ['', 'mean', 'first', 'last', 'justify'], data: '', show: 1 },
+          { name: 'c', label: '子元素', type: 'bool', data: false },
+          { name: 'flex-box', label: '子元素', type: 'number', data: 0, show: 6 }
+        ]
       }
       break
     case 'span':
       attr = {
-        style: 'color:#000;',
+        style: 'display:inline-block;color:#000;',
         config: [
           { name: 'text', label: '文字', type: 'input', data: '文字' }
+        ]
+      }
+      break
+    case 'h1':
+      attr = {
+        style: 'color:#555;fontSize:16px;',
+        config: [
+          { name: 'text', label: '文字', type: 'input', data: '标题' }
+        ]
+      }
+      break
+    case 'p':
+      attr = {
+        style: 'color:#888;fontSize:14px;',
+        config: [
+          { name: 'text', label: '文字', type: 'input', data: '这是一段描述文字' }
         ]
       }
       break
@@ -31,7 +56,6 @@ function getInit (type) {
       break
     case 'icon':
       attr = {
-        style: 'display:inline;',
         config: [
           { name: 'name', label: '图标名', type: 'input', data: 'icon-info' }
         ]

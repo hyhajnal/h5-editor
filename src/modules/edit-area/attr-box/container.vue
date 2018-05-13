@@ -27,6 +27,17 @@
       </el-col>
     </el-row>
 
+    <el-row :gutter="10" v-if="attrShow.textAlign">
+      <el-col :span="6" class="label">对齐:</el-col>
+      <el-col :span="18" class="input-box">
+        <radio-bar v-model="attr.textAlign" class="align-box">
+          <radio-item label="left"><i class="iconfont icon-text-left" /></radio-item>
+          <radio-item label="center"><i class="iconfont icon-text-center" /></radio-item>
+          <radio-item label="right"><i class="iconfont icon-text-right" /></radio-item>
+        </radio-bar>
+      </el-col>
+    </el-row>
+
     <el-row :gutter="10" v-if="attrShow.wh" type="flex" align="middle">
       <el-col :span="6" class="label">宽高:</el-col>
       <el-col :span="18" class="input-box">
@@ -149,7 +160,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="10" type="flex" align="middle" v-if="attrShow.display">
+    <!-- <el-row :gutter="10" type="flex" align="middle" v-if="attrShow.display">
       <el-col :span="6" class="label">盒子:</el-col>
       <el-col :span="18" class="input-box">
         <el-radio-group v-model="attr.display" size="mini">
@@ -158,9 +169,9 @@
           <el-radio label="inline-block">行内</el-radio>
         </el-radio-group>
       </el-col>
-    </el-row>
+    </el-row> -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <el-row :gutter="10" type="flex" align="middle" v-if="attr.display === 'flex'">
+    <!-- <el-row :gutter="10" type="flex" align="middle" v-if="attr.display === 'flex'">
       <el-col :span="6" class="label">水平对齐:</el-col>
       <el-col :span="18" class="input-box">
         <radio-bar v-model="attr.justifyContent" class="align-box">
@@ -171,11 +182,11 @@
           <radio-item label="center"><i class="iconfont icon-center" /></radio-item>
         </radio-bar>
       </el-col>
-    </el-row>
+    </el-row> -->
     <!-- justify-content: flex-start | flex-end | center | space-between | space-around; -->
 
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <el-row :gutter="10" v-if="attr.display === 'flex'">
+    <!-- <el-row :gutter="10" v-if="attr.display === 'flex'">
       <el-col :span="6" class="label">垂直对齐:</el-col>
       <el-col :span="18" class="input-box">
         <radio-bar v-model="attr.alignItems" class="align-box">
@@ -184,7 +195,7 @@
           <radio-item label="center"><i class="iconfont icon-middle" /></radio-item>
         </radio-bar>
       </el-col>
-    </el-row>
+    </el-row> -->
     <!-- align-items: flex-start | flex-end | center | baseline | stretch; -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
   </div>
@@ -198,6 +209,7 @@ const init = {
   color: '#000',
   fontSize: 16,
   fontWeight: 40,
+  textAlign: 'left',
   width: undefined,
   height: undefined,
   margin: [0, 0, 0, 0],
@@ -205,7 +217,7 @@ const init = {
   border: [0, 'solid', '#000'],
   borderRadius: [0, 'px'],
   background: 'transparent',
-  display: 'block',
+  // display: 'block',
   position: 'relative'
 }
 export default {
@@ -238,6 +250,7 @@ export default {
       deep: true
     },
     attrData () {
+      console.log(this.attrData)
       this.attr = { ...init, ...this.attrData }
       if (this.attrData && this.attrData.position === 'absolute') {
         this.position = true
@@ -256,15 +269,15 @@ export default {
       } else {
         this.attr = {left: undefined, top: undefined, right: undefined, bottom: undefined, zIndex: 0, ...this.attr}
       }
-    },
-    'attr.display' () {
-      if (this.attr.display === 'block') {
-        this.$delete(this.attr, 'alignItems')
-        this.$delete(this.attr, 'justifyContent')
-      } else {
-        this.attr = {...this.attr, justifyContent: 'flex-start', alignItems: 'flex-start'}
-      }
     }
+    // 'attr.display' () {
+    //   if (this.attr.display === 'block') {
+    //     this.$delete(this.attr, 'alignItems')
+    //     this.$delete(this.attr, 'justifyContent')
+    //   } else {
+    //     this.attr = {...this.attr, justifyContent: 'flex-start', alignItems: 'flex-start'}
+    //   }
+    // }
   },
   components: {
     RadioBar, RadioItem, ColorPicker

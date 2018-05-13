@@ -1,12 +1,12 @@
 <template>
-  <van-button :style="ele.style" v-if="ele.config">
-    {{ele.config[2].data}}
-  </van-button>
+  <p :style="ele.style" v-if="ele">
+    <slot>{{ele.config[0].data}}</slot>
+  </p>
 </template>
 
 <script>
 export default {
-  name: 'Button',
+  name: 'TypeP',
   props: {
     ele: Object
   }

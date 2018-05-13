@@ -20,7 +20,7 @@
         :data-pid="item.pid"
       />
     </draggable>
-    <p @mousedown="onDown">
+    <p @mousedown="onDown" class="moveBar">
       拖动调整高度 <span style="color: #FB7F6E;">{{height}}px</span>
     </p>
   </div>
@@ -55,6 +55,9 @@ export default {
     CustomElement,
     draggable
   },
+  mounted () {
+    this.baseHeight = (this.info && this.info.height) || 667
+  },
   computed: {
     ...mapGetters({
       elements: 'page',
@@ -65,8 +68,8 @@ export default {
       return this.baseHeight + this.dHeight
     },
     style () {
-      const background = (this.$store.state.info && this.$store.state.info.background) || '#fff'
-      return `height:${this.height}px;background:${background};`
+      const background = (this.info && this.info.background) || '#fff'
+      return `minHeight:${this.height}px;background:${background};`
     }
   },
   methods: {
@@ -119,7 +122,7 @@ export default {
   background: #fff;
   position: relative;
 }
-p {
+.moveBar {
   width: 100%;
   height: 30px;
   line-height: 30px;
@@ -132,7 +135,7 @@ p {
   color: #969191;
   user-select: none;
 }
-p::after {
+.moveBar::after {
   content: "";
   height: 2px;
   width: 90px;
@@ -141,7 +144,7 @@ p::after {
   top: 50%;
   left: 0;
 }
-p::before {
+.moveBar::before {
   content: "";
   display: block;
   height: 2px;

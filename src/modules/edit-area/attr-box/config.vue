@@ -1,8 +1,13 @@
 <template>
   <div class="attr-text">
 
-    <el-row :gutter="10" v-for="(item,idx) in config" :key="item.name" class="config-item">
-      <template v-if="config[idx].type !== 'table'">
+    <el-row :gutter="10"
+      v-for="(item,idx) in config"
+      :key="item.name"
+      class="config-item"
+      v-if="(!config[idx].show) || (config[idx].show && config[config[idx].show-1].data)"
+    >
+      <template v-if="config[idx].type && config[idx].type !== 'table'">
         <el-col :span="6" class="label">{{item.label}}:</el-col>
         <el-col :span="18">
 
@@ -35,6 +40,10 @@
             v-model="config[idx].data">
           </el-switch>
 
+          <color-picker v-if="config[idx].type === 'color'"
+            v-model="config[idx].data"
+          />
+
           <el-upload v-if="config[idx].type === 'upload'"
             class="upload"
             action="http://localhost:8360/editor/img/upload"
@@ -64,6 +73,7 @@
 import { RadioBar, RadioItem } from '@/components/radio'
 import ConfigTable from './configTable'
 import Config from '@/utils/config'
+import ColorPicker from '@/components/ColorPicker'
 export default {
   name: 'Config',
   props: {
@@ -92,7 +102,7 @@ export default {
     }
   },
   components: {
-    RadioBar, RadioItem, ConfigTable
+    RadioBar, RadioItem, ConfigTable, ColorPicker
   },
   methods: {
     change () {

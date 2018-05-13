@@ -38,7 +38,8 @@ const actions = {
         name: data.name,
         projectId: data.projectId,
         background: data.background,
-        iconLink: data.iconLink
+        iconLink: data.iconLink,
+        height: data.height
       }
       list = data.elements ? JSON.parse(data.elements) : []
       const modules = data.modules
@@ -135,14 +136,14 @@ const actions = {
   },
 
   addEle ({ state, commit }, payload) {
-    const { type, pid, idx, compConfig } = payload
+    const { type, pid, idx, compConfig, style } = payload
     let id = guid()
     let attr = getInit(type)
     let list = JSON.parse(JSON.stringify(state.list))
     const config = compConfig || null
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        id, pid, type, label: `${type}/${id}`, style: '', children: [], config, idx, ...attr
+        id, pid, type, label: `${type}/${id}`, style, children: [], config, idx, ...attr
       })
       commit('update', list)
     })

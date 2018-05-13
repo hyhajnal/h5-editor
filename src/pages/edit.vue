@@ -1,7 +1,7 @@
 <template>
   <div class="edit">
     <header>
-      <head-area :isSaving="isSaving" @save="save" :left="left"></head-area>
+      <head-area :isSaving="isSaving" @save="saveLocal" :left="left"></head-area>
     </header>
     <main>
       <div class="left" v-if="!isModuleEdit">
@@ -24,6 +24,7 @@ import ResourceArea from '@/modules/resource-area'
 import AttrArea from '@/modules/attr-area'
 import Config from '@/utils/config'
 import { mapGetters } from 'vuex'
+import hotkeys from 'hotkeys-js'
 
 export default {
   name: 'Edit',
@@ -35,30 +36,14 @@ export default {
   },
   mounted () {
     this.getData()
-    // const mod = JSON.parse(window.localStorage.getItem('mod'))
-    // let { pageInfo } = this.$store.state
-    // debugger
-    // 刷新: localStorage 里有值
-    // if (!pageInfo && mod) {
-    //   this.$store.dispatch('changeCurrent', mod)
-    // }
-    // const modNew = {
-    //   id: pageInfo ? pageInfo.id : mod.id,
-    //   name: pageInfo ? pageInfo.name : mod.name,
-    //   elements: list ? JSON.stringify({elements: list}) : mod.elements
-    // }
-    // 定时保存 store -> localStorage
-    // this.timer = setInterval(() => {
-    //   this.isSaving = true
-    //   setTimeout(() => {
-    //     this.isSaving = false
-    //   }, 1000)
-    //   window.localStorage.setItem('mod', JSON.stringify(modNew))
-    // }, 5000)
+    hotkeys('⌘+s', (e) => {
+      event.preventDefault()
+      this.saveLocal()
+    })
   },
-  // destroyed () {
-  //   clearInterval(this.timer)
-  // },
+  destroyed () {
+    hotkeys.unbind('⌘+s')
+  },
   beforeRouteLeave (to, from, next) {
     this.save()
     next()
@@ -74,10 +59,13 @@ export default {
     }
   },
   methods: {
+    // 保存至数据库
     save () {
-      const pageInfo = this.pageInfo
+      let pageInfo = this.pageInfo
+      const height = document.getElementById('page').style.height
+      pageInfo.height = height && parseInt(height.split('px')[0])
       const list = this.list
-      this.saveLocal(pageInfo, list)
+      this.saveLocal()
       this.axios.post(`${Config.URL}/editor/page/edit`, {
         ...pageInfo,
         elements: JSON.stringify(list)
@@ -85,13 +73,23 @@ export default {
         data !== 1000 && this.$message({type: 'success', message: '保存成功'})
       })
     },
-    saveLocal (pageInfo, list) {
+    // 保存至localStorage
+    saveLocal () {
+      let pageInfo = this.pageInfo
+      const height = document.getElementById('page').style.height
+      pageInfo.height = height && parseInt(height.split('px')[0])
+      const list = this.list
+      this.isSaving = true
       const mod = {
         id: pageInfo.id,
         name: pageInfo.name,
         elements: JSON.stringify(list)
       }
       window.localStorage.setItem('page', JSON.stringify(mod))
+      // 显示“保存中...”
+      setTimeout(() => {
+        this.isSaving = false
+      }, 500)
     },
     getData () {
       this.axios.get(`${Config.URL}/editor/page/detail`, {

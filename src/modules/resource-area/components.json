@@ -4,9 +4,8 @@
     "name": "按钮",
     "type": "button",
     "icon": "button",
+    "style": "background:#fff;color:red;fontSize:12px;borderRadius:0px;",
     "config": [
-      { "name": "type", "label": "类型", "type": "select", "data": "default", "options": ["default", "primary", "danger"] },
-      { "name": "size", "label": "大小", "type": "select", "data": "small", "options": ["large", "small", "mini"] },
       { "name": "text", "label": "内容", "type": "input", "data": "按钮" }
     ]
   },
@@ -15,7 +14,22 @@
     "name": "标签",
     "icon": "tag",
     "type": "tag",
-    "config": []
+    "style": "background:#fff;color:#F36D6E;fontSize:12px;border:1px solid #F36D6E;padding:2px 4px 2px 4px;borderRadius:2px;",
+    "config": [
+      { "name": "text", "label": "文字", "type": "input", "data": "标签" }
+    ]
+  },
+  {
+    "id": "c22",
+    "name": "图文标",
+    "icon": "tag",
+    "type": "icontext",
+    "style": "color:#888;padding:2px;",
+    "config": [
+      { "name": "icon", "label": "图标", "type": "input", "data": "icon-ziyuan" },
+      { "name": "label", "label": "文字", "type": "input", "data": "123万" },
+      { "name": "gutter", "label": "间距", "type": "number", "data": 0 }
+    ]
   },
   {
     "id": "c3",
@@ -50,7 +64,16 @@
     "name": "底部栏",
     "icon": "tabbar",
     "type": "tabbar",
-    "config": []
+    "style": "position:absolute;bottom:0;display:flex;",
+    "config": [
+      { "name": "data", "label": "数据", "type": "table", "data": [
+        {"icon": "icon-paihangbang", "label": "发现", "dot": false, "info": "5"},
+        {"icon": "icon-yonghu", "label": "发现", "dot": true, "info": ""},
+        {"icon": "icon-faxian", "label": "发现", "dot": false, "info": ""}
+      ]},
+      { "name": "normal", "label": "普通色", "type": "color", "data": "#ccc" },
+      { "name": "active", "label": "高亮色", "type": "color", "data": "#ddd" }
+    ]
   },
   {
     "id": "c8",

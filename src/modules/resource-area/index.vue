@@ -127,6 +127,7 @@ export default {
         type: obj.item.dataset.id,
         pid: pid,
         idx,
+        style: BaseComps[index].style,
         compConfig: BaseComps[index].config
       })
     }

@@ -8,7 +8,7 @@
       @mouseover.stop="() => onHover(node,data)"
       @mouseout.stop="() => noHover(node,data)"
     >
-      <span>
+      <span @click.stop="() => onActive(data)">
         <i :class="'icontype iconfont icon-' + data.type" />
         {{node.label}}
         <el-tag size="mini" v-if="data.className">{{data.className}}</el-tag>
@@ -25,6 +25,8 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import Bus from '@/utils/Bus'
+  import { treeTravelById } from '@/utils/transformTree'
 
   export default {
     name: 'Struct',
@@ -40,6 +42,7 @@
         const children = parent.data.children || parent.data
         const idx = children.findIndex(d => d.id === data.id)
         // children.splice(index, 1)
+        console.log(idx)
         this.$store.dispatch('delEle', { pid: data.pid, idx })
       },
 
@@ -51,6 +54,13 @@
       noHover (node, data) {
         let el = document.getElementById(data.id)
         el && el.classList.remove('selected')
+      },
+
+      onActive (data) {
+        treeTravelById(this.tree, data.id).then(ele => {
+          this.$store.commit('changeCurrentEl', ele)
+          Bus.$emit('changeCurrentEl')
+        })
       }
 
     }

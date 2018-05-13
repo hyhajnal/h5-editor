@@ -13,9 +13,11 @@
           <th><i class="el-icon-delete" @click="i => delRow(i)"></i></th>
           <th
             v-for="(key, j) in item"
-            :key="key"
+            :key="j"
           >
-            <input type="text" v-model="tableData[i][j]">
+            <input type="text" v-model="tableData[i][j]" v-if="typeof(tableData[i][j]) === 'string'">
+            <el-input-number size="small" v-model="tableData[i][j]" v-if="typeof(tableData[i][j]) === 'number'" />
+            <van-switch v-model="tableData[i][j]" size="small" v-if="typeof(tableData[i][j]) === 'boolean'" />
           </th>
         </tr>
       </tbody>

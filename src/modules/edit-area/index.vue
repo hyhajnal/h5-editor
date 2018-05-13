@@ -4,7 +4,7 @@
       <!-- 框选区域 -->
       <div class="shadow" v-show="divideStart" id="shadow"></div>
       <div class="select-area" :style="selectStyle"></div>
-      <page />
+      <page v-if="info" />
     </div>
 
     <el-dialog title="提示"
@@ -78,8 +78,8 @@ import hotkeys from 'hotkeys-js'
 import AttrBox from './attr-box/index'
 import Page from './page'
 import { moduleSelect } from '@/utils/transformTree'
-// import { createModule, createTempl } from '@/utils/help'
 import Config from '@/utils/config'
+import { mapGetters } from 'vuex'
 export default {
   name: 'EditArea',
   data () {
@@ -114,7 +114,10 @@ export default {
     displayStyle () {
       const display = !this.isEnd ? 'block' : 'none'
       return `display:${display};`
-    }
+    },
+    ...mapGetters({
+      info: 'pageInfo'
+    })
   },
   components: {
     AttrBox,
@@ -144,23 +147,30 @@ export default {
     onDown (e) {
       if (e.target.id !== 'shadow') return
       this.isEnd = false
-      this.x = e.clientX
-      this.y = e.clientY
+      this.x = e.pageX
+      this.y = e.pageY
       const el = this.$refs.edit
       const { top, left } = this.getOffset(el)
-      this.left = e.clientX - left
-      this.top = e.clientY - top
+      // 计算出鼠标（框选框）应相对于edit的位置
+      this.left = e.pageX - left
+      this.top = e.pageY - top
     },
 
     onUp (e) {
       if (e.target.id !== 'shadow') return
       let els = document.getElementsByClassName('element')
-      let pid = ''
       let list = []
+      let pid = 0 // 为同一父元素下的子元素
       // 选出在区域内的元素
       for (let i = 0; i < els.length; i++) {
         let el = els[i]
         if (this.inArea(el)) {
+          if (!pid) {
+            pid = el.dataset.pid // 第一个在范围内的元素的父元素
+          } else if (el.dataset.pid === pid) {
+            break
+          }
+          console.log(`${el.dataset.id}-${el.dataset.pid}`)
           list.push(el.dataset.id)
           el.classList.add('selected')
         }
@@ -172,13 +182,14 @@ export default {
         this.outerVisible = true
       }
       // 重置框选参数
+      console.log('clear')
       this.clear()
     },
 
     onMove (e) {
       if (e.target.id !== 'shadow' || this.isEnd) return
-      this.width = Math.abs(e.clientX - this.x)
-      this.height = Math.abs(e.clientY - this.y)
+      this.width = Math.abs(e.pageX - this.x)
+      this.height = Math.abs(e.pageY - this.y)
     },
 
     getOffset (element) {
@@ -197,8 +208,10 @@ export default {
     inArea (el) {
       let { top, left } = this.getOffset(el)
       const rect = el.getBoundingClientRect()
+      // 元素中心点的位置
       top = top + rect.width / 2
       left = left + rect.height / 2
+      // 选择框的范围
       const minX = this.x
       const minY = this.y
       const maxX = this.x + this.width
@@ -213,6 +226,7 @@ export default {
       this.clearAll()
     },
 
+    // 清空当前所选元素
     clearAll () {
       let els = document.getElementsByClassName('selected')
       const length = els.length
@@ -220,9 +234,11 @@ export default {
         document.querySelector('.selected').classList.remove('selected')
       }
       this.mod = { name: '', developer: '' }
+      this.templ = { name: '', tag: '' }
       this.selectList = []
     },
 
+    // 重置选择框位置
     clear () {
       this.isEnd = true
       this.x = 0
@@ -321,6 +337,7 @@ export default {
 
       hotkeys('esc', (event, handler) => {
         this.clear()
+        this.clearAll()
       })
     }
 
