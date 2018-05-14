@@ -1,22 +1,15 @@
+## Server 端
 
-Application created by [ThinkJS](http://www.thinkjs.org)
+thinkjs + mysql
 
-## Install dependencies
+### 启动
 
-```
-npm install
-```
-
-## Start server
-
-```
+``` bash
 npm start
 ```
 
-## Deploy with pm2
+### 数据库
 
-Use pm2 to deploy app on production enviroment.
-
-```
-pm2 startOrReload pm2.json
+``` bash
+mysql.server start
 ```

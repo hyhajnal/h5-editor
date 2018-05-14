@@ -7,7 +7,6 @@ module.exports = class extends Base {
 
   async addAction() {
     const comp = this.post('data');
-    comp.config = JSON.stringify(comp.content);
     const page = parseInt(this.post('page'));
     try {
       await this.model('Comp').add(comp);
@@ -29,15 +28,21 @@ module.exports = class extends Base {
   }
 
   async delAction() {
-
+    const id = parseInt(this.get('id'));
+    await this.model('Comp').where({id}).delete();
+    await this.model('ResourceUse').where({
+      resourceId: id,
+      type: 1
+    }).delete();
+    this.success(null, '删除成功');
   }
 
   async editAction() {
-    const moduleEdit = this.post();
+    const comp = this.post('data');
+    const id = parseInt(this.post('id'));
     try {
-      await this.model('Module').where({id: moduleEdit.id})
-        .update(moduleEdit);
-      this.success(null, '新建成功');
+      await this.model('Comp').where({id}).update(comp);
+      this.success({ id, ...comp }, '新建成功');
     } catch (e) {
       think.logger.error(e);
       this.fail('新建失败');

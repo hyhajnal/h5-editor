@@ -4,7 +4,7 @@ module.exports = class extends Base {
   async __before() {
     // 检测是否登录
     const user = await this.session('user');
-    think.logger.info(user);
+    think.logger.debug(user);
     if (!user) {
       this.status = 403;
       return false;

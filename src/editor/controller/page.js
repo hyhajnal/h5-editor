@@ -38,6 +38,7 @@ module.exports = class extends Base {
       }).select();
 
     const components = await this.model('Comp')
+      .field('c.*')
       .alias('c').join({
         table: 'ResourceUse',
         join: 'left',
@@ -47,11 +48,38 @@ module.exports = class extends Base {
         'r.pageId': id,
         'r.type': 1
       }).select();
-    this.success({...page, modules: mods, templs, components});
+
+    const images = await this.model('Image')
+      .where({pageId: id})
+      .order(`id DESC`)
+      .select();
+
+    this.success({...page, modules: mods, templs, components, images});
   }
 
-  async delAction() {
+  // 为页面添加模块
+  async addModAction() {
+    const mod = this.post();
+    const id = await this.model('Module').add(mod);
+    const newMod = await this.model('Module').where({id}).find();
+    await this.model('Relation').add({
+      otherId: id,
+      userId: await this.session('user').id,
+      type: 1
+    });
+    this.success(newMod);
+  }
 
+  // 为页面移除模块
+  async removeModAction() {
+    const modId = this.get();
+    await this.model('Module').where({id: modId}).delete();
+    await this.model('Relation').where({
+      otherId: modId,
+      userId: await this.session('user').id,
+      type: 1
+    });
+    this.success('删除成功');
   }
 
   // 为页面添加资源
@@ -63,7 +91,7 @@ module.exports = class extends Base {
       type
     }).find();
     if (record.id) {
-      return this.fail('该模块已被添加！');
+      return this.fail('该资源已被添加！');
     } else {
       await this.model('ResourceUse').add({
         resourceId,
