@@ -16,7 +16,7 @@
       <li v-for="(item,idx) in components" :key="item.id" :data-id="item.id" class="component-item">
         <div style="padding: 4px 14px 14px 14px;">
           <div class="bottom clearfix">
-            <span class="title">{{item.name}}-{{item.id}}</span>
+            <span class="title">{{item.name}}</span>
             <i class="el-icon-info"></i>
             <i class="el-icon-error" @click.stop="del(idx, item.resourceId)"></i>
           </div>
@@ -55,9 +55,9 @@ export default {
       const el = p.getElementsByClassName('component-item')[0]
       el && el.remove()
       let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
-      console.log('[Edit]', `${pid}的${nIdx}新增模版${obj.item.dataset.id}`)
+      console.log('[Edit]', `${pid}的${nIdx}新增组件${obj.item.dataset.id}`)
       this.$store.dispatch('addComp', {
-        type: obj.item.dataset.id,
+        id: obj.item.dataset.id,
         pid: pid,
         idx: nIdx
       })

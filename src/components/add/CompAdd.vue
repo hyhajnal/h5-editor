@@ -68,7 +68,9 @@ export default {
     },
     submit () {
       this.show = false
-      const comp = this.editor.get()
+      let comp = this.editor.get()
+      comp.config = JSON.stringify(comp.config)
+      comp.content = JSON.stringify(comp.content)
       let params = {
         page: this.page,
         data: comp

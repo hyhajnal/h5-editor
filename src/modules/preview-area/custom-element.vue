@@ -13,6 +13,33 @@
   </component>
 </template>
 
+<template>
+  <component
+    :is="'type-'+element.type"
+    :ele="element"
+    :data-id="element.id"
+    :id="element.id"
+  >
+    <template v-if="element.children && element.children.length > 0">
+      <template v-if="'flexbox|grid'.indexOf(element.type) > -1">
+        <custom-element
+          v-for="item in element.children"
+          :element="item"
+          :key="item.id"
+          :slot="'ele'+ item.idx"
+        />
+      </template>
+      <template v-else>
+        <custom-element
+          v-for="item in element.children"
+          :element="item"
+          :key="item.id"
+        />
+      </template>
+    </template>
+  </component>
+</template>
+
 <script>
 import _Type from '../edit-area/types/preview'
 import Config from '@/utils/config'

@@ -193,14 +193,16 @@ const actions = {
    * @param {拖入的父元素index} idx
    */
   addComp ({ state, commit }, payload) {
-    const { type, pid, idx } = payload
-    let id = guid()
+    const { id, pid, idx } = payload
+    let compId = guid()
     let list = JSON.parse(JSON.stringify(state.list))
-    const newCompIdx = state.components.findIndex(c => c.id === type)
+    const newCompIdx = state.components.findIndex(c => c.id === parseInt(id))
     let newComp = state.components[newCompIdx]
+    // console.log(newComp.config)
+    newComp.config = JSON.parse(newComp.config)
     treeTravel(list, pid).then(item => {
       item.splice(idx, 0, {
-        ...newComp, pid, label: `${newComp.type}/${id}`
+        ...newComp, pid, label: `${newComp.type}/${compId}`
       })
       commit('update', list)
     })

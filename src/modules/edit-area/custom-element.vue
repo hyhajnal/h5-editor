@@ -31,7 +31,7 @@
 
 <script>
 import Vue from 'vue'
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 import _Type from './types'
 import { mapGetters } from 'vuex'
 import Bus from '@/utils/Bus'
@@ -50,7 +50,7 @@ export default {
       inputValue: ''
     }
   },
-  components: {..._Type, draggable},
+  components: {..._Type},
   computed: {
     active () {
       const current = this.current
@@ -76,27 +76,27 @@ export default {
     }
   },
   methods: {
-    onEnd (obj) {
-      let oIdx = obj.from.classList[0] === 'col-container' ? parseInt(obj.from.dataset.index) : obj.oldIndex
-      let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
-      const from = `${obj.item.dataset.pid}的${oIdx}`
-      const to = `${obj.to.children[0].dataset.pid}的${nIdx}`
-      console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
-      this.$store.dispatch('moveEle', {
-        id: obj.item.dataset.id,
-        oPid: obj.item.dataset.pid,
-        nPid: obj.to.children[0].dataset.pid,
-        nIdx,
-        oIdx
-      })
-    },
+    // onEnd (obj) {
+    //   let oIdx = obj.from.classList[0] === 'col-container' ? parseInt(obj.from.dataset.index) : obj.oldIndex
+    //   let nIdx = obj.to.classList[0] === 'col-container' ? parseInt(obj.to.dataset.index) : obj.newIndex
+    //   const from = `${obj.item.dataset.pid}的${oIdx}`
+    //   const to = `${obj.to.children[0].dataset.pid}的${nIdx}`
+    //   console.log('edit', `元素${obj.item.dataset.id}:从${from}，成为了${to}`)
+    //   this.$store.dispatch('moveEle', {
+    //     id: obj.item.dataset.id,
+    //     oPid: obj.item.dataset.pid,
+    //     nPid: obj.to.children[0].dataset.pid,
+    //     nIdx,
+    //     oIdx
+    //   })
+    // },
     changeActive () {
       this.$store.commit('changeCurrentEl', this.element)
       Bus.$emit('changeCurrentEl')
     },
     renderChild () {
       const type = this.element.type
-      const content = JSON.parse(JSON.stringify(this.element.content))
+      const content = this.element.content && JSON.parse(JSON.stringify(this.element.content))
       const config = this.element.config
       Vue.component(`type-${type}`, {
         render: function (createElement) {

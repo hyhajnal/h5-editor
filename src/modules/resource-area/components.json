@@ -67,12 +67,12 @@
     "style": "position:absolute;bottom:0;display:flex;",
     "config": [
       { "name": "data", "label": "数据", "type": "table", "data": [
-        {"icon": "icon-paihangbang", "label": "发现", "dot": false, "info": "5"},
-        {"icon": "icon-yonghu", "label": "发现", "dot": true, "info": ""},
+        {"icon": "icon-paihangbang", "label": "排行榜", "dot": false, "info": "5"},
+        {"icon": "icon-yonghu", "label": "我的", "dot": true, "info": ""},
         {"icon": "icon-faxian", "label": "发现", "dot": false, "info": ""}
       ]},
-      { "name": "normal", "label": "普通色", "type": "color", "data": "#ccc" },
-      { "name": "active", "label": "高亮色", "type": "color", "data": "#ddd" }
+      { "name": "normal", "label": "普通色", "type": "color", "data": "#666" },
+      { "name": "active", "label": "高亮色", "type": "color", "data": "#EC0E0E" }
     ]
   },
   {

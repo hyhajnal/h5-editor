@@ -12,9 +12,11 @@
       :collectCount="comp.collectCount"
     />
     <el-row class="shadow" type="flex" justify="space-around" align="middle">
-      <i class="el-icon-circle-plus" @click.stop="addComp" v-if="!isAdd"></i>
-      <i class="el-icon-success" v-else></i>
-      <i class="el-icon-info" @click="openInfo"></i>
+      <i class="el-icon-circle-plus-outline" @click.stop="addComp" v-if="!isAdd"></i>
+      <i class="el-icon-circle-check-outline" v-else></i>
+      <i class="el-icon-more-outline" @click="openInfo"></i>
+      <i class="el-icon-edit" @click="editComp"></i>
+      <i class="el-icon-delete" @click="delComp"></i>
     </el-row>
     <el-dialog title="组件信息" :visible.sync="show">
       <ul>
@@ -25,33 +27,53 @@
         <li>
           <strong>组件属性：</strong>
           <el-table
-            :data="tableData"
+            :data="config"
             stripe
             style="width: 100%">
             <el-table-column
-              prop="date"
-              label="属性名"
-              width="180">
-            </el-table-column>
-            <el-table-column
               prop="name"
-              label="属性类型"
-              width="180">
+              label="属性"
+              width="150">
             </el-table-column>
             <el-table-column
-              prop="address"
-              label="默认值">
+              prop="label"
+              label="属性名"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="type"
+              label="属性类型"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="data"
+              label="默认值"
+              width="150">
             </el-table-column>
           </el-table>
         </li>
       </ul>
     </el-dialog>
+    <!-- Form -->
+    <el-dialog title="修改组件" :visible.sync="showEdit">
+
+      <p>请按实例填写组件内容以及配置，按确定修改组件</p>
+      <div ref="jsoneditor" style="width: 100%; height: 400px;"></div>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click.native="submit">修 改</el-button>
+      </div>
+    </el-dialog>
+    <!-- Form -->
   </div>
 </template>
 
 <script>
 import CardBottom from './Bottom'
 import Config from '@/utils/config'
+import JSONEditor from 'jsoneditor'
+import 'jsoneditor/dist/jsoneditor.min.css'
+
 export default {
   name: 'CompCard',
   data () {
@@ -59,23 +81,8 @@ export default {
       isAdd: false,
       editor: null,
       show: false,
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市'
-      }]
+      showEdit: false,
+      edit: null
     }
   },
   mounted () {
@@ -88,10 +95,16 @@ export default {
     })
   },
   props: {
-    comp: Object
+    comp: Object,
+    idx: Number
   },
   components: {
     CardBottom
+  },
+  computed: {
+    config () {
+      return this.comp.config && JSON.parse(this.comp.config)
+    }
   },
   methods: {
     addComp () {
@@ -118,6 +131,55 @@ export default {
     },
     openInfo () {
       this.show = true
+    },
+    delComp () {
+      this.axios.get(`${Config.URL}/editor/comp/del`, {
+        params: {id: this.comp.id}
+      }).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '成功删除该组件'})
+          this.$emit('after-del', this.idx)
+        }
+      })
+    },
+    // json编辑器
+    editComp () {
+      this.showEdit = true
+      const json = {
+        'name': this.comp.name,
+        'type': this.comp.type,
+        'tag': this.comp.tag,
+        'desc': this.comp.desc,
+        'content': JSON.parse(this.comp.content),
+        'config': this.config
+      }
+      setTimeout(() => {
+        var container = this.$refs.jsoneditor
+        var options = {
+          mode: 'code'
+        }
+        if (!this.editor) {
+          const editor = new JSONEditor(container, options)
+          editor.set(json)
+          this.editor = editor
+        }
+      }, 1000)
+    },
+    submit () {
+      this.showEdit = false
+      let comp = this.editor.get()
+      comp.config = JSON.stringify(comp.config)
+      comp.content = JSON.stringify(comp.content)
+      let params = {
+        id: this.comp.id,
+        data: comp
+      }
+      this.axios.post(`${Config.URL}/editor/comp/edit`, params).then(data => {
+        if (data !== 1000) {
+          this.$message({type: 'success', message: '修改成功'})
+          this.$emit('after-edit', this.idx, data)
+        }
+      })
     }
   }
 }

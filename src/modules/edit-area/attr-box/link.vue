@@ -24,7 +24,7 @@ export default {
   name: 'Link',
   props: {
     linkData: Number,
-    id: String
+    id: [String, Number]
   },
   data () {
     return {

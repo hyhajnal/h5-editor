@@ -9,17 +9,10 @@
     </figure>
     <section class="card-body">
       <h3 class="title">{{page.name}}</h3>
-      <el-row type="flex" justify="space-between" align="middle">
-        <el-row type="flex" justify="space-between" align="middle" class="owner">
-          <img src="../assets/2.jpg" alt="avatar" width="20" height="20">
-          <span>发布者</span>
-        </el-row>
-        <div class="social-bar">
-          <span><i class="iconfont icon-eye"></i>{{page.visitCount}}</span>
-          <span><i class="iconfont icon-like"></i>{{page.useCount}}</span>
-          <span><i class="iconfont icon-favor"></i>{{page.collectCount}}</span>
-        </div>
-      </el-row>
+      <card-bottom
+        :visitCount="page.visitCount"
+        :collectCount="page.collectCount"
+      />
     </section>
     <!-- <span class="tag">页面</span> -->
 
@@ -36,6 +29,7 @@
 
 <script>
 import Config from '@/utils/config'
+import CardBottom from './Bottom'
 
 export default {
   name: 'PageCard',
@@ -53,6 +47,7 @@ export default {
       return `background-image: url(${Config.URL}/static/${this.img});`
     }
   },
+  components: { CardBottom },
   methods: {
     goDetail () {
       // this.$router.push({name: 'PageDetail'})
@@ -86,7 +81,8 @@ export default {
 }
 .card-image {
   height: 417px;
-  background-size: cover;
+  background-size: 100% 100%;
+  // background-size: cover;
   position: relative;
   box-shadow: #ddd 0px 2px 5px;
   background: #fff;
@@ -115,27 +111,6 @@ export default {
 h3 {
   font-size: 14px;
   margin-bottom: 5px;
-}
-.owner {
-  img {
-    border-radius: 100%;
-    margin-right: 5px;
-  }
-  span {
-    font-size: 13px;
-  }
-}
-.social-bar {
-  font-size: 13px;
-  color: #555;
-  margin-top: 5px;
-  span {
-    margin-right: 4px;
-  }
-  margin-right: -4px;
-  i {
-    margin-right: 2px;
-  }
 }
 .tag {
   position: absolute;

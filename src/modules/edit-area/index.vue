@@ -167,12 +167,13 @@ export default {
         if (this.inArea(el)) {
           if (!pid) {
             pid = el.dataset.pid // 第一个在范围内的元素的父元素
+            list.push(el.dataset.id)
+            el.classList.add('selected')
           } else if (el.dataset.pid === pid) {
-            break
+            console.log(`${el.dataset.id}--${el.dataset.pid}--${pid}`)
+            list.push(el.dataset.id)
+            el.classList.add('selected')
           }
-          console.log(`${el.dataset.id}-${el.dataset.pid}`)
-          list.push(el.dataset.id)
-          el.classList.add('selected')
         }
       }
       // 赋值
@@ -254,8 +255,9 @@ export default {
         if (valid) {
           if (this.divideType === 'module') {
             this.saveModule({
-              elements: this.selectList,
-              ...this.mod
+              elements: this.selectList.toString(),
+              ...this.mod,
+              pageId: this.info.id
             })
           } else {
             const tree = this.$store.state.list

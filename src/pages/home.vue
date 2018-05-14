@@ -70,10 +70,10 @@
           <comp-add @after-add="afterAdd" :page="search.page"></comp-add>
         </el-col>
         <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
-          v-for="item in list"
+          v-for="(item, idx) in list"
           :key="item.id"
         >
-          <comp-card :comp="item"></comp-card>
+          <comp-card :comp="item" :idx="idx" @after-del="afterDel" @after-edit="afterEdit"></comp-card>
         </el-col>
       </el-row>
 
@@ -203,6 +203,12 @@ export default {
     afterAdd ({ list, total }) {
       this.list = list
       this.total = total
+    },
+    afterDel (idx) {
+      this.list.splice(idx, 1)
+    },
+    afterEdit (idx, data) {
+      this.list.splice(idx, 1, data)
     }
   }
 }
