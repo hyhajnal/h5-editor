@@ -36,13 +36,19 @@ export default {
   },
   mounted () {
     this.getData()
-    hotkeys('⌘+s', (e) => {
-      event.preventDefault()
+    hotkeys('⌘+s', e => {
+      e.preventDefault()
       this.saveLocal()
+    })
+    // 撤回
+    hotkeys('⌘+z', e => {
+      e.preventDefault()
+      this.$store.commit('revert')
     })
   },
   destroyed () {
     hotkeys.unbind('⌘+s')
+    hotkeys.unbind('⌘+z')
   },
   beforeRouteLeave (to, from, next) {
     this.save()

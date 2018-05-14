@@ -22,7 +22,7 @@
   {
     "id": "c22",
     "name": "图文标",
-    "icon": "tag",
+    "icon": "icontext",
     "type": "icontext",
     "style": "color:#888;padding:2px;",
     "config": [

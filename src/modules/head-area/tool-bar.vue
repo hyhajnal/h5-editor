@@ -6,6 +6,10 @@
           <i class="iconfont icon-delete"></i>
           <span>清空</span>
         </li>
+        <li @click="revert">
+          <i class="iconfont icon-revert"></i>
+          <span>撤回</span>
+        </li>
         <li v-show="!isSaving" @click="save">
           <i class="iconfont icon-save"></i>
           <span>保存</span>
@@ -67,6 +71,9 @@ export default {
     },
     clear () {
       this.$store.commit('clear')
+    },
+    revert () {
+      this.$store.commit('revert')
     }
   },
   computed: {

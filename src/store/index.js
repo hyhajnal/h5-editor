@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 // import Templs from '@/utils/templs.json'
 import { treeTravel, treeTravelById, moduleSelect, copyElorTempl } from '@/utils/transformTree'
 import { guid, getInit, mobiles } from '@/utils/help'
+let revertStatus = '' // 状态快照，用于撤回操作
 
 Vue.use(Vuex)
 
@@ -232,7 +233,15 @@ const actions = {
 
 const mutations = {
   update (state, list) {
+    // 保存上一个状态
+    revertStatus = JSON.stringify(state.list)
+    // 更新状态
     Vue.set(state, 'list', list)
+  },
+  // 撤回
+  revert (state) {
+    const status = JSON.parse(revertStatus)
+    Vue.set(state, 'list', status)
   },
   clear (state) {
     Vue.set(state, 'list', [])
@@ -295,7 +304,7 @@ const mutations = {
   },
   // 增加图片
   addImage (state, image) {
-    state.images.push(image)
+    state.images.unshift(image)
   },
   // 删除图片
   delImage (state, idx) {

@@ -24,7 +24,7 @@ function getInit (type) {
       break
     case 'span':
       attr = {
-        style: 'display:inline-block;color:#000;',
+        style: 'color:#000;',
         config: [
           { name: 'text', label: '文字', type: 'input', data: '文字' }
         ]
@@ -48,7 +48,7 @@ function getInit (type) {
       break
     case 'img':
       attr = {
-        style: 'display:inline-block;width:100px;height:80px;',
+        style: 'width:100px;height:80px;',
         config: [
           { name: 'url', label: 'url', type: 'input', data: '' }
         ]

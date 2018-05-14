@@ -56,5 +56,11 @@ export default {
   .el-tabs__nav-scroll {
     padding: 0 10px;
   }
+  .el-tabs__content {
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 120px);
+  }
 }
 </style>

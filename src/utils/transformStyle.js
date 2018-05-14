@@ -1,7 +1,7 @@
 const toStyleString = (data) => {
   let styleStr = 'position: relative;'
   Object.keys(data).forEach(key => {
-    if (('width|height'.indexOf(key) > -1) && data[key] === undefined) {
+    if (key === 'height' && data[key] === undefined) {
       return
     }
     if (('border|borderRadius'.indexOf(key) > -1) && data[key][0] === 0) {
@@ -34,7 +34,7 @@ function toStyleStrItem (key, value) {
   let result = ''
   switch (key) {
     case 'width':
-      result = `${value}px`
+      result = !value ? '100%' : `${value}px`
       break
     case 'height':
       result = `${value}px`
@@ -93,7 +93,7 @@ function toStyleObjItem (key, value) {
   switch (key) {
     case 'width':
       if (value === '100%') {
-        result = 0
+        result = undefined
       } else {
         result = parseInt(value.split('px')[0])
       }

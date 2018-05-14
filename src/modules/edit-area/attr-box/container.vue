@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="attr">
     <el-row :gutter="10" v-if="attrShow.color">
       <el-col :span="6" class="label">字体色:</el-col>
       <el-col :span="18">
@@ -38,7 +38,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="10" v-if="attrShow.wh" type="flex" align="middle">
+    <el-row :gutter="10" v-if="attrShow.width" type="flex" align="middle">
       <el-col :span="6" class="label">宽高:</el-col>
       <el-col :span="18" class="input-box">
         <el-tooltip class="item" effect="dark" content="宽" placement="top-start">
@@ -160,44 +160,6 @@
       </el-col>
     </el-row>
 
-    <!-- <el-row :gutter="10" type="flex" align="middle" v-if="attrShow.display">
-      <el-col :span="6" class="label">盒子:</el-col>
-      <el-col :span="18" class="input-box">
-        <el-radio-group v-model="attr.display" size="mini">
-          <el-radio label="block">块级</el-radio>
-          <el-radio label="flex">弹性</el-radio>
-          <el-radio label="inline-block">行内</el-radio>
-        </el-radio-group>
-      </el-col>
-    </el-row> -->
-    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <!-- <el-row :gutter="10" type="flex" align="middle" v-if="attr.display === 'flex'">
-      <el-col :span="6" class="label">水平对齐:</el-col>
-      <el-col :span="18" class="input-box">
-        <radio-bar v-model="attr.justifyContent" class="align-box">
-          <radio-item label="flex-start"><i class="iconfont icon-left" /></radio-item>
-          <radio-item label="flex-end"><i class="iconfont icon-right" /></radio-item>
-          <radio-item label="space-around"><i class="iconfont icon-space-around" /></radio-item>
-          <radio-item label="space-between"><i class="iconfont icon-space-between" /></radio-item>
-          <radio-item label="center"><i class="iconfont icon-center" /></radio-item>
-        </radio-bar>
-      </el-col>
-    </el-row> -->
-    <!-- justify-content: flex-start | flex-end | center | space-between | space-around; -->
-
-    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <!-- <el-row :gutter="10" v-if="attr.display === 'flex'">
-      <el-col :span="6" class="label">垂直对齐:</el-col>
-      <el-col :span="18" class="input-box">
-        <radio-bar v-model="attr.alignItems" class="align-box">
-          <radio-item label="flex-start"><i class="iconfont icon-top" /></radio-item>
-          <radio-item label="flex-end"><i class="iconfont icon-end" /></radio-item>
-          <radio-item label="center"><i class="iconfont icon-middle" /></radio-item>
-        </radio-bar>
-      </el-col>
-    </el-row> -->
-    <!-- align-items: flex-start | flex-end | center | baseline | stretch; -->
-    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
   </div>
 </template>
 
@@ -205,7 +167,7 @@
 import { RadioBar, RadioItem } from '@/components/radio'
 import ColorPicker from '@/components/ColorPicker'
 import { toStyleString } from '@/utils/transformStyle'
-const init = {
+const initMap = {
   color: '#000',
   fontSize: 16,
   fontWeight: 40,
@@ -217,7 +179,6 @@ const init = {
   border: [0, 'solid', '#000'],
   borderRadius: [0, 'px'],
   background: 'transparent',
-  // display: 'block',
   position: 'relative'
 }
 export default {
@@ -228,7 +189,7 @@ export default {
   },
   data () {
     return {
-      attr: init,
+      attr: null,
       options: [{
         label: '---',
         value: 'dashed'
@@ -240,7 +201,7 @@ export default {
     }
   },
   mounted () {
-    this.attr = { ...init, ...this.attrData }
+    this.init()
   },
   watch: {
     attr: {
@@ -250,8 +211,7 @@ export default {
       deep: true
     },
     attrData () {
-      console.log(this.attrData)
-      this.attr = { ...init, ...this.attrData }
+      this.init()
       if (this.attrData && this.attrData.position === 'absolute') {
         this.position = true
       } else {
@@ -270,14 +230,6 @@ export default {
         this.attr = {left: undefined, top: undefined, right: undefined, bottom: undefined, zIndex: 0, ...this.attr}
       }
     }
-    // 'attr.display' () {
-    //   if (this.attr.display === 'block') {
-    //     this.$delete(this.attr, 'alignItems')
-    //     this.$delete(this.attr, 'justifyContent')
-    //   } else {
-    //     this.attr = {...this.attr, justifyContent: 'flex-start', alignItems: 'flex-start'}
-    //   }
-    // }
   },
   components: {
     RadioBar, RadioItem, ColorPicker
@@ -291,6 +243,18 @@ export default {
         return 'bold'
       }
       return val * 10
+    },
+    // 初始化样式值
+    init () {
+      const initMapCopy = JSON.parse(JSON.stringify(initMap))
+      if (!this.attrShow) return
+      let initData = {}
+      for (let key in this.attrShow) {
+        let item = {}
+        item[key] = !this.attrData[key] ? initMapCopy[key] : this.attrData[key]
+        initData = Object.assign(initData, item)
+      }
+      this.attr = initData
     }
   }
 }
