@@ -8,6 +8,7 @@
         :visitCount="project.visitCount"
         :useCount="project.useCount"
         :collectCount="project.collectCount"
+        :owner="project.ownerName"
       />
     </section>
     <span class="tag" v-if="tag">{{tag}}</span>

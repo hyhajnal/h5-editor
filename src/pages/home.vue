@@ -18,12 +18,7 @@
           <radio-item label="templ" class="select-item">模版</radio-item>
           <radio-item label="comp" class="select-item">组件</radio-item>
         </radio-bar>
-        <router-link :to="{name: 'Login'}" v-if="!user">
-          <el-button type="danger" size="mini">登录</el-button>
-        </router-link>
-        <router-link :to="{name: 'Me'}" v-else>
-          <div class="avatar"></div>
-        </router-link>
+        <user-avatar></user-avatar>
       </div>
     </header>
 
@@ -106,6 +101,7 @@ import PageCard from '@/components/PageCard'
 import ModuleCard from '@/components/ModuleCard'
 import TemplCard from '@/components/TemplCard'
 import CompCard from '@/components/CompCard'
+import UserAvatar from '@/modules/head-area/user-avatar'
 import * as Add from '@/components/add'
 import Config from '@/utils/config'
 import HomeSelect from '@/components/HomeSelect'
@@ -125,12 +121,10 @@ export default {
       keyword: '',
       select: 'project',
       list: [],
-      total: 1,
-      user: null
+      total: 1
     }
   },
   mounted () {
-    this.getUser()
     this.select = this.$route.params.type || 'project'
     this.getList()
     this.$el.addEventListener('scroll', e => {
@@ -158,12 +152,12 @@ export default {
     CompCard,
     HomeSelect,
     RadioBar,
-    RadioItem
+    RadioItem,
+    UserAvatar
   },
   computed: {
     ...mapGetters({
       page: 'pageInfo'
-      // user: 'user'
     })
   },
   watch: {
@@ -211,13 +205,6 @@ export default {
     },
     afterEdit (idx, data) {
       this.list.splice(idx, 1, data)
-    },
-    getUser () {
-      if (document.cookie) {
-        this.user = JSON.parse(localStorage.getItem('user'))
-      } else {
-        this.user = null
-      }
     }
   }
 }
@@ -275,13 +262,6 @@ export default {
       left: 50%;
       transform: translate(-30%, -50%);
     }
-  }
-  .avatar {
-    background: url('/static/hua.jpg');
-    background-size: cover;
-    width: 28px;
-    height: 28px;
-    border-radius: 4px;
   }
   .right {
     display: flex;

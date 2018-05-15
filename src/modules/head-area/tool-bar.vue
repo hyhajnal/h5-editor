@@ -38,23 +38,19 @@
         </li>
       </template>
     </ul>
-    <router-link :to="{name: 'Login'}" v-if="!user">
-      <el-button type="danger" size="mini">登录</el-button>
-    </router-link>
-    <router-link :to="{name: 'Me'}" v-else>
-      <div class="avatar"></div>
-    </router-link>
+
+    <user-avatar></user-avatar>
+
   </div>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import UserAvatar from '@/modules/head-area/user-avatar'
 export default {
   name: 'ToolBar',
   data () {
     return {
-      edit: true,
-      user: null
+      edit: true
     }
   },
   props: {
@@ -63,9 +59,7 @@ export default {
       default: false
     }
   },
-  mounted () {
-    this.user = this.getUser()
-  },
+  components: {UserAvatar},
   methods: {
     preview () {
       this.$router.push({ path: 'preview/mobile' })
@@ -78,22 +72,12 @@ export default {
     },
     revert () {
       this.$store.commit('revert')
-    },
-    getUser () {
-      if (document.cookie) {
-        return JSON.parse(localStorage.getItem('user'))
-      } else {
-        return null
-      }
     }
   },
   computed: {
     route () {
       return this.$route.name
     }
-    // ...mapGetters({
-    //   user: 'user'
-    // })
   }
 }
 </script>
@@ -120,13 +104,6 @@ export default {
   i {
     display: block;
     font-size: 18px;
-  }
-  .avatar {
-    background: url('/static/hua.jpg');
-    background-size: cover;
-    width: 28px;
-    height: 28px;
-    border-radius: 4px;
   }
   li {
     cursor: pointer;

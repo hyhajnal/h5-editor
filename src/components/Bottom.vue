@@ -2,7 +2,7 @@
   <el-row type="flex" justify="space-between" align="middle" class="bottom-wrap">
     <el-row type="flex" justify="space-between" align="middle" class="owner">
       <img src="/static/hua.jpg" alt="avatar" width="20" height="20">
-      <span>发布者</span>
+      <span>{{owner || '发布者'}}</span>
     </el-row>
     <div class="social-bar">
       <span v-if="visitCount !== undefined">
@@ -24,7 +24,8 @@ export default {
   props: {
     visitCount: Number,
     useCount: Number,
-    collectCount: Number
+    collectCount: Number,
+    owner: String
   },
   data () {
     return {
