@@ -39,7 +39,7 @@ export default {
         background: '#fff',
         iconLink: ''
       },
-      owner: 'desinger1'
+      owner: ''
     }
   },
   mounted () {
@@ -51,6 +51,10 @@ export default {
         this.$store.commit('changeInfo', {...this.info, ...this.pageInfo})
       },
       deep: true
+    },
+    // 切换页面时，改变info
+    'info.id' () {
+      this.pageInfo = this.info
     },
     'pageInfo.iconLink' () {
       this.addCssByLink()
@@ -74,7 +78,7 @@ export default {
         link.setAttribute('rel', 'stylesheet')
         link.setAttribute('href', url)
         const head = document.getElementsByTagName('head')[0]
-        head.appendChild(link)
+        this.pageInfo.iconLink && head.appendChild(link)
       }
     }
   },

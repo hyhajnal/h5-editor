@@ -67,9 +67,9 @@
     "style": "position:absolute;bottom:0;display:flex;",
     "config": [
       { "name": "data", "label": "数据", "type": "table", "data": [
-        {"icon": "icon-paihangbang", "label": "排行榜", "dot": false, "info": "5"},
-        {"icon": "icon-yonghu", "label": "我的", "dot": true, "info": ""},
-        {"icon": "icon-faxian", "label": "发现", "dot": false, "info": ""}
+        {"icon": "icon-paihangbang", "label": "排行榜", "info": "5"},
+        {"icon": "icon-yonghu", "label": "我的", "info": ""},
+        {"icon": "icon-faxian", "label": "发现", "info": ""}
       ]},
       { "name": "normal", "label": "普通色", "type": "color", "data": "#666" },
       { "name": "active", "label": "高亮色", "type": "color", "data": "#EC0E0E" }
@@ -80,7 +80,14 @@
     "name": "导航栏",
     "icon": "navbar",
     "type": "navbar",
-    "config": []
+    "style": "background:#171717;color:#fff;",
+    "config": [
+      { "name": "title", "label": "标题", "type": "input", "data": "标题" },
+      { "name": "leftIcon", "label": "左图标", "type": "input", "data": "" },
+      { "name": "leftText", "label": "左文字", "type": "input", "data": "返回" },
+      { "name": "rightIcon", "label": "右图标", "type": "input", "data": "" },
+      { "name": "rightText", "label": "右文字", "type": "input", "data": "按钮" }
+    ]
   },
   {
     "id": "c9",

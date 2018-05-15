@@ -62,7 +62,7 @@ export default {
   height: 270px;
 }
 .card-image {
-  background-image: url('/static/module.jpg');
+  background-image: url('http://localhost/static/module.jpg');
   height: 200px;
   background-size: cover;
   position: relative;

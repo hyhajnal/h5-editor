@@ -4,15 +4,15 @@
       <router-link :to="{name: 'Home'}">
         <i class="iconfont icon-design"></i>
       </router-link>
-      <span v-if="isModuleEdit && route == 'Edit'"
+      <span v-if="isModuleEdit && route === 'Edit'"
         @click="changeToPage"
       >
-        {{pageInfo.name || title}}
+        {{pageInfo.name}}
       </span>
       <span v-if="isPreview" @click="goBack">
         {{info.name}}
       </span>
-      <span v-if="left" @click="goBack">
+      <span v-if="left && !isModuleEdit" @click="goBack">
         {{left}}
       </span>
 

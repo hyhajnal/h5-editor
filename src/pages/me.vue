@@ -159,7 +159,7 @@ header {
 .avatar {
   border-radius: 100%;
   margin: auto;
-  background: url('/static/hua.jpg');
+  background: url('/static/avatar.jpeg');
   background-size: cover;
   width: 120px;
   height: 120px;

@@ -60,7 +60,7 @@ i {
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid #f2f2f2;
-  background-image: url('/static/hua.jpg');
+  background-image: url('/static/avatar.jpeg');
 }
 /* ---- card css --- */
 </style>

@@ -28,6 +28,7 @@
         :visitCount="templ.visitCount"
         :useCount="templ.useCount"
         :collectCount="templ.collectCount"
+        :owner="templ.owner"
       />
     </section>
     <span class="tag" v-if="tag">{{tag}}</span>

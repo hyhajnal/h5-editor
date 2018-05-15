@@ -196,7 +196,7 @@ export default {
       // 元素中心点的位置
       const y = top + height / 2
       const x = left + width / 2
-      console.log(`id:${el.id},x:${x},y:${y}______x:${minX}-${maxX}, y:${minX}-${maxX}`)
+      // console.log(`id:${el.id},x:${x},y:${y}______x:${minX}-${maxX}, y:${minX}-${maxX}`)
       return y > minY && y < maxY && x > minX && x < maxX
     },
 

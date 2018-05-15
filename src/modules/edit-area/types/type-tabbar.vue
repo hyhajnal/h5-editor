@@ -1,28 +1,26 @@
 <template>
-  <van-tabbar v-model="active" :style="ele.style">
-    <van-tabbar-item
-      v-for="item in list"
+  <ul :style="ele.style">
+    <li class="custom-wrap"
+      v-for="(item, index) in list"
       :key="item.id"
-      :dot="item.dot"
-      :info="item.info"
+      @click="() => onActive(index)"
     >
-      <!-- <span :style="!props.active ? normalStyle: activeStyle">{{item.label}}</span> -->
-      <template slot="icon" slot-scope="props">
-        <div class="custom-wrap">
-          <i v-if="item.icon"
-            :class="['iconfont', item.icon]"
-            :style="!props.active ? normalStyle: activeStyle">
-          </i>
-          <br />
-          <span
-            v-if="item.label"
-            :style="!props.active ? normalStyle: activeStyle">
-            {{item.label}}
-          </span>
-        </div>
-      </template>
-    </van-tabbar-item>
-  </van-tabbar>
+      <!-- <i v-if="item.icon"
+        :class="['iconfont', item.icon]"
+        :style="!props.active ? normalStyle: activeStyle">
+      </i> -->
+      <i v-if="item.icon"
+        :class="['iconfont', item.icon]"
+        :style="active === index ? activeStyle :normalStyle"
+      />
+      <div class="dot">{{item.info}}</div>
+      <span
+        v-if="item.label"
+        :style="active === index ? activeStyle :normalStyle">
+        {{item.label}}
+      </span>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -46,23 +44,53 @@ export default {
     activeStyle () {
       return `color: ${this.ele.config[2].data};`
     }
+  },
+  methods: {
+    onActive (index) {
+      this.active = index
+    }
   }
 }
 </script>
 
 <style scoped>
+ul {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #f2f2f2;
+}
 .custom-wrap {
-  text-align: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
 }
 span {
   font-size: 12px;
+  margin-top: 5px;
+  cursor: pointer;
 }
-</style>
-
-<style>
-.van-tabbar-item__icon {
-  margin-bottom: 0px;
-  width: 100%;
+i {
+  cursor: pointer;
+  font-size: 16px;
+}
+.dot {
+  position: absolute;
+  left: 50%;
+  margin-left: 15px;
+  top: 2px;
+  color: #fff;
+  border-radius: .6em;
+  background: #f44;
+  font-size: .5em;
+  padding: 0 .3em;
 }
 </style>
 

@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.getData()
+    !this.info && this.getData()
     hotkeys('⌘+s', e => {
       e.preventDefault()
       this.saveLocal()

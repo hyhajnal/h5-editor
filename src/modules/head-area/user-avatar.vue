@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
 .avatar {
-  background: url('/static/hua.jpg');
+  background: url('/static/avatar.jpeg');
   background-size: cover;
   width: 28px;
   height: 28px;

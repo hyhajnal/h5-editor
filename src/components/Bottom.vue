@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" justify="space-between" align="middle" class="bottom-wrap">
     <el-row type="flex" justify="space-between" align="middle" class="owner">
-      <img src="/static/hua.jpg" alt="avatar" width="20" height="20">
+      <img src="/static/avatar.jpeg" alt="avatar" width="20" height="20">
       <span>{{owner || '发布者'}}</span>
     </el-row>
     <div class="social-bar">

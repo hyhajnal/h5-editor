@@ -10,5 +10,6 @@ export default {
   grid: {padding: true, margin: true, position: true},
   tabbar: {border: true, background: true},
   tag: {fontSize: true, color: true, fontWeight: true, background: true, padding: true, margin: true, position: true, borderRadius: true, border: true},
-  icontext: {color: true, margin: true, position: true}
+  icontext: {color: true, margin: true, position: true},
+  navbar: {color: true, background: true}
 }

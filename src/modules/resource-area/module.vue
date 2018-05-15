@@ -23,10 +23,10 @@
             <h1>{{item.name}}</h1>
             <p class="clearfix">
               <span class="title">{{item.developer}}</span>
-              <i class="el-icon-delete" @click.stop="del(idx)"></i>
-              <router-link :to="{name: 'Preview'}">
-                <i class="el-icon-search"></i>
-              </router-link>
+              <i class="el-icon-delete" @click.stop="del(idx, item.id)"></i>
+              <!-- <router-link :to="{name: 'Preview'}"> -->
+                <i class="el-icon-search" @click.stop="onPreview(idx)"></i>
+              <!-- </router-link> -->
               <i class="el-icon-edit" @click.stop="onClick(idx, item.id)"></i>
             </p>
           </div>
@@ -48,12 +48,27 @@ export default {
     })
   },
   methods: {
+    onPreview (i) {
+      if (this.$route.name === 'Edit') {
+        this.$store.dispatch('changeCurrent', i)
+        this.$router.push({ path: 'preview/mobile' })
+      } else {
+        this.$store.dispatch('changeCurrent', i)
+      }
+    },
     onClick (i) {
-      this.$store.dispatch('changeCurrent', i)
+      if (this.$route.name === 'Edit') {
+        this.$store.dispatch('changeCurrent', i)
+      } else {
+        this.$router.go(-1)
+        setTimeout(() => {
+          this.$store.dispatch('changeCurrent', i)
+        }, 500)
+      }
     },
     del (i, id) {
       this.axios.get(`${Config.URL}/editor/page/removeMod`, {
-        params: id
+        params: {id}
       }).then(data => {
         if (data !== 1000) {
           this.$message({type: 'success', message: '成功删除该模块'})
@@ -113,7 +128,7 @@ export default {
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #f2f2f2;
-    background-image: url('../../assets/none.png');
+    background-image: url('http://localhost/static/none.png');
     background-size: cover;
   }
   .component-preview {
