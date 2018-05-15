@@ -31,9 +31,7 @@ export default {
       show: false,
       form: {
         name: '',
-        elements: JSON.stringify({
-          elements: []
-        })
+        elements: JSON.stringify([])
       },
       formLabelWidth: '120px'
     }

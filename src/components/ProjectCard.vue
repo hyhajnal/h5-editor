@@ -50,7 +50,7 @@ export default {
   border-radius: 4px;
 }
 .card-image {
-  background-image: url('../assets/project.jpg');
+  background-image: url('/static/hua.jpg');
   height: 200px;
   background-size: cover;
   position: relative;

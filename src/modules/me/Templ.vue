@@ -2,39 +2,25 @@
   <div class="project-join">
     <el-row :gutter="30" class="project-list">
       <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
-        v-for="i in 10"
-        :key="i"
+        v-for="item in list"
+        :key="item.id"
       >
-        <el-card :body-style="{ padding: '0px' }">
-          <div class="image">
-            <div class="component-preview">
-            </div>
-          </div>
-          <div style="padding: 4px 14px 14px 14px;">
-            <div class="bottom clearfix">
-              <span class="title">模版{{i}}</span>
-              <i class="el-icon-search"></i>
-              <i class="el-icon-edit"></i>
-            </div>
-          </div>
-        </el-card>
+        <templ-card :templ="item"></templ-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import TemplCard from '@/components/TemplCard'
+
 export default {
   name: 'Templ',
-  data () {
-    return {
-      item: {
-        name: '测试项目',
-        id: 'ksncks'
-      }
-    }
+  props: {
+    list: Array
   },
   components: {
+    TemplCard
   }
 }
 </script>
@@ -74,7 +60,7 @@ i {
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid #f2f2f2;
-  background-image: url('../../assets/2.jpg');
+  background-image: url('/static/hua.jpg');
 }
 /* ---- card css --- */
 </style>

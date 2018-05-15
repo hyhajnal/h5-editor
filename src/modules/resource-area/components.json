@@ -89,8 +89,8 @@
     "type": "swiper",
     "config": [
       { "name": "image", "label": "图片", "type": "table", "data": [
-        {"url": "http://localhost:8360/static/1.jpg"},
-        {"url": "http://localhost:8360/static/2.jpg"}
+        {"url": "http://localhost/static/1.jpg"},
+        {"url": "http://localhost/static/2.jpg"}
       ]}
     ]
   },

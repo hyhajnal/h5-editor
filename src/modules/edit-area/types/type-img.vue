@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Config from '@/utils/config'
+// import Config from '@/utils/config'
 export default {
   name: 'Img',
   props: {
@@ -27,7 +27,7 @@ export default {
   methods: {
     handleAvatarSuccess (res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw)
-      const url = `${Config.URL}/static/upload/${res.data}`
+      const url = `localhost/static/upload/${res.data}`
       this.imageUrl = url
       this.$store.dispatch('updateConfig', [{
         name: 'url', label: 'url', type: 'input', data: url

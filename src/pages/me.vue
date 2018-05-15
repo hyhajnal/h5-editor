@@ -29,11 +29,14 @@
           <el-col :span="5" class="menu-side">
             <me-menu @select="onSelect"/>
           </el-col>
-          <el-col :span="19" class="content-list" v-if="list">
-            <me-project v-if="select.type === 'project'" :list="list"/>
-            <me-templ v-if="select.type === 'templ'" :list="list"/>
-            <me-comp v-if="select.type === 'comp'" :list="list"/>
-            <me-mod v-if="select.type === 'mod'" :list="list"/>
+          <el-col :span="19" class="content-list" v-if="list && list.length > 0">
+            <me-project v-if="select.type === 'projects'" :list="list"/>
+            <me-templ v-if="select.type === 'templs'" :list="list"/>
+            <me-comp v-if="select.type === 'comps'" :list="list"/>
+            <me-mod v-if="select.type === 'mods'" :list="list"/>
+          </el-col>
+          <el-col :span="19" class="content-list" v-else>
+            暂时没有数据哦
           </el-col>
         </el-row>
 
@@ -50,7 +53,7 @@ import MeComp from '@/modules/me/Comp'
 import MeTempl from '@/modules/me/Templ'
 import MeMod from '@/modules/me/Mod'
 import Config from '@/utils/config'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'Me',
@@ -58,17 +61,19 @@ export default {
     return {
       search: '',
       select: {
-        type: 'project',
+        type: 'projects',
         key: 0
       },
-      allData: null
+      allData: null,
+      user: null
     }
   },
   mounted () {
-    if (!this.user) {
+    if (!document.cookie) {
       this.$router.push({name: 'Login'})
     }
     this.getData()
+    this.getUser()
   },
   components: {
     MeMenu,
@@ -79,11 +84,11 @@ export default {
   },
   computed: {
     list () {
-      return this.allData && this.allData[this.select.type][this.select.key]
-    },
-    ...mapGetters({
-      user: 'user'
-    })
+      return (this.allData && this.allData[this.select.type] && this.allData[this.select.type][this.select.key])
+    }
+    // ...mapGetters({
+    //   user: 'user'
+    // })
   },
   methods: {
     onSelect (select) {
@@ -95,6 +100,13 @@ export default {
       }).then(data => {
         this.allData = data
       })
+    },
+    getUser () {
+      if (document.cookie) {
+        this.user = JSON.parse(localStorage.getItem('user'))
+      } else {
+        this.user = null
+      }
     }
   }
 }
@@ -102,7 +114,7 @@ export default {
 
 <style scoped lang="scss">
 .me-wrap {
-  background: url('../assets/bg.jpeg') 0 0 repeat;
+  background: url('/static/bg.jpeg') 0 0 repeat;
   background-size: 50%;
   width: 100vw;
   height: 100vh;
@@ -147,7 +159,7 @@ header {
 .avatar {
   border-radius: 100%;
   margin: auto;
-  background: url('../assets/2.jpg');
+  background: url('/static/hua.jpg');
   background-size: cover;
   width: 120px;
   height: 120px;
@@ -184,7 +196,7 @@ main {
   }
 }
 .menu-side {
-  height: 100%;
+  min-height: 100%;
 }
 .content-list {
   padding: 40px 60px;

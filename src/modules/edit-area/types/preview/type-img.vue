@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Config from '@/utils/config'
+// import Config from '@/utils/config'
 export default {
   name: 'IMG',
   props: {
@@ -15,7 +15,7 @@ export default {
       if (dataUrl) {
         return dataUrl
       } else {
-        return `${Config.URL}/static/noimage.jpg`
+        return `http://localhost/static/noimage.jpg`
       }
     }
   }

@@ -125,10 +125,12 @@ export default {
       keyword: '',
       select: 'project',
       list: [],
-      total: 1
+      total: 1,
+      user: null
     }
   },
   mounted () {
+    this.getUser()
     this.select = this.$route.params.type || 'project'
     this.getList()
     this.$el.addEventListener('scroll', e => {
@@ -160,8 +162,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      page: 'pageInfo',
-      user: 'user'
+      page: 'pageInfo'
+      // user: 'user'
     })
   },
   watch: {
@@ -209,6 +211,13 @@ export default {
     },
     afterEdit (idx, data) {
       this.list.splice(idx, 1, data)
+    },
+    getUser () {
+      if (document.cookie) {
+        this.user = JSON.parse(localStorage.getItem('user'))
+      } else {
+        this.user = null
+      }
     }
   }
 }
@@ -232,7 +241,7 @@ export default {
     margin: 0 !important;
   }
   .search-box {
-    background: url('../assets/bg-1.svg');
+    background: url('/static/bg-1.svg');
     height: 350px;
     padding-top: 60px;
     display: flex;
@@ -268,7 +277,7 @@ export default {
     }
   }
   .avatar {
-    background: url('../assets/2.jpg');
+    background: url('/static/hua.jpg');
     background-size: cover;
     width: 28px;
     height: 28px;

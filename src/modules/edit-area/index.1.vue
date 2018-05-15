@@ -84,11 +84,13 @@ export default {
   name: 'EditArea',
   data () {
     return {
-      x: 0, // 鼠标初始x
+      x: 0,
       y: 0,
-      width: 0, // 框选框宽度
+      width: 0,
       height: 0,
       isEnd: true,
+      top: 0,
+      left: 0,
       selectList: [],
       innerVisible: false,
       outerVisible: false,
@@ -107,7 +109,7 @@ export default {
   computed: {
     selectStyle () {
       const display = !this.isEnd ? 'block' : 'none'
-      return `top:${this.y}px;left:${this.x}px;width:${this.width}px;height:${this.height}px;display:${display};`
+      return `top:${this.top}px;left:${this.left}px;width:${this.width}px;height:${this.height}px;display:${display};`
     },
     displayStyle () {
       const display = !this.isEnd ? 'block' : 'none'
@@ -145,8 +147,13 @@ export default {
     onDown (e) {
       if (e.target.id !== 'shadow') return
       this.isEnd = false
-      this.x = e.clientX
-      this.y = e.clientY
+      this.x = e.pageX
+      this.y = e.pageY
+      const el = this.$refs.edit
+      const { top, left } = this.getOffset(el)
+      // 计算出鼠标（框选框）应相对于edit的位置
+      this.left = e.pageX - left
+      this.top = e.pageY - top
     },
 
     onUp (e) {
@@ -155,20 +162,15 @@ export default {
       let list = []
       let pid = 0 // 为同一父元素下的子元素
       // 选出在区域内的元素
-      const size = {
-        minX: this.x,
-        minY: this.y,
-        maxX: e.clientX,
-        maxY: e.clientY
-      }
       for (let i = 0; i < els.length; i++) {
         let el = els[i]
-        if (this.inArea(el, size)) {
+        if (this.inArea(el)) {
           if (!pid) {
             pid = el.dataset.pid // 第一个在范围内的元素的父元素
             list.push(el.dataset.id)
             el.classList.add('selected')
           } else if (el.dataset.pid === pid) {
+            console.log(`${el.dataset.id}--${el.dataset.pid}--${pid}`)
             list.push(el.dataset.id)
             el.classList.add('selected')
           }
@@ -181,23 +183,42 @@ export default {
         this.outerVisible = true
       }
       // 重置框选参数
+      console.log('clear')
       this.clear()
     },
 
     onMove (e) {
       if (e.target.id !== 'shadow' || this.isEnd) return
-      this.width = Math.abs(e.clientX - this.x)
-      this.height = Math.abs(e.clientY - this.y)
+      this.width = Math.abs(e.pageX - this.x)
+      this.height = Math.abs(e.pageY - this.y)
     },
 
-    // 在圈中的范围内，相对于client计算
-    inArea (el, { minX, minY, maxX, maxY }) {
-      let { top, left, width, height } = el.getBoundingClientRect()
+    getOffset (element) {
+      let top = element.offsetTop
+      let left = element.offsetLeft
+      let parent = element.offsetParent
+      while (parent != null && parent !== undefined) {
+        top += parent.offsetTop
+        left += parent.offsetLeft
+        parent = parent.offsetParent
+      }
+      return { top, left }
+    },
+
+    // 在圈中的范围内
+    inArea (el) {
+      let { top, left } = this.getOffset(el)
+      const rect = el.getBoundingClientRect()
       // 元素中心点的位置
-      const y = top + height / 2
-      const x = left + width / 2
-      console.log(`id:${el.id},x:${x},y:${y}______x:${minX}-${maxX}, y:${minX}-${maxX}`)
-      return y > minY && y < maxY && x > minX && x < maxX
+      top = top + rect.width / 2
+      left = left + rect.height / 2
+      // 选择框的范围
+      const minX = this.x
+      const minY = this.y
+      const maxX = this.x + this.width
+      const maxY = this.y + this.height
+      // console.log(`${el.dataset.id}:${left}(${minX}-${maxX}),${top}(${minY}-${maxY})`)
+      return top > minY && top < maxY && left > minX && left < maxX
     },
 
     handleClose () {
@@ -225,8 +246,8 @@ export default {
       this.y = 0
       this.width = 0
       this.height = 0
-      // this.top = 0
-      // this.left = 0
+      this.top = 0
+      this.left = 0
     },
 
     publish () {
@@ -344,7 +365,7 @@ export default {
     background: rgba(0,0,0,0.2);
   }
   .select-area {
-    position: fixed;
+    position: absolute;
     z-index: 999;
     border: 2px dashed orange;
     background: rgba(0, 0, 0, 0.3);

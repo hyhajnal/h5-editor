@@ -48,12 +48,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 export default {
   name: 'ToolBar',
   data () {
     return {
-      edit: true
+      edit: true,
+      user: null
     }
   },
   props: {
@@ -61,6 +62,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  mounted () {
+    this.user = this.getUser()
   },
   methods: {
     preview () {
@@ -74,15 +78,22 @@ export default {
     },
     revert () {
       this.$store.commit('revert')
+    },
+    getUser () {
+      if (document.cookie) {
+        return JSON.parse(localStorage.getItem('user'))
+      } else {
+        return null
+      }
     }
   },
   computed: {
     route () {
       return this.$route.name
-    },
-    ...mapGetters({
-      user: 'user'
-    })
+    }
+    // ...mapGetters({
+    //   user: 'user'
+    // })
   }
 }
 </script>
@@ -111,7 +122,7 @@ export default {
     font-size: 18px;
   }
   .avatar {
-    background: url('../../assets/2.jpg');
+    background: url('/static/hua.jpg');
     background-size: cover;
     width: 28px;
     height: 28px;

@@ -56,6 +56,7 @@ function getInit (type) {
       break
     case 'icon':
       attr = {
+        style: 'color:#000;',
         config: [
           { name: 'name', label: '图标名', type: 'input', data: 'icon-info' }
         ]

@@ -2,7 +2,7 @@
   <div class="image-resource" v-if="info">
     <el-upload
         class="upload"
-        action="http://localhost:8360/editor/img/upload"
+        action="http://localhost/api/editor/img/upload"
         :show-file-list="false"
         :data="extra"
         name="image"
@@ -17,7 +17,7 @@
         class="component-item"
         :key="item.id"
       >
-        <img :src="'http://localhost:8360/static/upload/'+item.url" alt="图片资源库">
+        <img :src="'http://localhost/static/upload/'+item.url" alt="图片资源库">
         <p class="clearfix">
           <i class="el-icon-delete" @click="del(idx, item)"></i>
           <span @click="copy(item.url)">点击复制链接</span>
@@ -69,7 +69,7 @@ export default {
       document.execCommand('copy')
     },
     copyHandler (e, url) {
-      let Url = `http://localhost:8360/static/upload/${url}`
+      let Url = `http://localhost/static/upload/${url}`
       e.clipboardData.setData('text/plain', Url)
       e.preventDefault()
       this.$message({

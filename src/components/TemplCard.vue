@@ -138,7 +138,7 @@ export default {
 figure {
   width: 100%;
   height: 100%;
-  background-image: url('../assets/none.png');
+  background-image: url('/static/none.png');
   background-size: cover;
 }
 .shadow {

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Config from '@/utils/config'
+// import Config from '@/utils/config'
 import CardBottom from './Bottom'
 
 export default {
@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     bgImg () {
-      return `background-image: url(${Config.URL}/static/${this.img});`
+      return `background-image: url(http://localhost/static/${this.img});`
     }
   },
   components: { CardBottom },

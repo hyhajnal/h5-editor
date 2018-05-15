@@ -2,8 +2,8 @@
   <div class="project-join">
     <el-row :gutter="30" class="project-list">
       <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
-        v-for="i in 10"
-        :key="i"
+        v-for="item in list"
+        :key="item.id"
       >
         <module-card :mod="item"></module-card>
       </el-col>
@@ -15,13 +15,8 @@
 import ModuleCard from '@/components/ModuleCard'
 export default {
   name: 'Mod',
-  data () {
-    return {
-      item: {
-        name: '测试项目',
-        id: 'ksncks'
-      }
-    }
+  props: {
+    list: Array
   },
   components: {
     ModuleCard

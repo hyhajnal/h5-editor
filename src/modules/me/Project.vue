@@ -5,8 +5,8 @@
         <add-card :type="select" @after-add="afterAdd" :page="page"></add-card>
       </el-col> -->
       <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
-        v-for="i in 10"
-        :key="i"
+        v-for="item in list"
+        :key="item.id"
       >
         <project-card :project="item"></project-card>
       </el-col>
@@ -18,6 +18,9 @@
 import ProjectCard from '@/components/ProjectCard'
 export default {
   name: 'ProjectJoin',
+  props: {
+    list: Array
+  },
   data () {
     return {
       item: {

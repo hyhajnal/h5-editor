@@ -8,6 +8,9 @@
         <el-form-item label="项目名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="项目标签" :label-width="formLabelWidth" prop="tag">
+          <el-input v-model="form.tag" auto-complete="off"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.stop="show = false">取 消</el-button>
@@ -31,6 +34,7 @@ export default {
       show: false,
       form: {
         name: '',
+        tag: '',
         elements: JSON.stringify({
           elements: []
         })

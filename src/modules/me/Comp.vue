@@ -2,35 +2,24 @@
   <div class="project-join">
     <el-row :gutter="30" class="project-list">
       <el-col :xs="12" :sm="8" :md="8" :lg="8" :xl="1"
-        v-for="i in 10"
-        :key="i"
+        v-for="item in list"
+        :key="item.id"
       >
-        <el-card :body-style="{ padding: '0px' }">
-          <div style="padding: 4px 14px 14px 14px;">
-            <div class="bottom clearfix">
-              <p class="title">组件</p>
-              <a href="#">van-button</a>
-              <i class="el-icon-info"></i>
-              <i class="el-icon-error"></i>
-            </div>
-          </div>
-        </el-card>
+        <comp-card :comp="item"></comp-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import CompCard from '@/components/CompCard'
+
 export default {
   name: 'Comp',
-  data () {
-    return {
-      item: {
-        name: '测试项目',
-        id: 'ksncks'
-      }
-    }
-  }
+  props: {
+    list: Array
+  },
+  components: { CompCard }
 }
 </script>
 

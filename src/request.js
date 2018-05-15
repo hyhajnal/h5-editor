@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 const vm = new Vue()
+axios.defaults.withCredentials = true
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
@@ -31,7 +32,7 @@ axios.interceptors.response.use(response => {
     switch (error.response.status) {
       case 403:
         error.message = '你还未登录'
-        location.href = 'http://localhost:8888/#/login'
+        location.href = 'http://localhost/#/login'
         break
       case 500:
         error.message = '服务器发生错误了'
