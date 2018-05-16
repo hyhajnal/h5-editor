@@ -83,10 +83,10 @@
     "style": "background:#171717;color:#fff;",
     "config": [
       { "name": "title", "label": "标题", "type": "input", "data": "标题" },
-      { "name": "leftIcon", "label": "左图标", "type": "input", "data": "" },
+      { "name": "leftIcon", "label": "左图标", "type": "input", "data": "icon-fanhui" },
       { "name": "leftText", "label": "左文字", "type": "input", "data": "返回" },
-      { "name": "rightIcon", "label": "右图标", "type": "input", "data": "" },
-      { "name": "rightText", "label": "右文字", "type": "input", "data": "按钮" }
+      { "name": "rightIcon", "label": "右图标", "type": "input", "data": "icon-user" },
+      { "name": "rightText", "label": "右文字", "type": "input", "data": "" }
     ]
   },
   {

@@ -1,5 +1,5 @@
 <template>
-  <div class="page" id="page" ref="page" v-if="elements">
+  <div class="page" id="page" ref="page" v-if="elements" :style="style">
     <custom-element
       v-for="item in elements"
       :key="item.id"
@@ -21,8 +21,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      elements: 'page'
-    })
+      elements: 'page',
+      info: 'pageInfo'
+    }),
+    style () {
+      const height = (this.info && this.info.height) || 667
+      const background = (this.info && this.info.background) || '#fff'
+      return `minHeight:${height}px;background:${background};`
+    }
   },
   mounted () {
     let mod = window.localStorage.getItem('page')

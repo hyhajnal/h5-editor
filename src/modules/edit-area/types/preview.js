@@ -15,6 +15,7 @@ import TypeGrid from './preview/type-grid'
 import TypeSwiper from './type-swiper'
 import TypeIcon from './type-icon'
 import TypeIcontext from './type-icontext'
+import TypeRate from './type-rate'
 
 export default {
   TypeButton,
@@ -33,5 +34,6 @@ export default {
   TypeIcon,
   TypeP,
   TypeH1,
-  TypeIcontext
+  TypeIcontext,
+  TypeRate
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="code-area">
+  <div class="code-area" id="code-area">
     <h1 class="html-title">
       Vue<i class="iconfont icon-copy" @click="copy"></i>
     </h1>
@@ -18,7 +18,8 @@ export default {
   name: 'CodeArea',
   data () {
     return {
-      vue: ''
+      vue: '',
+      isBind: false
     }
   },
   mounted () {
@@ -35,10 +36,18 @@ export default {
       this.codeGenerate()
     }
   },
+  beforeRouteLeave (to, from, next) {
+    document.removeEventListener('copy', this.copyHandler, false)
+    next()
+  },
   methods: {
     copy () {
-      document.addEventListener('copy', this.copyHandler, false)
-      document.execCommand('copy')
+      if (!this.isBind) {
+        document.addEventListener('copy', this.copyHandler, false)
+        this.isBind = true
+      } else {
+        document.execCommand('copy')
+      }
     },
     copyHandler (e) {
       e.clipboardData.setData('text/plain', this.vue)

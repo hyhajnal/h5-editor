@@ -140,6 +140,13 @@ export default {
     hotkeys.unbind('⌘+d')
     hotkeys.unbind('esc')
   },
+  beforeRouteLeave (to, from, next) {
+    hotkeys.unbind('a')
+    hotkeys.unbind('⌘+v')
+    hotkeys.unbind('⌘+d')
+    hotkeys.unbind('esc')
+    next()
+  },
   methods: {
 
     onDown (e) {

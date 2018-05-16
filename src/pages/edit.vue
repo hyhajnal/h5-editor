@@ -46,12 +46,14 @@ export default {
       this.$store.commit('revert')
     })
   },
-  destroyed () {
-    hotkeys.unbind('⌘+s')
-    hotkeys.unbind('⌘+z')
-  },
+  // destroyed () {
+  //   hotkeys.unbind('⌘+s')
+  //   hotkeys.unbind('⌘+z')
+  // },
   beforeRouteLeave (to, from, next) {
     this.save()
+    hotkeys.unbind('⌘+s')
+    hotkeys.unbind('⌘+z')
     next()
   },
   computed: {
@@ -68,12 +70,13 @@ export default {
     // 保存至数据库
     save () {
       let pageInfo = this.pageInfo
-      const height = document.getElementById('page').style.height
-      pageInfo.height = height && parseInt(height.split('px')[0])
+      let height = document.getElementById('page').style.minHeight
+      height = height && parseInt(height.split('px')[0])
       const list = this.list
       this.saveLocal()
       this.axios.post(`${Config.URL}/editor/page/edit`, {
         ...pageInfo,
+        height,
         elements: JSON.stringify(list)
       }).then(data => {
         data !== 1000 && this.$message({type: 'success', message: '保存成功'})
