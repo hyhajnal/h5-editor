@@ -9,7 +9,7 @@ module.exports = class extends think.Controller {
     this.setCorsHeader();
   }
   setCorsHeader() {
-    this.header('Access-Control-Allow-Origin', '*' || null);
+    this.header('Access-Control-Allow-Origin', '*');
     this.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     this.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     this.header('Access-Control-Allow-Credentials', true);

@@ -1,6 +1,16 @@
 const Base = require('./base.js');
 
 module.exports = class extends Base {
+  async __before() {
+    // 检测是否登录
+    const user = await this.session('user');
+    think.logger.debug(user);
+    if (!user) {
+      this.status = 403;
+      return false;
+    }
+  }
+
   indexAction() {
     return this.display();
   }
@@ -8,8 +18,17 @@ module.exports = class extends Base {
   async addAction() {
     const project = this.post('data');
     const page = parseInt(this.post('page'));
+    const { name } = await this.session('user');
     try {
-      await this.model('Project').add(project);
+      const projectId = await this.model('Project').add({
+        ...project,
+        ownerName: name
+      });
+      await this.model('Relation').add({
+        user: name,
+        otherId: projectId,
+        role: 3
+      });
       const list = await this.model('Project')
         .where().order('created DESC')
         .page(page, 11).select();

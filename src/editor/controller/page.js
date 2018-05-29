@@ -62,23 +62,13 @@ module.exports = class extends Base {
     const mod = this.post();
     const id = await this.model('Module').add(mod);
     const newMod = await this.model('Module').where({id}).find();
-    await this.model('Relation').add({
-      otherId: id,
-      userId: await this.session('user').id,
-      type: 1
-    });
     this.success(newMod);
   }
 
   // 为页面移除模块
   async removeModAction() {
-    const modId = this.get();
+    const modId = this.get('id');
     await this.model('Module').where({id: modId}).delete();
-    await this.model('Relation').where({
-      otherId: modId,
-      userId: await this.session('user').id,
-      type: 1
-    });
     this.success('删除成功');
   }
 

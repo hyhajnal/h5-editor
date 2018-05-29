@@ -56,8 +56,9 @@ exports.session = {
   common: {
     cookie: {
       name: 'thinkjs',
-      keys: ['signature key'],
-      signed: true
+      httpOnly: false
+      // keys: ['signature key'],
+      // signed: true
     }
   },
   file: {

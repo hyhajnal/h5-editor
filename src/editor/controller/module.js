@@ -6,10 +6,11 @@ module.exports = class extends Base {
   }
 
   async addAction() {
+    const { name } = await this.session('user');
     const moduleNew = this.post('module');
     const page = parseInt(this.post('page'));
     try {
-      await this.model('Module').add(moduleNew);
+      await this.model('Module').add({...moduleNew, owner: name});
       const list = await this.model('Module')
         .where().order('created DESC')
         .page(page, 11).select();

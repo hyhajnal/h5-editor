@@ -8,11 +8,12 @@ module.exports = class extends Base {
   // 新建模版
   async addAction() {
     const templ = this.post();
-    const id = await this.model('Templ').add({...templ, useCount: 1});
+    const { name } = await this.session('user');
+    const templId = await this.model('Templ').add({...templ, useCount: 1, owner: name});
     const newTempl = await this.model('Templ')
-      .where({id}).find();
+      .where({id: templId}).find();
     await this.model('ResourceUse').add({
-      resourceId: id,
+      resourceId: templId,
       pageId: templ.pageId,
       type: 2
     });

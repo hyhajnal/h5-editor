@@ -12,80 +12,83 @@ module.exports = class extends Base {
   }
 
   async indexAction() {
-    const { id } = await this.session('user');
+    const { name } = await this.session('user');
     // 我发起的项目
     const ownProjects = await this.model('Project')
+      .field('p.*')
       .alias('p').join({
-        table: 'user',
+        table: 'relation',
         join: 'left',
-        as: 'u',
+        as: 'r',
         on: ['id', 'otherId']
       }).where({
-        'u.userId': id,
-        'u.role': 3,
-        'u.type': 0
+        'r.user': name,
+        'r.role': 3
       }).select();
 
     // 我参与的项目
     const joinProjects = await this.model('Project')
+      .field('p.*')
       .alias('p').join({
-        table: 'user',
+        table: 'relation',
         join: 'left',
-        as: 'u',
+        as: 'r',
         on: ['id', 'otherId']
       }).where({
-        'u.userId': id,
-        'u.type': 0
+        'r.user': name
       }).select();
 
     // 我收藏的项目
     const collectProjects = await this.model('Project')
+      .field('p.*')
       .alias('p').join({
-        table: 'user',
+        table: 'collect',
         join: 'left',
         as: 'c',
         on: ['id', 'otherId']
       }).where({
-        'u.userId': id,
-        'u.type': 0
+        'c.user': name,
+        'c.type': 0
       }).select();
 
     // 我收藏的模版
     const collectTempls = await this.model('Templ')
+      .field('t.*')
       .alias('t').join({
-        table: 'user',
+        table: 'collect',
         join: 'left',
         as: 'c',
         on: ['id', 'otherId']
       }).where({
-        'u.userId': id,
-        'u.type': 0
+        'c.user': name,
+        'c.type': 1
       }).select();
 
     // 我收藏的组件
     const collectComps = await this.model('Comp')
+      .field('comp.*')
       .alias('comp').join({
-        table: 'user',
+        table: 'collect',
         join: 'left',
         as: 'c',
         on: ['id', 'otherId']
       }).where({
-        'u.userId': id,
-        'u.type': 0
+        'c.user': name,
+        'c.type': 2
       }).select();
 
     // 我的模块
-    const mods = await this.model('Module').where({ owner: id }).select();
+    const mods = await this.model('Module').where({ developer: name }).select();
 
     // 我的组件
-    const comps = await this.model('Comp').where({ owner: id }).select();
+    const comps = await this.model('Comp').where({ owner: name }).select();
 
     // 我的模版
-    const templs = await this.model('Templ').where({ owner: id }).select();
+    const templs = await this.model('Templ').where({ owner: name }).select();
 
     this.success({
       projects: [ownProjects, joinProjects, collectProjects],
-      mods,
+      mods: [mods],
       comps: [comps, collectComps],
       templs: [templs, collectTempls]
     });
