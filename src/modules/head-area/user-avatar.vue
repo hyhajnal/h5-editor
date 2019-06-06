@@ -27,15 +27,23 @@ export default {
     }
   },
   mounted () {
-    this.user = this.getUser()
+    this.getUser()
   },
   methods: {
     getUser () {
-      if (document.cookie) {
-        return JSON.parse(localStorage.getItem('user'))
+      if (document.cookie && localStorage.getItem('user')) {
+        this.user = JSON.parse(localStorage.getItem('user'))
       } else {
-        return null
+        this.getUserInfo()
       }
+    },
+    getUserInfo() {
+      this.axios.get('/api/editor/login/getUserInfo').then(data => {
+        if (data !== 1000) {
+          this.user = data
+          localStorage.setItem('user', JSON.stringify(data))
+        }
+      })
     },
     logout () {
       this.axios.get(`${Config.URL}/editor/login/logout`).then(data => {

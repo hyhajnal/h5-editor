@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     bgImg () {
-      return `background-image: url(http://localhost/static/${this.img});`
+      return `background-image: url(/static/${this.img});`
     }
   },
   components: { CardBottom },

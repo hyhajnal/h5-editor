@@ -128,7 +128,7 @@ export default {
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #f2f2f2;
-    background-image: url('http://localhost/static/none.png');
+    background-image: url('/static/none.png');
     background-size: cover;
   }
   .component-preview {

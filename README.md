@@ -5,6 +5,8 @@
 
 用于将设计稿样式转化为组件化的代码
 
+[本地启动方式](https://github.com/hyhajnal/h5-editor/tree/server)
+
 > 有时间会持续更新维护的 😄
 
 ## 使用者

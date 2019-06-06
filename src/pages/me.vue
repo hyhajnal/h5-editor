@@ -1,5 +1,5 @@
 <template>
-  <div class="me-wrap">
+  <div class="me-wrap bg">
     <div class="shadow"></div>
     <header>
       <router-link :to="{name: 'Home'}">
@@ -114,7 +114,6 @@ export default {
 
 <style scoped lang="scss">
 .me-wrap {
-  background: url('/static/bg.jpeg') 0 0 repeat;
   background-size: 50%;
   width: 100vw;
   height: 100vh;

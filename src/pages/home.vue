@@ -22,7 +22,7 @@
       </div>
     </header>
 
-    <div class="search-box">
+    <div class="search-box bg">
       <el-input
         prefix-icon="el-icon-search"
         placeholder="请输入你想要找的内容"
@@ -228,7 +228,6 @@ export default {
     margin: 0 !important;
   }
   .search-box {
-    background: url('/static/bg-1.svg');
     height: 350px;
     padding-top: 60px;
     display: flex;

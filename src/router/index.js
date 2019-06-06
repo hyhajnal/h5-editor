@@ -15,6 +15,11 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/',
+      name: 'Welcome',
+      component: Home
+    },
+    {
       path: '/edit',
       name: 'Edit',
       component: Edit

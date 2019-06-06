@@ -2,7 +2,7 @@
   <div class="image-resource" v-if="info">
     <el-upload
         class="upload"
-        action="http://localhost/api/editor/img/upload"
+        :action="baseUrl + '/editor/img/upload'"
         :show-file-list="false"
         :data="extra"
         name="image"
@@ -17,7 +17,7 @@
         class="component-item"
         :key="item.id"
       >
-        <img :src="'http://localhost/static/upload/'+item.url" alt="图片资源库">
+        <img :src="'/static/upload/'+item.url" alt="图片资源库">
         <p class="clearfix">
           <i class="el-icon-delete" @click="del(idx, item)"></i>
           <span @click="copy(item.url)">点击复制链接</span>
@@ -32,6 +32,11 @@ import { mapGetters } from 'vuex'
 import Config from '@/utils/config'
 export default {
   name: 'ImageResource',
+  data () {
+    return {
+      baseUrl: Config.URL
+    }
+  },
   computed: {
     ...mapGetters({
       images: 'images',
@@ -69,7 +74,7 @@ export default {
       document.execCommand('copy')
     },
     copyHandler (e, url) {
-      let Url = `http://localhost/static/upload/${url}`
+      let Url = `/static/upload/${url}`
       e.clipboardData.setData('text/plain', Url)
       e.preventDefault()
       this.$message({

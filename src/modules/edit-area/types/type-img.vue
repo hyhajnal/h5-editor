@@ -27,7 +27,7 @@ export default {
   methods: {
     handleAvatarSuccess (res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw)
-      const url = `localhost/static/upload/${res.data}`
+      const url = `/static/upload/${res.data}`
       this.imageUrl = url
       this.$store.dispatch('updateConfig', [{
         name: 'url', label: 'url', type: 'input', data: url

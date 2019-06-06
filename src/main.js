@@ -10,7 +10,7 @@ import store from '../src/store'
 import clickoutside from './directive'
 import axios from './request'
 import Vant from 'vant'
-import 'vant/lib/vant-css/index.css'
+import 'vant/lib/index.css'
 import VueHighlightJS from 'vue-highlightjs'
 
 Vue.use(Vant)
