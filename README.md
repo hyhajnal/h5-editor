@@ -3,34 +3,29 @@
 thinkjs + mysql
 
 
-### 1. 数据库
-
-./editor_2018-05-29.sql
+### 1. 启动数据库 mysql
 
 ``` bash
 mysql.server start
 ```
 
-#### 2. 配置 nginx
+[导入sql ./editor_2018-05-29.sql](./editor_2018-05-29.sql)
 
-./h5editor.com.conf
 
-``` bash
-sudo nginx
-```
-
-### 3. server 启动
+### 2. server 启动
 
 ``` bash
+npm install
 npm start
 ```
 
 ### 4. client 启动
 
 ``` bash
+npm install
 npm run dev
 ```
 
 ### 5. 访问首页
 
-localhost/#home
+http://localhost:8888

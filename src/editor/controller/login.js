@@ -14,6 +14,11 @@ module.exports = class extends Base {
     }
   }
 
+  async getUserInfoAction() {
+    const user = await this.session('user');
+    this.success(user);
+  }
+
   async registerAction() {
     const user = this.post('user');
     const u = await this.model('User')
